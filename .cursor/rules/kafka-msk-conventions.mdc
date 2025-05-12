@@ -1,0 +1,36 @@
+---
+description: Defines standards for Kafka integration with Spring Boot including configuration settings, producer/consumer implementations, error handling strategies, AWS MSK authentication, and message processing patterns to ensure reliable event-driven communication.
+globs: **/src/main/java/com/shs/b2bm_service_order/kafka/*.java
+alwaysApply: true
+---
+- Use spring-kafka library for Kafka integration in Spring Boot applications
+- Configure Kafka properties in application.properties/application.yml with appropriate profiles for different environments
+- Use @EnableKafka annotation in a configuration class to enable Kafka support
+- Create dedicated KafkaConfig class for Kafka-related configurations
+- Define producer and consumer factory beans using DefaultKafkaProducerFactory and DefaultKafkaConsumerFactory
+- Configure appropriate serializers/deserializers for keys and values (e.g., StringSerializer, JsonSerializer)
+- Use KafkaTemplate for producing messages to Kafka topics
+- Implement @KafkaListener annotation for consuming messages from Kafka topics
+- Create strongly-typed message objects rather than using raw strings
+- Include proper error handling in Kafka consumers using ErrorHandler or ContainerProperties.setErrorHandler
+- Implement dead letter topics for handling failed message processing
+- Configure appropriate acknowledgment modes for consumers (e.g., MANUAL, MANUAL_IMMEDIATE)
+- Use proper retry mechanisms for failed message processing with RetryTemplate
+- Configure consumer group IDs appropriately for parallel processing and load distribution
+- Implement idempotent consumers to handle duplicate messages
+- Use exactly-once semantics when appropriate with transaction support
+- Configure appropriate timeout values for producers and consumers
+- Implement proper monitoring and metrics for Kafka producers and consumers using Spring Boot Actuator
+- Configure AWS IAM-based authentication for Amazon MSK
+- Use AWS Secrets Manager or similar for storing Kafka credentials securely
+- Configure appropriate MSK-specific settings like broker endpoints, security protocols, and encryption
+- Use SASL/SCRAM or IAM authentication for MSK depending on security requirements
+- Implement proper logging for Kafka operations at appropriate levels
+- Use topic naming conventions that include environment, application name, and purpose
+- Configure appropriate partition counts and replication factors for MSK topics
+- Use compacted topics for key-value store use cases
+- Implement health checks for Kafka connectivity using Spring Boot Actuator
+- Apply message schemas and validation using Schema Registry when appropriate
+- Use Avro or Protocol Buffers for structured message formats when appropriate
+- Implement proper partition strategies for message ordering when needed
+

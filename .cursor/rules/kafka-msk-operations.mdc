@@ -1,0 +1,32 @@
+---
+description: Establishes standards for provisioning and securing Amazon MSK including infrastructure as code, network isolation, authentication mechanisms, monitoring, and disaster recovery to ensure reliable and scalable Kafka infrastructure.
+globs: **/src/main/java/com/shs/b2bm_service_order/kafka/*.java
+alwaysApply: true
+---
+- Use infrastructure as code (CloudFormation/Terraform) to provision and configure Amazon MSK clusters
+- Configure appropriate MSK cluster size based on expected throughput and data retention needs
+- Implement proper network security with VPC security groups and NACLs for MSK
+- Use private subnets for MSK brokers with proper routing configuration
+- Configure appropriate authentication and authorization for MSK (IAM or SASL/SCRAM)
+- Implement encryption in transit and at rest for all Kafka data in MSK
+- Set up proper monitoring and alerting for MSK clusters using CloudWatch
+- Configure appropriate data retention policies for topics based on business requirements
+- Implement proper backup and disaster recovery strategies for Kafka data
+- Use AWS managed Prometheus for Kafka metrics monitoring
+- Implement proper log management and analysis with CloudWatch Logs
+- Set up automated scaling policies for MSK clusters based on usage patterns
+- Use MSK Connect for integrating with other AWS services when appropriate
+- Implement proper configuration for client connection pooling and timeouts
+- Use AWS Service Discovery or Parameter Store for broker discovery
+- Configure appropriate replication factor (at least 3 for production)
+- Implement cross-region replication for disaster recovery when needed
+- Use AWS PrivateLink for secure access to MSK from other VPCs or accounts
+- Implement proper access control with minimum privilege principle
+- Use separate MSK clusters for different environments (dev, test, prod)
+- Configure appropriate topic partition counts based on throughput needs
+- Implement proper security patching and version upgrade strategy for MSK
+- Use container-based deployment with proper Kafka client configurations
+- Implement proper secret management for Kafka credentials
+- Configure appropriate DNS entries for Kafka brokers
+- Use proper connection pooling in client applications
+- Implement proper health checks and readiness probes for Kafka-dependent services

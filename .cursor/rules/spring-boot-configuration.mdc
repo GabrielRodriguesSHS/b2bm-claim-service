@@ -1,0 +1,18 @@
+---
+description: Governs application logic design in Spring Boot projects, defining the roles and responsibilities of RestControllers, Services, Repositories, and DTOs.
+globs: **/src/main/java/**/*
+alwaysApply: true
+---
+- Framework: Java Spring Boot 3.4.5 with Java 21
+- Dependencies: Spring Web, Spring Data JPA, Spring Security, Lombok, Validation, Actuator, Kafka
+- All request and response handling must be done only in RestController classes
+- All business logic must be implemented in Service layer
+- All database operation logic must be done in ServiceImpl classes, which must use methods provided by Repositories
+- RestControllers cannot autowire Repositories directly unless absolutely beneficial to do so
+- ServiceImpl classes cannot query the database directly and must use Repositories methods, unless absolutely necessary
+- Data transfer between layers must be done using DTOs, not entity classes
+- Entity classes must be used only for database persistence
+- Use application.properties/application.yml for configuration settings
+- Implement environment-specific configurations using Spring Profiles
+- Use @ConfigurationProperties for type-safe configuration properties
+- Use Spring Boot 3.x features including improved auto-configuration and native compilation support

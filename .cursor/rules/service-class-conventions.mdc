@@ -1,0 +1,18 @@
+---
+description: Defines the structure and implementation of service classes, enforcing the use of interfaces, ServiceImpl classes, DTOs for data transfer, and transactional management.
+globs: **/src/main/java/com/shs/b2bm_service_order/services/*.java
+alwaysApply: true
+---
+- Service classes must be of type interface.
+- Define service interfaces for all service implementations
+- Service implementation classes must be annotated with @Service
+- Use constructor-based dependency injection instead of field injection
+- Implement @Transactional at service layer for database operations
+- Use DTOs for data transfer between layers, not entity objects
+- Implement proper exception handling with custom exceptions
+- Use Optional<T> return types for queries that may not return results
+- Validate input parameters using @Valid annotation or programmatic validation
+- For existence checks, use repository methods with .orElseThrow() or .findById().isEmpty()
+- Use caching with @Cacheable, @CacheEvict, @CachePut when appropriate for performance optimization
+- Implement asynchronous processing with @Async for non-blocking operations when needed
+- Use logging at appropriate levels for traceability and debugging

@@ -1,0 +1,22 @@
+---
+description: Establishes comprehensive security practices including Spring Security implementation, proper authentication mechanisms, input validation, OWASP compliance, and audit logging to protect applications from common vulnerabilities and unauthorized access.
+globs: **/src/main/java/com/shs/b2bm_service_order/security/*.java
+alwaysApply: true
+---
+- Implement Spring Security for authentication and authorization
+- Use proper password encoding with BCryptPasswordEncoder
+- Implement proper CORS configuration for cross-origin requests
+- Include CSRF protection for non-GET requests
+- Use JWT or OAuth2 for stateless authentication when appropriate
+- Implement proper role-based access control with @PreAuthorize
+- Secure sensitive endpoints with appropriate authorization checks
+- Validate and sanitize all user inputs to prevent injection attacks
+- Use HTTPS in production environments
+- Implement proper session management
+- Follow OWASP Top 10 security guidelines
+- Include security headers in HTTP responses
+- Implement rate limiting for sensitive endpoints
+- Use secure cookies with HttpOnly and Secure flags
+- Keep dependencies updated to avoid security vulnerabilities
+- Implement proper logging for security events
+- Use security auditing for critical operations

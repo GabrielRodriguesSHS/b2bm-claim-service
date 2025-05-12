@@ -1,0 +1,20 @@
+---
+description: Defines comprehensive exception handling practices including custom exception classes, global exception handlers, standardized error responses, and proper logging to ensure consistent API error management.
+globs: **/src/main/java/**/*
+alwaysApply: true
+---
+- Create custom exception classes extending RuntimeException for business logic exceptions
+- Implement a global exception handler using @RestControllerAdvice
+- Use @ExceptionHandler methods to handle specific exception types
+- Return appropriate HTTP status codes with error responses
+- Create a standardized error response DTO with fields like timestamp, status, error, message, path
+- Implement validation exception handling for @Valid annotation failures
+- Log exceptions appropriately at ERROR or WARN level
+- Include meaningful exception messages that help with troubleshooting
+- Use try-with-resources for automatic resource cleanup
+- Avoid catching generic Exception class; catch specific exceptions instead
+- Don't swallow exceptions without proper handling or logging
+- Use custom exceptions to provide domain-specific error information
+- Consider using conditional exception handling with Optional.orElseThrow()
+- Return problem-json format responses for REST API error responses when appropriate
+

@@ -1,0 +1,19 @@
+---
+description: Provides comprehensive guidelines for testing Spring Boot applications including proper test slicing with specialized annotations, mocking strategies, assertion best practices, and test data management to ensure thorough code validation.
+globs: **/src/test/java/**/*.java
+alwaysApply: true
+---
+- Write unit tests for all business logic using JUnit 5
+- Use @SpringBootTest for integration tests that require Spring context
+- Use @DataJpaTest for repository layer tests
+- Use @WebMvcTest for controller layer tests without loading the entire application context
+- Implement MockMvc for testing web layers with appropriate assertions
+- Use Mockito for mocking dependencies: @Mock, @InjectMocks, @MockBean
+- Write assertions using AssertJ fluent API for better readability
+- Implement parameterized tests using @ParameterizedTest for testing multiple scenarios
+- Set up test data using @BeforeEach or @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+- Clean up test data using @AfterEach when necessary
+- Use test containers for integration tests that require external dependencies
+- Implement test slices for focused testing of specific components
+- Include test coverage reports using JaCoCo
+- Follow AAA pattern (Arrange-Act-Assert) for test structure

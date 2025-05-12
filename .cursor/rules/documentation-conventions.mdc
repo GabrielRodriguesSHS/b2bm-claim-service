@@ -1,0 +1,19 @@
+---
+description: 
+globs: **/*.java
+alwaysApply: true
+---
+- Document all public classes, methods, and fields with JavaDoc comments
+- Include @param, @return, and @throws tags in method JavaDocs when applicable
+- Document API endpoints with Springdoc OpenAPI annotations
+- Use @Operation to describe API operations
+- Include @ApiResponse annotations to document possible responses
+- Document request/response DTOs with appropriate descriptions
+- Maintain a comprehensive README.md file with setup and usage instructions
+- Include example API requests and responses in documentation
+- Document configuration properties with @ConfigurationProperties
+- Include package-info.java files for package-level documentation
+- Use meaningful commit messages that describe changes
+- Maintain a CHANGELOG.md file for version history
+- Document database schema changes in migration scripts
+- Keep documentation up-to-date with code changes

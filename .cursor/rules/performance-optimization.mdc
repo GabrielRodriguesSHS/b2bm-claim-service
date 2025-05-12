@@ -1,0 +1,22 @@
+---
+description: Outlines performance optimization strategies including caching, pagination, asynchronous processing, database query optimization, and connection pooling to enhance application responsiveness and resource utilization.
+globs: **/src/main/java/**/*
+alwaysApply: true
+---
+- Implement caching strategies using Spring Cache abstraction
+- Use @Cacheable, @CacheEvict, and @CachePut annotations appropriately
+- Implement pagination for large result sets using Pageable parameter
+- Use asynchronous processing with @Async for non-blocking operations
+- Optimize database queries with proper indexing and query analysis
+- Use batch processing for bulk operations
+- Implement connection pooling for database connections
+- Use JPA entity graphs to avoid N+1 query problems
+- Consider using query projections for read-only operations
+- Implement proper lazy loading for entity relationships
+- Use DTOs to limit data transfer between layers
+- Implement proper database transaction management
+- Consider using Redis or other in-memory data stores for caching
+- Use thread pools for parallel processing
+- Implement proper timeout handling for external service calls
+- Use Spring's async capabilities for long-running processes
+- Profile and monitor application performance with Spring Boot Actuator

@@ -1,0 +1,14 @@
+---
+description: Sets standards for Data Transfer Objects (DTOs), typically records, including parameter validation in compact canonical constructors.
+globs: **/src/main/java/com/shs/b2bm_service_order/dtos/*.java
+alwaysApply: true
+---
+- Must be of type record, unless specified in a prompt otherwise.
+- Prefer using Java record types for immutable DTOs: public record UserDto(Long id, String name) {}
+- Include validation annotations directly in record parameters: public record UserDto(@NotNull Long id, @NotBlank String name) {}
+- Implement parameter validation in compact canonical constructors when using records
+- Use appropriate validation constraints: @NotNull, @NotBlank, @Size, @Email, @Min, @Max, etc.
+- Include proper documentation with JavaDoc comments
+- Create separate DTOs for request (xxxRequest) and response (xxxResponse) objects
+- Include builder pattern for complex DTOs when not using records
+- Use meaningful field names that match entity properties where appropriate

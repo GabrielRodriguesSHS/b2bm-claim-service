@@ -1,0 +1,15 @@
+---
+description: Sets the standards for entity class design including annotations, ID generation strategies, and relationship configurations for database interaction.
+globs: **/src/main/java/com/shs/b2bm_service_order/entities/*.java
+alwaysApply: true
+---
+- Must annotate entity classes with @Entity.
+- Entity classes must be annotated with @Entity and optionally @Table from javax.persistence
+- Use Lombok annotations appropriately: @Data, @Getter, @Setter, @NoArgsConstructor, @AllArgsConstructor
+- Annotate entity ID with @Id and @GeneratedValue(strategy=GenerationType.IDENTITY)
+- Use appropriate column constraints: @Column(nullable=false, length=255, etc.)
+- Use validation annotations: @NotNull, @Size, @Email, etc.
+- Use FetchType.LAZY for relationships (OneToMany, ManyToOne, ManyToMany) unless specified otherwise
+- Implement proper cascading strategies for relationships
+- Include proper toString, equals, and hashCode methods (via Lombok or manual implementation)
+- Consider using @EntityListeners(AuditingEntityListener.class) with @CreatedDate, @LastModifiedDate for auditing fields

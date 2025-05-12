@@ -1,0 +1,200 @@
+package com.shs.b2bm.claim.service.repositories;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.shs.b2bm.claim.service.entities.ServiceOrder;
+import com.shs.b2bm.claim.service.entities.ServiceOrderDataImportAuditInformation;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.annotation.DirtiesContext;
+
+@DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+class ServiceOrderDataImportAuditInformationRepositoryTest {
+
+  @Autowired private ServiceOrderDataImportAuditInformationRepository repository;
+
+  @Autowired private TestEntityManager entityManager;
+
+  @Test
+  void whenSaveAuditInformation_thenPersistedCorrectly() {
+    // Arrange
+    ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
+    auditInfo.setGeneratedBy("System Test");
+    auditInfo.setTotalNumberOfRecords(100);
+
+    // Act
+    ServiceOrderDataImportAuditInformation savedAuditInfo = repository.save(auditInfo);
+
+    // Assert
+    assertThat(savedAuditInfo.getServiceOrderDataImportAuditInformationId()).isNotNull();
+    assertThat(
+            entityManager.find(
+                ServiceOrderDataImportAuditInformation.class,
+                savedAuditInfo.getServiceOrderDataImportAuditInformationId()))
+        .isEqualTo(savedAuditInfo);
+  }
+
+  @Test
+  void whenFindById_thenReturnAuditInformation() {
+    // Arrange
+    ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
+    auditInfo.setGeneratedBy("System Test");
+    auditInfo.setTotalNumberOfRecords(100);
+
+    Long id = entityManager.persistAndGetId(auditInfo, Long.class);
+    entityManager.flush();
+
+    // Act
+    Optional<ServiceOrderDataImportAuditInformation> found = repository.findById(id);
+
+    // Assert
+    assertThat(found).isPresent();
+    assertThat(found.get().getGeneratedBy()).isEqualTo("System Test");
+    assertThat(found.get().getTotalNumberOfRecords()).isEqualTo(100);
+  }
+
+  @Test
+  void whenFindAll_thenReturnAllAuditInformation() {
+    // Arrange
+    ServiceOrderDataImportAuditInformation auditInfo1 =
+        new ServiceOrderDataImportAuditInformation();
+    auditInfo1.setGeneratedBy("System Test 1");
+    auditInfo1.setTotalNumberOfRecords(100);
+
+    ServiceOrderDataImportAuditInformation auditInfo2 =
+        new ServiceOrderDataImportAuditInformation();
+    auditInfo2.setGeneratedBy("System Test 2");
+    auditInfo2.setTotalNumberOfRecords(200);
+
+    entityManager.persist(auditInfo1);
+    entityManager.persist(auditInfo2);
+    entityManager.flush();
+
+    // Act
+    List<ServiceOrderDataImportAuditInformation> auditInfoList = repository.findAll();
+
+    // Assert
+    assertThat(auditInfoList).hasSize(2);
+    assertThat(auditInfoList)
+        .extracting(ServiceOrderDataImportAuditInformation::getGeneratedBy)
+        .containsExactlyInAnyOrder("System Test 1", "System Test 2");
+  }
+
+  @Test
+  void whenUpdateAuditInformation_thenPersistedCorrectly() {
+    // Arrange
+    ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
+    auditInfo.setGeneratedBy("System Test");
+    auditInfo.setTotalNumberOfRecords(100);
+
+    Long id = entityManager.persistAndGetId(auditInfo, Long.class);
+    entityManager.flush();
+
+    // Act
+    ServiceOrderDataImportAuditInformation savedAuditInfo = repository.findById(id).get();
+    savedAuditInfo.setGeneratedBy("Updated System");
+    savedAuditInfo.setTotalNumberOfRecords(150);
+    repository.save(savedAuditInfo);
+
+    // Assert
+    ServiceOrderDataImportAuditInformation updatedAuditInfo =
+        entityManager.find(ServiceOrderDataImportAuditInformation.class, id);
+    assertThat(updatedAuditInfo.getGeneratedBy()).isEqualTo("Updated System");
+    assertThat(updatedAuditInfo.getTotalNumberOfRecords()).isEqualTo(150);
+  }
+
+  @Test
+  void whenDeleteAuditInformation_thenRemoved() {
+    // Arrange
+    ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
+    auditInfo.setGeneratedBy("System Test");
+    auditInfo.setTotalNumberOfRecords(100);
+
+    Long id = entityManager.persistAndGetId(auditInfo, Long.class);
+    entityManager.flush();
+
+    // Act
+    repository.deleteById(id);
+
+    // Assert
+    ServiceOrderDataImportAuditInformation deletedAuditInfo =
+        entityManager.find(ServiceOrderDataImportAuditInformation.class, id);
+    assertThat(deletedAuditInfo).isNull();
+  }
+
+  @Test
+  void whenAuditInformationSaved_thenAuditingFieldsAreSet() {
+    // Arrange
+    ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
+    auditInfo.setGeneratedBy("System Audit");
+    auditInfo.setTotalNumberOfRecords(100);
+
+    // Act
+    ServiceOrderDataImportAuditInformation savedAuditInfo = repository.save(auditInfo);
+    entityManager.flush();
+
+    // Assert
+    assertThat(savedAuditInfo.getCreatedDate()).isNotNull();
+    assertThat(savedAuditInfo.getModifiedDate()).isNotNull();
+    assertThat(savedAuditInfo.getCreatedDate()).isEqualTo(savedAuditInfo.getModifiedDate());
+    assertThat(savedAuditInfo.getCreatedBy()).isNotNull();
+    assertThat(savedAuditInfo.getLastModifiedBy()).isNotNull();
+    assertThat(savedAuditInfo.getCreatedBy()).isEqualTo("b2bm-service-order");
+    assertThat(savedAuditInfo.getLastModifiedBy()).isEqualTo("b2bm-service-order");
+  }
+
+  @Test
+  void whenAuditInformationSavedWithServiceOrders_thenCascadingAndBidirectionalRelationshipWork() {
+    // Arrange
+    ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
+    auditInfo.setGeneratedBy("System Relation");
+    auditInfo.setTotalNumberOfRecords(100);
+
+    ServiceOrder order1 = new ServiceOrder();
+    order1.setUnitNumber("UNIT-AUDIT-1");
+    order1.setServiceOrderNumber("ORD-AUDIT-1");
+    order1.setServiceOrderDataImportAuditInformation(auditInfo);
+
+    ServiceOrder order2 = new ServiceOrder();
+    order2.setUnitNumber("UNIT-AUDIT-2");
+    order2.setServiceOrderNumber("ORD-AUDIT-2");
+    order2.setServiceOrderDataImportAuditInformation(auditInfo);
+
+    List<ServiceOrder> orders = new ArrayList<>();
+    orders.add(order1);
+    orders.add(order2);
+    auditInfo.setServiceOrders(orders);
+
+    // Act
+    ServiceOrderDataImportAuditInformation savedAuditInfo = repository.save(auditInfo);
+    entityManager.flush();
+    entityManager.clear(); // Clear persistence context to force reload
+
+    // Assert
+    ServiceOrderDataImportAuditInformation fetchedAuditInfo =
+        repository
+            .findById(savedAuditInfo.getServiceOrderDataImportAuditInformationId())
+            .orElseThrow();
+
+    assertThat(fetchedAuditInfo).isNotNull();
+    assertThat(fetchedAuditInfo.getServiceOrders()).hasSize(2);
+    assertThat(fetchedAuditInfo.getServiceOrders())
+        .extracting(ServiceOrder::getServiceOrderNumber)
+        .containsExactlyInAnyOrder("ORD-AUDIT-1", "ORD-AUDIT-2");
+
+    // Verify bidirectional relationship
+    ServiceOrder fetchedOrder =
+        entityManager.find(
+            ServiceOrder.class, fetchedAuditInfo.getServiceOrders().getFirst().getServiceOrderId());
+    assertThat(fetchedOrder.getServiceOrderDataImportAuditInformation())
+        .isEqualTo(fetchedAuditInfo);
+    assertThat(fetchedOrder.getServiceOrderDataImportAuditInformation().getGeneratedBy())
+        .isEqualTo("System Relation");
+  }
+}

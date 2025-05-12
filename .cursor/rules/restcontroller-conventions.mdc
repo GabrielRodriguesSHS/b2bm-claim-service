@@ -1,0 +1,18 @@
+---
+description: Specifies standards for RestController classes, including API route mappings, HTTP method annotations, dependency injection, and error handling with ApiResponse and GlobalExceptionHandler.
+globs: **/src/main/java/com/shs/b2bm_service_order/controllers/**/*
+alwaysApply: true
+---
+- Must annotate controller classes with @RestController.
+- Annotate controller classes with @RestController and @RequestMapping("/api/resource-name")
+- Use appropriate HTTP method annotations: @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping
+- Implement constructor-based dependency injection for services
+- Return ResponseEntity<T> with appropriate HTTP status codes
+- Use @Valid annotation to validate request DTOs
+- Implement proper error handling with @ExceptionHandler or global exception handling
+- Use @PathVariable for path parameters and @RequestParam for query parameters
+- Document APIs with Springdoc OpenAPI annotations (@Operation, @ApiResponse, etc.)
+- Return paginated results using Page<T> for collections when appropriate
+- Implement HATEOAS principles for RESTful API design when needed
+- Use proper HTTP status codes: 200 OK, 201 Created, 204 No Content, 400 Bad Request, 404 Not Found, etc.
+- Implement proper security with @PreAuthorize or other Spring Security annotations

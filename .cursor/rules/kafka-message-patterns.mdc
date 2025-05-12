@@ -1,0 +1,28 @@
+---
+description: Establishes standards for message design and event handling including consistent envelope structures, versioning for compatibility, correlation tracking, naming conventions, and proper validation to ensure reliable asynchronous communication between services.
+globs: **/src/main/java/com/shs/b2bm_service_order/kafka/*.java
+alwaysApply: true
+---
+- Design message payloads with clear, well-defined structures specific to each event type
+- Include metadata in message headers rather than payload when appropriate
+- Use a standard envelope structure for all messages with fields like eventType, timestamp, version, and payload
+- Implement event versioning to support backward compatibility for message schema evolution
+- Follow the command pattern for request-based messaging and event pattern for notification-based messaging
+- Use correlation IDs to track related messages across multiple services and topics
+- Include source system identifier in message metadata
+- Implement proper validation for both producing and consuming messages
+- Use meaningful topic naming convention: [environment].[service-name].[entity].[event-type]
+- Create separate message classes for each domain event type
+- Implement immutable message objects using Java records when appropriate
+- Include proper auditing fields in messages: createdAt, createdBy, eventId
+- Use camelCase for message field names consistently
+- Document message structures with JavaDoc and/or OpenAPI annotations
+- Implement proper serialization/deserialization error handling
+- Use generics for common message processing patterns
+- Implement message transformation utilities when needed
+- Group related events into appropriate topics based on business domains
+- Use a consistent approach for temporal data fields (ISO-8601 format recommended)
+- Always include message validation at both producer and consumer sides
+- Implement clear message routing strategies based on content, headers, or metadata
+- Use event sourcing patterns when appropriate for maintaining state
+- Consider implementing the outbox pattern for reliable message publishing

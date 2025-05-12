@@ -1,0 +1,30 @@
+---
+description: Provides guidelines for testing Kafka integrations including the use of embedded Kafka, TestContainers, asynchronous testing patterns, and verification of message processing, error handling, and performance characteristics.
+globs: **/src/main/java/com/shs/b2bm_service_order/kafka/*.java
+alwaysApply: true
+---
+- Use embedded Kafka for unit testing Kafka producers and consumers
+- Implement Spring Kafka Test support for testing Kafka integration in Spring applications
+- Use @EmbeddedKafka annotation for integration testing with embedded Kafka broker
+- Create dedicated test consumers/producers for verifying message publishing and consumption
+- Implement proper assertion mechanisms for validating message content and metadata
+- Use TestTopics for isolated testing of Kafka functionality
+- Implement timeout handling in tests to account for asynchronous message processing
+- Create mock/stub implementations of KafkaTemplate for unit testing producers
+- Use CountDownLatch or similar mechanisms for coordinating asynchronous test assertions
+- Implement WireMock or similar tools for testing service integration with Kafka
+- Use consumer groups dedicated to testing to avoid interference with production consumers
+- Implement proper test cleanup to remove test messages and reset topic state
+- Create integration tests that verify end-to-end message flow through the system
+- Test error handling scenarios like deserialization failures and retry mechanisms
+- Implement consumer lag monitoring in tests for performance validation
+- Use TestContainers for integration testing with actual Kafka when needed
+- Create dedicated test configurations for Kafka-related beans
+- Test backpressure handling and resource constraints
+- Implement consumer rebalancing tests for multi-instance scenarios
+- Test proper offset management and commits
+- Implement tests for message ordering guarantees when needed
+- Create tests for schema evolution and compatibility
+- Use test health indicators for Kafka connectivity
+- Implement performance tests for high-throughput scenarios
+- Test proper error handling and dead-letter topic functionality
