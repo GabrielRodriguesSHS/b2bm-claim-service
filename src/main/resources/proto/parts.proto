@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package com.shs.b2bm_service_order;
+
+option java_multiple_files = true;
+option java_package = "com.shs.b2bm.claim.service.kafka.proto";
+option java_outer_classname = "PartsProto";
+
+message Parts {
+  int32 sequence_number = 1;
+  string part_code = 2;
+  string part_description = 3;
+}

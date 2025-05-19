@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package com.shs.b2bm_service_order;
+
+option java_multiple_files = true;
+option java_package = "com.shs.b2bm.claim.service.kafka.proto";
+option java_outer_classname = "UdfComponentProto";
+
+message UdfComponent {
+  int64 code = 1;
+  string charComponent = 2;
+}

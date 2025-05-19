@@ -63,4 +63,16 @@ public class ServiceOrder extends BaseEntity {
   @OneToMany(mappedBy = "serviceOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @ToString.Exclude
   private List<ServiceAttempt> serviceAttempts = new ArrayList<>();
+
+  @OneToMany(mappedBy = "serviceOrderData", cascade = CascadeType.ALL)
+  private List<JobCodes> jobCodes = new ArrayList<>();
+
+  @OneToMany(mappedBy = "serviceOrderData", cascade = CascadeType.ALL)
+  private List<Parts> parts = new ArrayList<>();
+
+  @OneToMany(mappedBy = "serviceOrderData", cascade = CascadeType.ALL)
+  private List<UdfComponent> udfComponents = new ArrayList<>();
+
+  @OneToMany(mappedBy = "serviceOrderData", cascade = CascadeType.ALL)
+  private List<ServiceMonetary> serviceMonetary = new ArrayList<>();
 }

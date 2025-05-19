@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package com.shs.b2bm_service_order;
+
+option java_multiple_files = true;
+option java_package = "com.shs.b2bm.claim.service.kafka.proto";
+option java_outer_classname = "ServiceMonetaryProto";
+
+message ServiceMonetary {
+  string type_payment = 1;
+  string date_payment = 2;
+  double value1 = 3;
+}

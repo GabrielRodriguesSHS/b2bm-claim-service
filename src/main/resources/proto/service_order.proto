@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package com.shs.b2bm_service_order;
+
+option java_multiple_files = true;
+option java_package = "com.shs.b2bm.claim.service.kafka.proto";
+option java_outer_classname = "ServiceOrderProto";
+
+import "parts.proto";
+import "service_attempt.proto";
+import "job_codes.proto";
+import "service_monetary.proto";
+import "udf_component.proto";
+
+message ServiceOrder {
+  string unit_number = 1;
+  string service_order_number = 2;
+  string closed_date = 3;
+  repeated Parts parts = 4;
+  repeated ServiceAttempt service_attempts = 5;
+  repeated JobCodes job_codes = 6;
+  repeated ServiceMonetary service_monetary = 7;
+  repeated UdfComponent udf_component = 8;
+}

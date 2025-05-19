@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package com.shs.b2bm_service_order;
+
+option java_multiple_files = true;
+option java_package = "com.shs.b2bm.claim.service.kafka.proto";
+option java_outer_classname = "ServiceAttemptProto";
+
+import "google/protobuf/timestamp.proto";
+
+message ServiceAttempt {
+  string call_date = 1;
+  string technician_employee_number = 2;
+  string call_code = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  int32 transit_time_in_minutes = 6;
+  string technician_comment_1 = 7;
+  string technician_comment_2 = 8;
+}
