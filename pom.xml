@@ -244,6 +244,7 @@
 				<configuration>
 					<excludes>
 						<exclude>com/shs/b2bm/claim/service/B2bmClaimServiceApplication.class</exclude>
+						<exclude>**/proto/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

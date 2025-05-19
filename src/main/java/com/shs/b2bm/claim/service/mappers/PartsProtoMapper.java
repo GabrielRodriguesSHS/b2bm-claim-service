@@ -10,8 +10,8 @@ import org.mapstruct.factory.Mappers;
 public interface PartsProtoMapper {
   PartsProtoMapper INSTANCE = Mappers.getMapper(PartsProtoMapper.class);
 
-  @Mapping(source = "sequence_number", target = "sequenceNumber")
-  @Mapping(source = "part_code", target = "partCode")
-  @Mapping(source = "part_description", target = "partDescription")
+  @Mapping(source = "sequenceNumber", target = "sequenceNumber")
+  @Mapping(source = "partCode", target = "partCode")
+  @Mapping(source = "partDescription", target = "partDescription")
   Parts toEntity(com.shs.b2bm.claim.service.kafka.proto.Parts parts);
 }

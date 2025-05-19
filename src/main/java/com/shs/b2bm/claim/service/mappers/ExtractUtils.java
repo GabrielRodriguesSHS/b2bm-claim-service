@@ -1,48 +1,52 @@
 package com.shs.b2bm.claim.service.mappers;
 
+import com.google.protobuf.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
+import org.mapstruct.Named;
+
 public class ExtractUtils {
 
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
   /**
-   * Safely splits a pipe-delimited string, returning an empty array if the input is null or empty.
+   * Converts a string date in yyyy-MM-dd format to a Date object using thread-safe Java Time API.
    *
-   * @param value the string to split
-   * @return the split array, or empty array if input is null/empty
+   * @param dateStr the date string to parse
+   * @return the parsed Date object, or null if the input is null or empty
+   * @throws IllegalArgumentException if the date string is not in the expected format
    */
-  public static String[] safeSplit(String value) {
-    if (value == null || value.isEmpty()) {
-      return new String[0];
+  @Named("stringToDate")
+  public static Date stringToDate(String dateStr) {
+    if (dateStr == null || dateStr.trim().isEmpty()) {
+      return null;
     }
-    return value.split("\\|", -1);
-  }
-
-  public static String extractField(String[] fields, int index) {
-    return fields.length > index ? fields[index].trim() : "";
-  }
-
-  public static int extractIntField(String[] fields, int index) {
-    String field = extractField(fields, index);
     try {
-      return Integer.parseInt(field);
-    } catch (NumberFormatException e) {
-      return 0;
+      LocalDate localDate = LocalDate.parse(dateStr.trim(), DATE_FORMATTER);
+      return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    } catch (DateTimeParseException e) {
+      throw new IllegalArgumentException("Invalid date format. Expected format: yyyy-MM-dd", e);
     }
   }
 
-  public static long extractLongField(String[] fields, int index) {
-    String field = extractField(fields, index);
-    try {
-      return Long.parseLong(field);
-    } catch (NumberFormatException e) {
-      return 0L;
+  /**
+   * Converts a Protobuf Timestamp to LocalDateTime.
+   *
+   * @param timestamp the Protobuf Timestamp to convert
+   * @return the converted LocalDateTime, or null if input is null
+   */
+  @Named("timestampToLocalDateTime")
+  public LocalDateTime timestampToLocalDateTime(Timestamp timestamp) {
+    if (timestamp == null) {
+      return null;
     }
-  }
-
-  public static double extractDoubleField(String[] fields, int index) {
-    String field = extractField(fields, index);
-    try {
-      return Double.parseDouble(field);
-    } catch (NumberFormatException e) {
-      return 0.0;
-    }
+    return LocalDateTime.ofInstant(
+        Instant.ofEpochSecond(timestamp.getSeconds(), timestamp.getNanos()),
+        ZoneId.systemDefault());
   }
 }

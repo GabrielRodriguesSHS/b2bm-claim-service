@@ -27,7 +27,8 @@ public class ServiceMonetary extends BaseEntity {
   @Column(name = "value1")
   private Double value1;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "service_order_data_id")
+  @ToString.Exclude
   private ServiceOrder serviceOrderData;
 }

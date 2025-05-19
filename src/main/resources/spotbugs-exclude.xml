@@ -21,4 +21,8 @@
     <Match>
         <Bug pattern="EI_EXPOSE_REP2" />
     </Match>
+
+    <Match>
+        <Package name="com.shs.b2bm.claim.service.kafka.proto"/>
+    </Match>
 </FindBugsFilter> 

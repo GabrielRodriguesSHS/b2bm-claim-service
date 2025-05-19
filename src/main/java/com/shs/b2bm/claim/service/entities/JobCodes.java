@@ -1,6 +1,5 @@
 package com.shs.b2bm.claim.service.entities;
 
-import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -28,7 +27,8 @@ public class JobCodes extends BaseEntity {
   @Column(name = "description")
   private String description;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "service_order_data_id")
+  @ToString.Exclude
   private ServiceOrder serviceOrderData;
 }

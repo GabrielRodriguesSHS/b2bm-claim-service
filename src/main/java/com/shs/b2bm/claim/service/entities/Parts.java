@@ -27,7 +27,8 @@ public class Parts extends BaseEntity {
   @Column(name = "part_description")
   private String partDescription;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "service_order_data_id")
+  @ToString.Exclude
   private ServiceOrder serviceOrderData;
 }

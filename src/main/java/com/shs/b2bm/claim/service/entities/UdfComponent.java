@@ -24,7 +24,8 @@ public class UdfComponent extends BaseEntity {
   @Column(name = "char_component")
   private String charComponent;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "service_order_data_id")
+  @ToString.Exclude
   private ServiceOrder serviceOrderData;
 }
