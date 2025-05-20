@@ -13,6 +13,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
 
+/**
+ * Integration tests for {@link ServiceAttemptRepository}.
+ * Verifies CRUD operations, auditing, and entity relationships for ServiceAttempt.
+ */
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ServiceAttemptRepositoryTest {
@@ -29,6 +33,9 @@ class ServiceAttemptRepositoryTest {
     return order;
   }
 
+  /**
+   * Test that a ServiceAttempt is persisted correctly.
+   */
   @Test
   void whenSaveServiceAttempt_thenPersistedCorrectly() {
     // Arrange
@@ -49,6 +56,9 @@ class ServiceAttemptRepositoryTest {
         .isEqualTo(savedAttempt);
   }
 
+  /**
+   * Test that a ServiceAttempt can be found by its ID.
+   */
   @Test
   void whenFindById_thenReturnServiceAttempt() {
     // Arrange
@@ -71,6 +81,9 @@ class ServiceAttemptRepositoryTest {
     assertThat(found.get().getTechEmployeeNumber()).isEqualTo("ABC123");
   }
 
+  /**
+   * Test that all ServiceAttempts can be retrieved from the repository.
+   */
   @Test
   void whenFindAll_thenReturnAllServiceAttempts() {
     // Arrange
@@ -100,6 +113,9 @@ class ServiceAttemptRepositoryTest {
         .containsExactlyInAnyOrder("CODE-123", "CODE-456");
   }
 
+  /**
+   * Test that updating a ServiceAttempt persists the changes correctly.
+   */
   @Test
   void whenUpdateServiceAttempt_thenPersistedCorrectly() {
     // Arrange
@@ -123,6 +139,9 @@ class ServiceAttemptRepositoryTest {
     assertThat(updatedAttempt.getCallCode()).isEqualTo("CODE-UPDATED");
   }
 
+  /**
+   * Test that deleting a ServiceAttempt removes it from the database.
+   */
   @Test
   void whenDeleteServiceAttempt_thenRemoved() {
     // Arrange
@@ -144,6 +163,9 @@ class ServiceAttemptRepositoryTest {
     assertThat(deletedAttempt).isNull();
   }
 
+  /**
+   * Test that auditing fields are set when a ServiceAttempt is saved.
+   */
   @Test
   void whenServiceAttemptSaved_thenAuditingFieldsAreSet() {
     // Arrange
@@ -167,6 +189,9 @@ class ServiceAttemptRepositoryTest {
     assertThat(savedAttempt.getLastModifiedBy()).isEqualTo("b2bm-service-order");
   }
 
+  /**
+   * Test that the bidirectional relationship between ServiceAttempt and ServiceOrder is maintained.
+   */
   @Test
   void whenServiceAttemptSavedWithServiceOrder_thenBidirectionalRelationshipIsMaintained() {
     // Arrange
@@ -197,6 +222,9 @@ class ServiceAttemptRepositoryTest {
         .isEqualTo(savedAttempt.getServiceAttemptId());
   }
 
+  /**
+   * Test that a persisted ServiceAttempt can be retrieved with the repository and its relationships are intact.
+   */
   @Test
   void whenServiceAttemptIsPersisted_thenItCanBeRetrievedWithRepository() {
     // Arrange

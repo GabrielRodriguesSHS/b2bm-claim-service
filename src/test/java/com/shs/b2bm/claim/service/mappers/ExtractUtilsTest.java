@@ -15,8 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 /**
- * Unit tests for {@link ExtractUtils}. Tests date and timestamp conversion utilities used by the
- * mappers.
+ * Unit tests for {@link ExtractUtils}. Tests date and timestamp conversion utilities used by the mappers.
  */
 class ExtractUtilsTest {
 

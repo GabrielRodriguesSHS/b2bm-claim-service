@@ -13,6 +13,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
 
+/**
+ * Integration tests for {@link ServiceOrderDataImportAuditInformationRepository}.
+ * Verifies CRUD operations, auditing, and entity relationships for ServiceOrderDataImportAuditInformation.
+ */
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ServiceOrderDataImportAuditInformationRepositoryTest {
@@ -21,6 +25,9 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
 
   @Autowired private TestEntityManager entityManager;
 
+  /**
+   * Test that a ServiceOrderDataImportAuditInformation is persisted correctly.
+   */
   @Test
   void whenSaveAuditInformation_thenPersistedCorrectly() {
     // Arrange
@@ -40,6 +47,9 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
         .isEqualTo(savedAuditInfo);
   }
 
+  /**
+   * Test that a ServiceOrderDataImportAuditInformation can be found by its ID.
+   */
   @Test
   void whenFindById_thenReturnAuditInformation() {
     // Arrange
@@ -59,6 +69,9 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     assertThat(found.get().getTotalNumberOfRecords()).isEqualTo(100);
   }
 
+  /**
+   * Test that all ServiceOrderDataImportAuditInformation entities can be retrieved from the repository.
+   */
   @Test
   void whenFindAll_thenReturnAllAuditInformation() {
     // Arrange
@@ -86,6 +99,9 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
         .containsExactlyInAnyOrder("System Test 1", "System Test 2");
   }
 
+  /**
+   * Test that updating a ServiceOrderDataImportAuditInformation persists the changes correctly.
+   */
   @Test
   void whenUpdateAuditInformation_thenPersistedCorrectly() {
     // Arrange
@@ -109,6 +125,9 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     assertThat(updatedAuditInfo.getTotalNumberOfRecords()).isEqualTo(150);
   }
 
+  /**
+   * Test that deleting a ServiceOrderDataImportAuditInformation removes it from the database.
+   */
   @Test
   void whenDeleteAuditInformation_thenRemoved() {
     // Arrange
@@ -128,6 +147,9 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     assertThat(deletedAuditInfo).isNull();
   }
 
+  /**
+   * Test that auditing fields are set when a ServiceOrderDataImportAuditInformation is saved.
+   */
   @Test
   void whenAuditInformationSaved_thenAuditingFieldsAreSet() {
     // Arrange
@@ -149,6 +171,9 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     assertThat(savedAuditInfo.getLastModifiedBy()).isEqualTo("b2bm-service-order");
   }
 
+  /**
+   * Test that cascading and bidirectional relationships work when saving ServiceOrderDataImportAuditInformation with ServiceOrders.
+   */
   @Test
   void whenAuditInformationSavedWithServiceOrders_thenCascadingAndBidirectionalRelationshipWork() {
     // Arrange
