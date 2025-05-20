@@ -1,6 +1,7 @@
 package com.shs.b2bm.claim.service.entities;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -22,7 +23,7 @@ public class ServiceMonetary extends BaseEntity {
   private String typePayment;
 
   @Column(name = "date_payment")
-  private String datePayment;
+  private LocalDate datePayment;
 
   @Column(name = "value1")
   private Double value1;

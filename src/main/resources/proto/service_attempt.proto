@@ -8,13 +8,22 @@ option java_outer_classname = "ServiceAttemptProto";
 
 import "google/protobuf/timestamp.proto";
 
+// Represents a service attempt for a service order
 message ServiceAttempt {
+  // Date of the service call (ISO-8601 format)
   string call_date = 1;
+  // Employee number of the technician
   string technician_employee_number = 2;
+  // Code for the service call
   string call_code = 3;
+  // Start time of the service attempt
   google.protobuf.Timestamp start_time = 4;
+  // End time of the service attempt
   google.protobuf.Timestamp end_time = 5;
+  // Transit time in minutes
   int32 transit_time_in_minutes = 6;
+  // First technician comment
   string technician_comment_1 = 7;
+  // Second technician comment
   string technician_comment_2 = 8;
 }

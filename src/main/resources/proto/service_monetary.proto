@@ -6,8 +6,12 @@ option java_multiple_files = true;
 option java_package = "com.shs.b2bm.claim.service.kafka.proto";
 option java_outer_classname = "ServiceMonetaryProto";
 
+// Represents a monetary transaction for a service order
 message ServiceMonetary {
+  // Type of payment
   string type_payment = 1;
+  // Date of payment (ISO-8601 format)
   string date_payment = 2;
-  double value1 = 3;
+  // Value of the payment
+  double value_1 = 3;
 }

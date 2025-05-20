@@ -11,10 +11,8 @@ public interface ServiceAttemptProtoMapper {
 
   @Mapping(source = "callDate", target = "callDate", qualifiedByName = "stringToDate")
   @Mapping(source = "technicianEmployeeNumber", target = "techEmployeeNumber")
-  @Mapping(source = "callCode", target = "callCode")
   @Mapping(source = "startTime", target = "startTime", qualifiedByName = "timestampToLocalDateTime")
   @Mapping(source = "endTime", target = "endTime", qualifiedByName = "timestampToLocalDateTime")
-  @Mapping(source = "transitTimeInMinutes", target = "transitTimeInMinutes")
   @Mapping(source = "technicianComment1", target = "techComment1")
   @Mapping(source = "technicianComment2", target = "techComment2")
   @Mapping(target = "serviceOrder", ignore = true)

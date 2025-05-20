@@ -11,8 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,9 +41,9 @@ public class ServiceAttempt extends BaseEntity {
   private Long serviceAttemptId;
 
   @Temporal(TemporalType.DATE)
-  private Date callDate;
+  private LocalDate callDate;
 
-  @Column private Integer techEmployeeNumber;
+  @Column private String techEmployeeNumber;
 
   @Column private String callCode;
 

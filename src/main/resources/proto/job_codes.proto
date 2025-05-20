@@ -6,8 +6,12 @@ option java_multiple_files = true;
 option java_package = "com.shs.b2bm.claim.service.kafka.proto";
 option java_outer_classname = "JobCodesProto";
 
+// Represents a job code associated with a service order
 message JobCodes {
+  // Sequence number of the job code in the order
   int32 sequence_number = 1;
+  // Numeric job code
   int64 job_code = 2;
+  // Description of the job code
   string description = 3;
 }

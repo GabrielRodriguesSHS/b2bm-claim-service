@@ -6,7 +6,10 @@ option java_multiple_files = true;
 option java_package = "com.shs.b2bm.claim.service.kafka.proto";
 option java_outer_classname = "UdfComponentProto";
 
+// Represents a user-defined component for a service order
 message UdfComponent {
+  // Code of the user-defined component
   int64 code = 1;
-  string charComponent = 2;
+  // Character component value
+  string char_component = 2;
 }

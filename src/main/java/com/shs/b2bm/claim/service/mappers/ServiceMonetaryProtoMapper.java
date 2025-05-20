@@ -9,9 +9,7 @@ import org.mapstruct.factory.Mappers;
 public interface ServiceMonetaryProtoMapper {
   ServiceMonetaryProtoMapper INSTANCE = Mappers.getMapper(ServiceMonetaryProtoMapper.class);
 
-  @Mapping(source = "typePayment", target = "typePayment")
   @Mapping(source = "datePayment", target = "datePayment", qualifiedByName = "stringToDate")
-  @Mapping(source = "value1", target = "value1")
   com.shs.b2bm.claim.service.entities.ServiceMonetary toEntity(
       com.shs.b2bm.claim.service.kafka.proto.ServiceMonetary serviceMonetary);
 }

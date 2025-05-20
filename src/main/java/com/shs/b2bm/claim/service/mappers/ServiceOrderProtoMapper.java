@@ -34,8 +34,6 @@ public interface ServiceOrderProtoMapper {
     return source.stream().map(mapper).collect(Collectors.toList());
   }
 
-  @Mapping(source = "unitNumber", target = "unitNumber")
-  @Mapping(source = "serviceOrderNumber", target = "serviceOrderNumber")
   @Mapping(source = "closedDate", target = "closedDate", qualifiedByName = "stringToDate")
   @Mapping(source = "partsList", target = "parts")
   @Mapping(source = "serviceAttemptsList", target = "serviceAttempts")

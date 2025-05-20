@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import org.mapstruct.Named;
 
 public class ExtractUtils {
@@ -22,13 +21,12 @@ public class ExtractUtils {
    * @throws IllegalArgumentException if the date string is not in the expected format
    */
   @Named("stringToDate")
-  public static Date stringToDate(String dateStr) {
+  public static LocalDate stringToDate(String dateStr) {
     if (dateStr == null || dateStr.trim().isEmpty()) {
       return null;
     }
     try {
-      LocalDate localDate = LocalDate.parse(dateStr.trim(), DATE_FORMATTER);
-      return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+      return LocalDate.parse(dateStr.trim(), DATE_FORMATTER);
     } catch (DateTimeParseException e) {
       throw new IllegalArgumentException("Invalid date format. Expected format: yyyy-MM-dd", e);
     }

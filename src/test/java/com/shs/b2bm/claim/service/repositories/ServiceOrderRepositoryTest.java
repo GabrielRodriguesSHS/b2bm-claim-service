@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.shs.b2bm.claim.service.entities.ServiceAttempt;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.entities.ServiceOrderDataImportAuditInformation;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -176,14 +176,14 @@ class ServiceOrderRepositoryTest {
 
     ServiceAttempt attempt1 = new ServiceAttempt();
     attempt1.setCallCode("CODE-123");
-    attempt1.setTechEmployeeNumber(12345);
-    attempt1.setCallDate(new Date());
+    attempt1.setTechEmployeeNumber("ABC123");
+    attempt1.setCallDate(LocalDate.now());
     attempt1.setServiceOrder(order);
 
     ServiceAttempt attempt2 = new ServiceAttempt();
     attempt2.setCallCode("CODE-456");
-    attempt2.setTechEmployeeNumber(67890);
-    attempt2.setCallDate(new Date());
+    attempt2.setTechEmployeeNumber("ABC123");
+    attempt2.setCallDate(LocalDate.now());
     attempt2.setServiceOrder(order);
 
     List<ServiceAttempt> attempts = new ArrayList<>();

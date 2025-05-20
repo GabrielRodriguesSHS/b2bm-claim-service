@@ -6,8 +6,12 @@ option java_multiple_files = true;
 option java_package = "com.shs.b2bm.claim.service.kafka.proto";
 option java_outer_classname = "PartsProto";
 
+// Represents a part used in a service order
 message Parts {
+  // Sequence number of the part in the order
   int32 sequence_number = 1;
+  // Code identifying the part
   string part_code = 2;
+  // Description of the part
   string part_description = 3;
 }

@@ -36,7 +36,7 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-123");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechEmployeeNumber("ABC123");
     attempt.setStartTime(LocalDateTime.now());
     attempt.setServiceOrder(order);
 
@@ -56,7 +56,7 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-123");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechEmployeeNumber("ABC123");
     attempt.setServiceOrder(order);
 
     Long id = entityManager.persistAndGetId(attempt, Long.class);
@@ -68,7 +68,7 @@ class ServiceAttemptRepositoryTest {
     // Assert
     assertThat(found).isPresent();
     assertThat(found.get().getCallCode()).isEqualTo("CODE-123");
-    assertThat(found.get().getTechEmployeeNumber()).isEqualTo(12345);
+    assertThat(found.get().getTechEmployeeNumber()).isEqualTo("ABC123");
   }
 
   @Test
@@ -78,12 +78,12 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt1 = new ServiceAttempt();
     attempt1.setCallCode("CODE-123");
-    attempt1.setTechEmployeeNumber(12345);
+    attempt1.setTechEmployeeNumber("ABC123");
     attempt1.setServiceOrder(order);
 
     ServiceAttempt attempt2 = new ServiceAttempt();
     attempt2.setCallCode("CODE-456");
-    attempt2.setTechEmployeeNumber(67890);
+    attempt2.setTechEmployeeNumber("ABC123");
     attempt2.setServiceOrder(order);
 
     entityManager.persist(attempt1);
@@ -107,7 +107,7 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-123");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechEmployeeNumber("ABC123");
     attempt.setServiceOrder(order);
 
     Long id = entityManager.persistAndGetId(attempt, Long.class);
@@ -130,7 +130,7 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-123");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechEmployeeNumber("ABC123");
     attempt.setServiceOrder(order);
 
     Long id = entityManager.persistAndGetId(attempt, Long.class);
@@ -151,7 +151,7 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-AUDIT");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechEmployeeNumber("ABC123");
     attempt.setServiceOrder(order);
 
     // Act
@@ -174,7 +174,7 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-RELATION");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechEmployeeNumber("ABC123");
     attempt.setServiceOrder(order);
 
     // Act
@@ -204,7 +204,7 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-RETRIEVE");
-    attempt.setTechEmployeeNumber(98765);
+    attempt.setTechEmployeeNumber("ABC123");
     attempt.setServiceOrder(order);
 
     ServiceAttempt savedAttempt = repository.save(attempt);
@@ -218,7 +218,7 @@ class ServiceAttemptRepositoryTest {
     // Assert
     assertThat(foundAttempt).isNotNull();
     assertThat(foundAttempt.getCallCode()).isEqualTo("CODE-RETRIEVE");
-    assertThat(foundAttempt.getTechEmployeeNumber()).isEqualTo(98765);
+    assertThat(foundAttempt.getTechEmployeeNumber()).isEqualTo("ABC123");
     assertThat(foundAttempt.getServiceOrder()).isNotNull();
     assertThat(foundAttempt.getServiceOrder().getServiceOrderId())
         .isEqualTo(order.getServiceOrderId());
