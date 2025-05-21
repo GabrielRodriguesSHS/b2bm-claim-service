@@ -158,8 +158,8 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     assertThat(savedAuditInfo.getCreatedDate()).isEqualTo(savedAuditInfo.getModifiedDate());
     assertThat(savedAuditInfo.getCreatedBy()).isNotNull();
     assertThat(savedAuditInfo.getLastModifiedBy()).isNotNull();
-    assertThat(savedAuditInfo.getCreatedBy()).isEqualTo("b2bm-service-order");
-    assertThat(savedAuditInfo.getLastModifiedBy()).isEqualTo("b2bm-service-order");
+    assertThat(savedAuditInfo.getCreatedBy()).isEqualTo("b2bm-claim-service");
+    assertThat(savedAuditInfo.getLastModifiedBy()).isEqualTo("b2bm-claim-service");
   }
 
   /**

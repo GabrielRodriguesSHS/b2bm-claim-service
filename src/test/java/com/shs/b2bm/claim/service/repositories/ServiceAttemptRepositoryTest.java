@@ -173,8 +173,8 @@ class ServiceAttemptRepositoryTest {
     assertThat(savedAttempt.getModifiedDate()).isNotNull();
     assertThat(savedAttempt.getCreatedBy()).isNotNull();
     assertThat(savedAttempt.getLastModifiedBy()).isNotNull();
-    assertThat(savedAttempt.getCreatedBy()).isEqualTo("b2bm-service-order");
-    assertThat(savedAttempt.getLastModifiedBy()).isEqualTo("b2bm-service-order");
+    assertThat(savedAttempt.getCreatedBy()).isEqualTo("b2bm-claim-service");
+    assertThat(savedAttempt.getLastModifiedBy()).isEqualTo("b2bm-claim-service");
   }
 
   /**

@@ -22,6 +22,6 @@ class AuditorAwareImplTest {
 
     // Assert
     assertThat(result).isPresent();
-    assertThat(result.get()).isEqualTo("b2bm-service-order");
+    assertThat(result.get()).isEqualTo("b2bm-claim-service");
   }
 }

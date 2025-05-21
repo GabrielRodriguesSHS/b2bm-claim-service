@@ -39,8 +39,8 @@ class JpaAuditingIntegrationTest {
     assertThat(persistedOrder).isNotNull();
     assertThat(persistedOrder.getCreatedDate()).isNotNull();
     assertThat(persistedOrder.getModifiedDate()).isNotNull();
-    assertThat(persistedOrder.getCreatedBy()).isEqualTo("b2bm-service-order");
-    assertThat(persistedOrder.getLastModifiedBy()).isEqualTo("b2bm-service-order");
+    assertThat(persistedOrder.getCreatedBy()).isEqualTo("b2bm-claim-service");
+    assertThat(persistedOrder.getLastModifiedBy()).isEqualTo("b2bm-claim-service");
   }
 
   /** Test that last modified fields are updated when an entity is updated. */
@@ -74,8 +74,8 @@ class JpaAuditingIntegrationTest {
     assertThat(updatedOrder.getUnitNumber()).isEqualTo("UPDATED-UNIT-002");
     assertThat(updatedOrder.getCreatedDate()).isNotNull();
     assertThat(updatedOrder.getModifiedDate()).isNotNull();
-    assertThat(updatedOrder.getCreatedBy()).isEqualTo("b2bm-service-order");
-    assertThat(updatedOrder.getLastModifiedBy()).isEqualTo("b2bm-service-order");
+    assertThat(updatedOrder.getCreatedBy()).isEqualTo("b2bm-claim-service");
+    assertThat(updatedOrder.getLastModifiedBy()).isEqualTo("b2bm-claim-service");
 
     // Modified date should be after created date after an update
     assertThat(updatedOrder.getModifiedDate()).isAfterOrEqualTo(updatedOrder.getCreatedDate());

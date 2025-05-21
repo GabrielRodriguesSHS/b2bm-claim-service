@@ -26,12 +26,12 @@ Thank you for your interest in contributing to the B2BM Service Order Service! T
 1. Fork the repository
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/b2bm-service-order.git
-   cd b2bm-service-order
+   git clone https://github.com/YOUR-USERNAME/b2bm-claim-service.git
+   cd b2bm-claim-service
    ```
 3. Set up the upstream remote:
    ```bash
-   git remote add upstream https://github.com/ORIGINAL-OWNER/b2bm-service-order.git
+   git remote add upstream https://github.com/ORIGINAL-OWNER/b2bm-claim-service.git
    ```
 4. Create a new branch for your feature or bug fix:
    ```bash
