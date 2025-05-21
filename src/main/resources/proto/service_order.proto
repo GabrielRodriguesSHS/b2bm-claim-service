@@ -6,11 +6,7 @@ option java_multiple_files = true;
 option java_package = "com.shs.b2bm.claim.service.kafka.proto";
 option java_outer_classname = "ServiceOrderProto";
 
-import "parts.proto";
 import "service_attempt.proto";
-import "job_codes.proto";
-import "service_monetary.proto";
-import "udf_component.proto";
 
 // Represents a service order in the system
 message ServiceOrder {
@@ -20,14 +16,6 @@ message ServiceOrder {
   string service_order_number = 2;
   // Date when the service order was closed (ISO-8601 format)
   string closed_date = 3;
-  // List of parts associated with the service order
-  repeated Parts parts = 4;
   // List of service attempts for the order
   repeated ServiceAttempt service_attempts = 5;
-  // List of job codes for the order
-  repeated JobCodes job_codes = 6;
-  // List of monetary transactions for the order
-  repeated ServiceMonetary service_monetary = 7;
-  // List of user-defined components for the order
-  repeated UdfComponent udf_component = 8;
 }

@@ -15,14 +15,7 @@ import org.mapstruct.factory.Mappers;
  * component mappers for handling nested objects and custom type conversions.
  */
 @Mapper(
-    uses = {
-      PartsProtoMapper.class,
-      ServiceAttemptProtoMapper.class,
-      JobCodesProtoMapper.class,
-      ServiceMonetaryProtoMapper.class,
-      UdfComponentProtoMapper.class,
-      ExtractUtils.class
-    },
+    uses = {ServiceAttemptProtoMapper.class, ExtractUtils.class},
     unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ServiceOrderProtoMapper {
   ServiceOrderProtoMapper INSTANCE = Mappers.getMapper(ServiceOrderProtoMapper.class);
@@ -35,10 +28,6 @@ public interface ServiceOrderProtoMapper {
   }
 
   @Mapping(source = "closedDate", target = "closedDate", qualifiedByName = "stringToDate")
-  @Mapping(source = "partsList", target = "parts")
   @Mapping(source = "serviceAttemptsList", target = "serviceAttempts")
-  @Mapping(source = "jobCodesList", target = "jobCodes")
-  @Mapping(source = "serviceMonetaryList", target = "serviceMonetary")
-  @Mapping(source = "udfComponentList", target = "udfComponents")
   ServiceOrder toEntity(com.shs.b2bm.claim.service.kafka.proto.ServiceOrder serviceOrder);
 }
