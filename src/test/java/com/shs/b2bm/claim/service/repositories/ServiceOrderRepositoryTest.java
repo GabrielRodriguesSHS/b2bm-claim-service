@@ -16,8 +16,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
 
 /**
- * Integration tests for {@link ServiceOrderRepository}.
- * Verifies CRUD operations, auditing, and entity relationships for ServiceOrder.
+ * Integration tests for {@link ServiceOrderRepository}. Verifies CRUD operations, auditing, and
+ * entity relationships for ServiceOrder.
  */
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -27,9 +27,7 @@ class ServiceOrderRepositoryTest {
 
   @Autowired private TestEntityManager entityManager;
 
-  /**
-   * Test that a ServiceOrder is persisted correctly.
-   */
+  /** Test that a ServiceOrder is persisted correctly. */
   @Test
   void whenSaveServiceOrder_thenPersistedCorrectly() {
     // Arrange
@@ -46,9 +44,7 @@ class ServiceOrderRepositoryTest {
         .isEqualTo(savedOrder);
   }
 
-  /**
-   * Test that a ServiceOrder can be found by its ID.
-   */
+  /** Test that a ServiceOrder can be found by its ID. */
   @Test
   void whenFindById_thenReturnServiceOrder() {
     // Arrange
@@ -66,9 +62,7 @@ class ServiceOrderRepositoryTest {
     assertThat(found.get().getServiceOrderNumber()).isEqualTo("ORD-12345");
   }
 
-  /**
-   * Test that all ServiceOrders can be retrieved from the repository.
-   */
+  /** Test that all ServiceOrders can be retrieved from the repository. */
   @Test
   void whenFindAll_thenReturnAllServiceOrders() {
     // Arrange
@@ -94,9 +88,7 @@ class ServiceOrderRepositoryTest {
         .containsExactlyInAnyOrder("ORD-12345", "ORD-67890");
   }
 
-  /**
-   * Test that updating a ServiceOrder persists the changes correctly.
-   */
+  /** Test that updating a ServiceOrder persists the changes correctly. */
   @Test
   void whenUpdateServiceOrder_thenPersistedCorrectly() {
     // Arrange
@@ -116,9 +108,7 @@ class ServiceOrderRepositoryTest {
     assertThat(updatedOrder.getServiceOrderNumber()).isEqualTo("ORD-UPDATED");
   }
 
-  /**
-   * Test that deleting a ServiceOrder removes it from the database.
-   */
+  /** Test that deleting a ServiceOrder removes it from the database. */
   @Test
   void whenDeleteServiceOrder_thenRemoved() {
     // Arrange
@@ -136,9 +126,7 @@ class ServiceOrderRepositoryTest {
     assertThat(deletedOrder).isNull();
   }
 
-  /**
-   * Test that auditing fields are set when a ServiceOrder is saved.
-   */
+  /** Test that auditing fields are set when a ServiceOrder is saved. */
   @Test
   void whenServiceOrderSaved_thenAuditingFieldsAreSet() {
     // Arrange
@@ -160,7 +148,8 @@ class ServiceOrderRepositoryTest {
   }
 
   /**
-   * Test that the relationship between ServiceOrder and ServiceOrderDataImportAuditInformation is persisted.
+   * Test that the relationship between ServiceOrder and ServiceOrderDataImportAuditInformation is
+   * persisted.
    */
   @Test
   void whenServiceOrderSavedWithAuditInfo_thenRelationshipIsPersisted() {
@@ -193,7 +182,8 @@ class ServiceOrderRepositoryTest {
   }
 
   /**
-   * Test that cascading works when saving a ServiceOrder with ServiceAttempts and verifies bidirectional relationship.
+   * Test that cascading works when saving a ServiceOrder with ServiceAttempts and verifies
+   * bidirectional relationship.
    */
   @Test
   void whenServiceOrderSavedWithServiceAttempts_thenCascadingWorks() {

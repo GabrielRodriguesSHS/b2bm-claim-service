@@ -10,8 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Integration tests for JPA auditing configuration.
- * Verifies that auditing fields are set and updated correctly on entities.
+ * Integration tests for JPA auditing configuration. Verifies that auditing fields are set and
+ * updated correctly on entities.
  */
 @SpringBootTest
 @Transactional
@@ -19,9 +19,7 @@ class JpaAuditingIntegrationTest {
 
   @Autowired private EntityManager entityManager;
 
-  /**
-   * Test that auditing fields are set correctly when a new entity is persisted.
-   */
+  /** Test that auditing fields are set correctly when a new entity is persisted. */
   @Test
   void auditing_ShouldSetAuditFieldsCorrectly() {
     // Arrange
@@ -45,9 +43,7 @@ class JpaAuditingIntegrationTest {
     assertThat(persistedOrder.getLastModifiedBy()).isEqualTo("b2bm-service-order");
   }
 
-  /**
-   * Test that last modified fields are updated when an entity is updated.
-   */
+  /** Test that last modified fields are updated when an entity is updated. */
   @Test
   void auditing_ShouldUpdateLastModifiedFields() {
     // Arrange

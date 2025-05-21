@@ -1,5 +1,6 @@
 package com.shs.b2bm.claim.service.mappers;
 
+import com.shs.b2bm.claim.service.entities.ServiceAttempt;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -17,6 +18,5 @@ public interface ServiceAttemptProtoMapper {
   @Mapping(source = "technicianComment2", target = "techComment2")
   @Mapping(target = "serviceOrder", ignore = true)
   @Mapping(target = "serviceAttemptId", ignore = true)
-  com.shs.b2bm.claim.service.entities.ServiceAttempt toEntity(
-      com.shs.b2bm.claim.service.kafka.proto.ServiceAttempt serviceAttempt);
+  ServiceAttempt toEntity(com.shs.b2bm.claim.service.kafka.proto.ServiceAttempt serviceAttempt);
 }

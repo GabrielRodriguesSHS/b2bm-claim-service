@@ -15,7 +15,8 @@ class ServiceOrderProtoMapperTest {
   private final ServiceOrderProtoMapper mapper = ServiceOrderProtoMapper.INSTANCE;
 
   /**
-   * Tests that all fields from the ServiceOrder protobuf message are correctly mapped to the entity, including nested collections.
+   * Tests that all fields from the ServiceOrder protobuf message are correctly mapped to the
+   * entity, including nested collections.
    */
   @Test
   void toEntity_ShouldMapAllFields() {
@@ -97,7 +98,8 @@ class ServiceOrderProtoMapperTest {
   }
 
   /**
-   * Tests that default/null values from the ServiceOrder protobuf message are correctly mapped to the entity.
+   * Tests that default/null values from the ServiceOrder protobuf message are correctly mapped to
+   * the entity.
    */
   @Test
   void toEntity_WithNullValues_ShouldMapToDefaults() {
@@ -121,17 +123,13 @@ class ServiceOrderProtoMapperTest {
     assertThat(entity.getUdfComponents()).isEmpty();
   }
 
-  /**
-   * Tests that mapping a null list returns an empty list.
-   */
+  /** Tests that mapping a null list returns an empty list. */
   @Test
   void mapList_WithNullList_ShouldReturnEmptyList() {
     assertThat(ServiceOrderProtoMapper.mapList(null, String::toUpperCase)).isEmpty();
   }
 
-  /**
-   * Tests that mapping a valid list applies the mapping function to all elements.
-   */
+  /** Tests that mapping a valid list applies the mapping function to all elements. */
   @Test
   void mapList_WithValidList_ShouldMapAllElements() {
     var result =
@@ -140,9 +138,7 @@ class ServiceOrderProtoMapperTest {
     assertThat(result).hasSize(2).containsExactly("TEST1", "TEST2");
   }
 
-  /**
-   * Tests that mapping a null proto returns null.
-   */
+  /** Tests that mapping a null proto returns null. */
   @Test
   void toEntity_WithNullProto_ShouldMapToDefaults() {
     // Arrange
