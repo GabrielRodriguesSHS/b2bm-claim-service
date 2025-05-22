@@ -6,6 +6,7 @@ import com.shs.b2bm.claim.service.entities.ServiceAttempt;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.entities.ServiceOrderDataImportAuditInformation;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,10 @@ class ServiceOrderRepositoryTest {
     // Arrange
     ServiceOrder order = new ServiceOrder();
     order.setServiceOrderNumber("ORD-12345");
+    order.setCreatedDate(LocalDateTime.now());
+    order.setModifiedDate(LocalDateTime.now());
+    order.setCreatedBy("b2bm-claim-service");
+    order.setLastModifiedBy("b2bm-claim-service");
     order.setUnitNumber("UNIT-001");
 
     // Act
@@ -50,6 +55,10 @@ class ServiceOrderRepositoryTest {
     // Arrange
     ServiceOrder order = new ServiceOrder();
     order.setServiceOrderNumber("ORD-12345");
+    order.setCreatedDate(LocalDateTime.now());
+    order.setModifiedDate(LocalDateTime.now());
+    order.setCreatedBy("b2bm-claim-service");
+    order.setLastModifiedBy("b2bm-claim-service");
     order.setUnitNumber("UNIT-001");
     Long id = entityManager.persistAndGetId(order, Long.class);
     entityManager.flush();
@@ -68,10 +77,18 @@ class ServiceOrderRepositoryTest {
     // Arrange
     ServiceOrder order1 = new ServiceOrder();
     order1.setServiceOrderNumber("ORD-12345");
+    order1.setCreatedDate(LocalDateTime.now());
+    order1.setModifiedDate(LocalDateTime.now());
+    order1.setCreatedBy("b2bm-claim-service");
+    order1.setLastModifiedBy("b2bm-claim-service");
     order1.setUnitNumber("UNIT-001");
 
     ServiceOrder order2 = new ServiceOrder();
     order2.setServiceOrderNumber("ORD-67890");
+    order2.setCreatedDate(LocalDateTime.now());
+    order2.setModifiedDate(LocalDateTime.now());
+    order2.setCreatedBy("b2bm-claim-service");
+    order2.setLastModifiedBy("b2bm-claim-service");
     order2.setUnitNumber("UNIT-002");
 
     entityManager.persist(order1);
@@ -95,6 +112,10 @@ class ServiceOrderRepositoryTest {
     ServiceOrder order = new ServiceOrder();
     order.setServiceOrderNumber("ORD-12345");
     order.setUnitNumber("UNIT-001");
+    order.setCreatedDate(LocalDateTime.now());
+    order.setModifiedDate(LocalDateTime.now());
+    order.setCreatedBy("b2bm-claim-service");
+    order.setLastModifiedBy("b2bm-claim-service");
     Long id = entityManager.persistAndGetId(order, Long.class);
     entityManager.flush();
 
@@ -115,6 +136,10 @@ class ServiceOrderRepositoryTest {
     ServiceOrder order = new ServiceOrder();
     order.setServiceOrderNumber("ORD-12345");
     order.setUnitNumber("UNIT-001");
+    order.setCreatedDate(LocalDateTime.now());
+    order.setModifiedDate(LocalDateTime.now());
+    order.setCreatedBy("b2bm-claim-service");
+    order.setLastModifiedBy("b2bm-claim-service");
     Long id = entityManager.persistAndGetId(order, Long.class);
     entityManager.flush();
 
@@ -133,6 +158,10 @@ class ServiceOrderRepositoryTest {
     ServiceOrder order = new ServiceOrder();
     order.setServiceOrderNumber("ORD-AUDIT");
     order.setUnitNumber("UNIT-AUDIT");
+    order.setCreatedDate(LocalDateTime.now());
+    order.setModifiedDate(LocalDateTime.now());
+    order.setCreatedBy("b2bm-claim-service");
+    order.setLastModifiedBy("b2bm-claim-service");
 
     // Act
     ServiceOrder savedOrder = repository.save(order);
@@ -156,12 +185,20 @@ class ServiceOrderRepositoryTest {
     // Arrange
     ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
     auditInfo.setGeneratedBy("Test System");
+    auditInfo.setCreatedDate(LocalDateTime.now());
+    auditInfo.setModifiedDate(LocalDateTime.now());
+    auditInfo.setCreatedBy("b2bm-claim-service");
+    auditInfo.setLastModifiedBy("b2bm-claim-service");
     auditInfo.setTotalNumberOfRecords(100);
     entityManager.persist(auditInfo);
 
     ServiceOrder order = new ServiceOrder();
     order.setServiceOrderNumber("ORD-WITH-AUDIT");
     order.setUnitNumber("UNIT-WITH-AUDIT");
+    order.setCreatedDate(LocalDateTime.now());
+    order.setModifiedDate(LocalDateTime.now());
+    order.setCreatedBy("b2bm-claim-service");
+    order.setLastModifiedBy("b2bm-claim-service");
     order.setServiceOrderDataImportAuditInformation(auditInfo);
 
     // Act
@@ -191,23 +228,35 @@ class ServiceOrderRepositoryTest {
     ServiceOrder order = new ServiceOrder();
     order.setServiceOrderNumber("ORD-WITH-ATTEMPTS");
     order.setUnitNumber("UNIT-WITH-ATTEMPTS");
+    order.setCreatedDate(LocalDateTime.now());
+    order.setModifiedDate(LocalDateTime.now());
+    order.setCreatedBy("b2bm-claim-service");
+    order.setLastModifiedBy("b2bm-claim-service");
 
     ServiceAttempt attempt1 = new ServiceAttempt();
     attempt1.setCallCode("CODE-123");
-    attempt1.setTechEmployeeNumber("ABC123");
-    attempt1.setCallDate(LocalDate.now());
+    attempt1.setTechnicianEmployeeNumber("ABC123");
+    attempt1.setCallDate(LocalDate.now().toString());
+    attempt1.setCreatedDate(LocalDateTime.now());
+    attempt1.setModifiedDate(LocalDateTime.now());
+    attempt1.setCreatedBy("b2bm-claim-service");
+    attempt1.setLastModifiedBy("b2bm-claim-service");
     attempt1.setServiceOrder(order);
 
     ServiceAttempt attempt2 = new ServiceAttempt();
     attempt2.setCallCode("CODE-456");
-    attempt2.setTechEmployeeNumber("ABC123");
-    attempt2.setCallDate(LocalDate.now());
+    attempt2.setTechnicianEmployeeNumber("ABC123");
+    attempt2.setCallDate(LocalDate.now().toString());
+    attempt2.setCreatedDate(LocalDateTime.now());
+    attempt2.setModifiedDate(LocalDateTime.now());
+    attempt2.setCreatedBy("b2bm-claim-service");
+    attempt2.setLastModifiedBy("b2bm-claim-service");
     attempt2.setServiceOrder(order);
 
     List<ServiceAttempt> attempts = new ArrayList<>();
     attempts.add(attempt1);
     attempts.add(attempt2);
-    order.setServiceAttempts(attempts);
+    order.setServiceAttemptsList(attempts);
 
     // Act
     ServiceOrder savedOrder = repository.save(order);
@@ -216,14 +265,15 @@ class ServiceOrderRepositoryTest {
 
     // Assert
     ServiceOrder fetchedOrder = repository.findById(savedOrder.getServiceOrderId()).orElseThrow();
-    assertThat(fetchedOrder.getServiceAttempts()).hasSize(2);
-    assertThat(fetchedOrder.getServiceAttempts().get(0).getServiceAttemptId()).isNotNull();
-    assertThat(fetchedOrder.getServiceAttempts().get(1).getServiceAttemptId()).isNotNull();
+    assertThat(fetchedOrder.getServiceAttemptsList()).hasSize(2);
+    assertThat(fetchedOrder.getServiceAttemptsList().get(0).getServiceAttemptId()).isNotNull();
+    assertThat(fetchedOrder.getServiceAttemptsList().get(1).getServiceAttemptId()).isNotNull();
 
     // Verify the relationship is bidirectional
     ServiceAttempt fetchedAttempt =
         entityManager.find(
-            ServiceAttempt.class, fetchedOrder.getServiceAttempts().get(0).getServiceAttemptId());
+            ServiceAttempt.class,
+            fetchedOrder.getServiceAttemptsList().get(0).getServiceAttemptId());
     assertThat(fetchedAttempt.getServiceOrder()).isEqualTo(fetchedOrder);
   }
 }

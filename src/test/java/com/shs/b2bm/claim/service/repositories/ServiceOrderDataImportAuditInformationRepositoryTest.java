@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.entities.ServiceOrderDataImportAuditInformation;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,10 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     // Arrange
     ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
     auditInfo.setGeneratedBy("System Test");
+    auditInfo.setCreatedDate(LocalDateTime.now());
+    auditInfo.setModifiedDate(LocalDateTime.now());
+    auditInfo.setCreatedBy("b2bm-claim-service");
+    auditInfo.setLastModifiedBy("b2bm-claim-service");
     auditInfo.setTotalNumberOfRecords(100);
 
     // Act
@@ -51,6 +56,10 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     // Arrange
     ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
     auditInfo.setGeneratedBy("System Test");
+    auditInfo.setCreatedDate(LocalDateTime.now());
+    auditInfo.setModifiedDate(LocalDateTime.now());
+    auditInfo.setCreatedBy("b2bm-claim-service");
+    auditInfo.setLastModifiedBy("b2bm-claim-service");
     auditInfo.setTotalNumberOfRecords(100);
 
     Long id = entityManager.persistAndGetId(auditInfo, Long.class);
@@ -75,11 +84,19 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     ServiceOrderDataImportAuditInformation auditInfo1 =
         new ServiceOrderDataImportAuditInformation();
     auditInfo1.setGeneratedBy("System Test 1");
+    auditInfo1.setCreatedDate(LocalDateTime.now());
+    auditInfo1.setModifiedDate(LocalDateTime.now());
+    auditInfo1.setCreatedBy("b2bm-claim-service");
+    auditInfo1.setLastModifiedBy("b2bm-claim-service");
     auditInfo1.setTotalNumberOfRecords(100);
 
     ServiceOrderDataImportAuditInformation auditInfo2 =
         new ServiceOrderDataImportAuditInformation();
     auditInfo2.setGeneratedBy("System Test 2");
+    auditInfo2.setCreatedDate(LocalDateTime.now());
+    auditInfo2.setModifiedDate(LocalDateTime.now());
+    auditInfo2.setCreatedBy("b2bm-claim-service");
+    auditInfo2.setLastModifiedBy("b2bm-claim-service");
     auditInfo2.setTotalNumberOfRecords(200);
 
     entityManager.persist(auditInfo1);
@@ -102,6 +119,10 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     // Arrange
     ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
     auditInfo.setGeneratedBy("System Test");
+    auditInfo.setCreatedDate(LocalDateTime.now());
+    auditInfo.setModifiedDate(LocalDateTime.now());
+    auditInfo.setCreatedBy("b2bm-claim-service");
+    auditInfo.setLastModifiedBy("b2bm-claim-service");
     auditInfo.setTotalNumberOfRecords(100);
 
     Long id = entityManager.persistAndGetId(auditInfo, Long.class);
@@ -126,6 +147,10 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     // Arrange
     ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
     auditInfo.setGeneratedBy("System Test");
+    auditInfo.setCreatedDate(LocalDateTime.now());
+    auditInfo.setModifiedDate(LocalDateTime.now());
+    auditInfo.setCreatedBy("b2bm-claim-service");
+    auditInfo.setLastModifiedBy("b2bm-claim-service");
     auditInfo.setTotalNumberOfRecords(100);
 
     Long id = entityManager.persistAndGetId(auditInfo, Long.class);
@@ -146,6 +171,10 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     // Arrange
     ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
     auditInfo.setGeneratedBy("System Audit");
+    auditInfo.setCreatedDate(LocalDateTime.now());
+    auditInfo.setModifiedDate(LocalDateTime.now());
+    auditInfo.setCreatedBy("b2bm-claim-service");
+    auditInfo.setLastModifiedBy("b2bm-claim-service");
     auditInfo.setTotalNumberOfRecords(100);
 
     // Act
@@ -171,16 +200,28 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     // Arrange
     ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
     auditInfo.setGeneratedBy("System Relation");
+    auditInfo.setCreatedDate(LocalDateTime.now());
+    auditInfo.setModifiedDate(LocalDateTime.now());
+    auditInfo.setCreatedBy("b2bm-claim-service");
+    auditInfo.setLastModifiedBy("b2bm-claim-service");
     auditInfo.setTotalNumberOfRecords(100);
 
     ServiceOrder order1 = new ServiceOrder();
     order1.setUnitNumber("UNIT-AUDIT-1");
     order1.setServiceOrderNumber("ORD-AUDIT-1");
+    order1.setCreatedDate(LocalDateTime.now());
+    order1.setModifiedDate(LocalDateTime.now());
+    order1.setCreatedBy("b2bm-claim-service");
+    order1.setLastModifiedBy("b2bm-claim-service");
     order1.setServiceOrderDataImportAuditInformation(auditInfo);
 
     ServiceOrder order2 = new ServiceOrder();
     order2.setUnitNumber("UNIT-AUDIT-2");
     order2.setServiceOrderNumber("ORD-AUDIT-2");
+    order2.setCreatedDate(LocalDateTime.now());
+    order2.setModifiedDate(LocalDateTime.now());
+    order2.setCreatedBy("b2bm-claim-service");
+    order2.setLastModifiedBy("b2bm-claim-service");
     order2.setServiceOrderDataImportAuditInformation(auditInfo);
 
     List<ServiceOrder> orders = new ArrayList<>();

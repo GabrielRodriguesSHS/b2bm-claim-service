@@ -4,12 +4,12 @@ package com.shs.b2bm_service_order;
 
 option java_multiple_files = true;
 option java_package = "com.shs.b2bm.claim.service.kafka.proto";
-option java_outer_classname = "ServiceAttemptProto";
+option java_outer_classname = "ServiceAttemptProtoOuter";
 
 import "google/protobuf/timestamp.proto";
 
 // Represents a service attempt for a service order
-message ServiceAttempt {
+message ServiceAttemptProto {
   // Date of the service call (ISO-8601 format)
   string call_date = 1;
   // Employee number of the technician
@@ -17,11 +17,11 @@ message ServiceAttempt {
   // Code for the service call
   string call_code = 3;
   // Start time of the service attempt
-  google.protobuf.Timestamp start_time = 4;
+  string start_time = 4;
   // End time of the service attempt
-  google.protobuf.Timestamp end_time = 5;
+  string end_time = 5;
   // Transit time in minutes
-  int32 transit_time_in_minutes = 6;
+  string transit_time_in_minutes = 6;
   // First technician comment
   string technician_comment_1 = 7;
   // Second technician comment

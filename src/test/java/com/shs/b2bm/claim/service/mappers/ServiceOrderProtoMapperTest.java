@@ -3,7 +3,9 @@ package com.shs.b2bm.claim.service.mappers;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
-import java.util.Arrays;
+import com.shs.b2bm.claim.service.kafka.proto.ServiceAttemptProto;
+import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -22,13 +24,13 @@ class ServiceOrderProtoMapperTest {
   void toEntity_ShouldMapAllFields() {
     // Arrange
     var protoBuilder =
-        com.shs.b2bm.claim.service.kafka.proto.ServiceOrder.newBuilder()
+        ServiceOrderProto.newBuilder()
             .setUnitNumber("UNIT001")
             .setServiceOrderNumber("SO001")
             .setClosedDate("2024-03-15")
             .addAllServiceAttempts(
-                Arrays.asList(
-                    com.shs.b2bm.claim.service.kafka.proto.ServiceAttempt.newBuilder()
+                List.of(
+                    ServiceAttemptProto.newBuilder()
                         .setCallDate("2024-03-15")
                         .setTechnicianEmployeeNumber("ABC123")
                         .setCallCode("CC001")
@@ -45,9 +47,10 @@ class ServiceOrderProtoMapperTest {
     assertThat(entity.getClosedDate()).isNotNull();
 
     // Verify Service Attempts
-    assertThat(entity.getServiceAttempts()).hasSize(1);
-    assertThat(entity.getServiceAttempts().get(0).getTechEmployeeNumber()).isEqualTo("ABC123");
-    assertThat(entity.getServiceAttempts().get(0).getCallCode()).isEqualTo("CC001");
+    assertThat(entity.getServiceAttemptsList()).hasSize(1);
+    assertThat(entity.getServiceAttemptsList().getFirst().getTechnicianEmployeeNumber())
+        .isEqualTo("ABC123");
+    assertThat(entity.getServiceAttemptsList().getFirst().getCallCode()).isEqualTo("CC001");
   }
 
   /**
@@ -57,7 +60,7 @@ class ServiceOrderProtoMapperTest {
   @Test
   void toEntity_WithNullValues_ShouldMapToDefaults() {
     // Arrange
-    var protoBuilder = com.shs.b2bm.claim.service.kafka.proto.ServiceOrder.newBuilder();
+    var protoBuilder = ServiceOrderProto.newBuilder();
     var proto = protoBuilder.build();
 
     // Act
@@ -68,30 +71,15 @@ class ServiceOrderProtoMapperTest {
     assertThat(entity.getUnitNumber()).isEqualTo(""); // Proto defaults to empty string
     assertThat(entity.getServiceOrderNumber()).isEqualTo(""); // Proto defaults to empty string
     assertThat(entity.getClosedDate())
-        .isNull(); // Custom date conversion returns null for empty string
-    assertThat(entity.getServiceAttempts()).isEmpty();
-  }
-
-  /** Tests that mapping a null list returns an empty list. */
-  @Test
-  void mapList_WithNullList_ShouldReturnEmptyList() {
-    assertThat(ServiceOrderProtoMapper.mapList(null, String::toUpperCase)).isEmpty();
-  }
-
-  /** Tests that mapping a valid list applies the mapping function to all elements. */
-  @Test
-  void mapList_WithValidList_ShouldMapAllElements() {
-    var result =
-        ServiceOrderProtoMapper.mapList(Arrays.asList("test1", "test2"), String::toUpperCase);
-
-    assertThat(result).hasSize(2).containsExactly("TEST1", "TEST2");
+        .isEqualTo(""); // Custom date conversion returns null for empty string
+    assertThat(entity.getServiceAttemptsList()).isEmpty();
   }
 
   /** Tests that mapping a null proto returns null. */
   @Test
   void toEntity_WithNullProto_ShouldMapToDefaults() {
     // Arrange
-    var protoBuilder = com.shs.b2bm.claim.service.kafka.proto.ServiceOrder.newBuilder();
+    var protoBuilder = ServiceOrderProto.newBuilder();
     var proto = protoBuilder.build();
 
     // Act

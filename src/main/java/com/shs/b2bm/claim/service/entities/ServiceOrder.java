@@ -14,7 +14,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -53,7 +52,7 @@ public class ServiceOrder extends BaseEntity {
   private String serviceOrderNumber;
 
   @Temporal(TemporalType.DATE)
-  private LocalDate closedDate;
+  private String closedDate;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "service_order_data_import_audit_information_id")
@@ -62,5 +61,5 @@ public class ServiceOrder extends BaseEntity {
 
   @OneToMany(mappedBy = "serviceOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @ToString.Exclude
-  private List<ServiceAttempt> serviceAttempts = new ArrayList<>();
+  private List<ServiceAttempt> serviceAttemptsList = new ArrayList<>();
 }

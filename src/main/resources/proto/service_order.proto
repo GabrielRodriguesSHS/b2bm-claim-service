@@ -4,12 +4,12 @@ package com.shs.b2bm_service_order;
 
 option java_multiple_files = true;
 option java_package = "com.shs.b2bm.claim.service.kafka.proto";
-option java_outer_classname = "ServiceOrderProto";
+option java_outer_classname = "ServiceOrderProtoOuter";
 
 import "service_attempt.proto";
 
 // Represents a service order in the system
-message ServiceOrder {
+message ServiceOrderProto {
   // Unit number associated with the service order
   string unit_number = 1;
   // Unique service order number
@@ -17,5 +17,5 @@ message ServiceOrder {
   // Date when the service order was closed (ISO-8601 format)
   string closed_date = 3;
   // List of service attempts for the order
-  repeated ServiceAttempt service_attempts = 5;
+  repeated ServiceAttemptProto service_attempts = 5;
 }
