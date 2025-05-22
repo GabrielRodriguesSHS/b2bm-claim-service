@@ -208,7 +208,7 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
 
     ServiceOrder order1 = new ServiceOrder();
     order1.setUnitNumber("UNIT-AUDIT-1");
-    order1.setServiceOrderNumber("ORD-AUDIT-1");
+    order1.setOrderNumber("ORD-AUDIT-1");
     order1.setCreatedDate(LocalDateTime.now());
     order1.setModifiedDate(LocalDateTime.now());
     order1.setCreatedBy("b2bm-claim-service");
@@ -217,7 +217,7 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
 
     ServiceOrder order2 = new ServiceOrder();
     order2.setUnitNumber("UNIT-AUDIT-2");
-    order2.setServiceOrderNumber("ORD-AUDIT-2");
+    order2.setOrderNumber("ORD-AUDIT-2");
     order2.setCreatedDate(LocalDateTime.now());
     order2.setModifiedDate(LocalDateTime.now());
     order2.setCreatedBy("b2bm-claim-service");
@@ -243,7 +243,7 @@ class ServiceOrderDataImportAuditInformationRepositoryTest {
     assertThat(fetchedAuditInfo).isNotNull();
     assertThat(fetchedAuditInfo.getServiceOrders()).hasSize(2);
     assertThat(fetchedAuditInfo.getServiceOrders())
-        .extracting(ServiceOrder::getServiceOrderNumber)
+        .extracting(ServiceOrder::getOrderNumber)
         .containsExactlyInAnyOrder("ORD-AUDIT-1", "ORD-AUDIT-2");
 
     // Verify bidirectional relationship

@@ -26,7 +26,7 @@ class ServiceOrderProtoMapperTest {
     var protoBuilder =
         ServiceOrderProto.newBuilder()
             .setUnitNumber("UNIT001")
-            .setServiceOrderNumber("SO001")
+            .setOrderNumber("SO001")
             .setClosedDate("2024-03-15")
             .addAllServiceAttempts(
                 List.of(
@@ -43,7 +43,7 @@ class ServiceOrderProtoMapperTest {
     // Assert
     assertThat(entity).isNotNull();
     assertThat(entity.getUnitNumber()).isEqualTo("UNIT001");
-    assertThat(entity.getServiceOrderNumber()).isEqualTo("SO001");
+    assertThat(entity.getOrderNumber()).isEqualTo("SO001");
     assertThat(entity.getClosedDate()).isNotNull();
 
     // Verify Service Attempts
@@ -69,7 +69,7 @@ class ServiceOrderProtoMapperTest {
     // Assert
     assertThat(entity).isNotNull();
     assertThat(entity.getUnitNumber()).isEqualTo(""); // Proto defaults to empty string
-    assertThat(entity.getServiceOrderNumber()).isEqualTo(""); // Proto defaults to empty string
+    assertThat(entity.getOrderNumber()).isEqualTo(""); // Proto defaults to empty string
     assertThat(entity.getClosedDate())
         .isEqualTo(""); // Custom date conversion returns null for empty string
     assertThat(entity.getServiceAttemptsList()).isEmpty();

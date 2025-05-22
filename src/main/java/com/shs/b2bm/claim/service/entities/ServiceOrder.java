@@ -49,7 +49,7 @@ public class ServiceOrder extends BaseEntity {
 
   @NotBlank(message = "Service order number cannot be blank")
   @Column(nullable = false)
-  private String serviceOrderNumber;
+  private String orderNumber;
 
   @Temporal(TemporalType.DATE)
   private String closedDate;

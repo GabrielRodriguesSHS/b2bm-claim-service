@@ -27,7 +27,7 @@ class ServiceAttemptRepositoryTest {
 
   private ServiceOrder createAndPersistServiceOrder() {
     ServiceOrder order = new ServiceOrder();
-    order.setServiceOrderNumber("ORD-TEST");
+    order.setOrderNumber("ORD-TEST");
     order.setUnitNumber("UNIT-TEST");
     order.setCreatedDate(LocalDateTime.now());
     order.setModifiedDate(LocalDateTime.now());
@@ -237,7 +237,7 @@ class ServiceAttemptRepositoryTest {
     assertThat(fetchedAttempt.getServiceOrder()).isNotNull();
     assertThat(fetchedAttempt.getServiceOrder().getServiceOrderId())
         .isEqualTo(order.getServiceOrderId());
-    assertThat(fetchedAttempt.getServiceOrder().getServiceOrderNumber()).isEqualTo("ORD-TEST");
+    assertThat(fetchedAttempt.getServiceOrder().getOrderNumber()).isEqualTo("ORD-TEST");
 
     // Verify the other side of the relationship (one-to-many)
     ServiceOrder fetchedOrder = entityManager.find(ServiceOrder.class, order.getServiceOrderId());

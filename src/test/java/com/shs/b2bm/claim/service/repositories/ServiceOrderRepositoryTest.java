@@ -33,7 +33,7 @@ class ServiceOrderRepositoryTest {
   void whenSaveServiceOrder_thenPersistedCorrectly() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setServiceOrderNumber("ORD-12345");
+    order.setOrderNumber("ORD-12345");
     order.setCreatedDate(LocalDateTime.now());
     order.setModifiedDate(LocalDateTime.now());
     order.setCreatedBy("b2bm-claim-service");
@@ -54,7 +54,7 @@ class ServiceOrderRepositoryTest {
   void whenFindById_thenReturnServiceOrder() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setServiceOrderNumber("ORD-12345");
+    order.setOrderNumber("ORD-12345");
     order.setCreatedDate(LocalDateTime.now());
     order.setModifiedDate(LocalDateTime.now());
     order.setCreatedBy("b2bm-claim-service");
@@ -68,7 +68,7 @@ class ServiceOrderRepositoryTest {
 
     // Assert
     assertThat(found).isPresent();
-    assertThat(found.get().getServiceOrderNumber()).isEqualTo("ORD-12345");
+    assertThat(found.get().getOrderNumber()).isEqualTo("ORD-12345");
   }
 
   /** Test that all ServiceOrders can be retrieved from the repository. */
@@ -76,7 +76,7 @@ class ServiceOrderRepositoryTest {
   void whenFindAll_thenReturnAllServiceOrders() {
     // Arrange
     ServiceOrder order1 = new ServiceOrder();
-    order1.setServiceOrderNumber("ORD-12345");
+    order1.setOrderNumber("ORD-12345");
     order1.setCreatedDate(LocalDateTime.now());
     order1.setModifiedDate(LocalDateTime.now());
     order1.setCreatedBy("b2bm-claim-service");
@@ -84,7 +84,7 @@ class ServiceOrderRepositoryTest {
     order1.setUnitNumber("UNIT-001");
 
     ServiceOrder order2 = new ServiceOrder();
-    order2.setServiceOrderNumber("ORD-67890");
+    order2.setOrderNumber("ORD-67890");
     order2.setCreatedDate(LocalDateTime.now());
     order2.setModifiedDate(LocalDateTime.now());
     order2.setCreatedBy("b2bm-claim-service");
@@ -101,7 +101,7 @@ class ServiceOrderRepositoryTest {
     // Assert
     assertThat(orders).hasSize(2);
     assertThat(orders)
-        .extracting(ServiceOrder::getServiceOrderNumber)
+        .extracting(ServiceOrder::getOrderNumber)
         .containsExactlyInAnyOrder("ORD-12345", "ORD-67890");
   }
 
@@ -110,7 +110,7 @@ class ServiceOrderRepositoryTest {
   void whenUpdateServiceOrder_thenPersistedCorrectly() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setServiceOrderNumber("ORD-12345");
+    order.setOrderNumber("ORD-12345");
     order.setUnitNumber("UNIT-001");
     order.setCreatedDate(LocalDateTime.now());
     order.setModifiedDate(LocalDateTime.now());
@@ -121,12 +121,12 @@ class ServiceOrderRepositoryTest {
 
     // Act
     ServiceOrder savedOrder = repository.findById(id).get();
-    savedOrder.setServiceOrderNumber("ORD-UPDATED");
+    savedOrder.setOrderNumber("ORD-UPDATED");
     repository.save(savedOrder);
 
     // Assert
     ServiceOrder updatedOrder = entityManager.find(ServiceOrder.class, id);
-    assertThat(updatedOrder.getServiceOrderNumber()).isEqualTo("ORD-UPDATED");
+    assertThat(updatedOrder.getOrderNumber()).isEqualTo("ORD-UPDATED");
   }
 
   /** Test that deleting a ServiceOrder removes it from the database. */
@@ -134,7 +134,7 @@ class ServiceOrderRepositoryTest {
   void whenDeleteServiceOrder_thenRemoved() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setServiceOrderNumber("ORD-12345");
+    order.setOrderNumber("ORD-12345");
     order.setUnitNumber("UNIT-001");
     order.setCreatedDate(LocalDateTime.now());
     order.setModifiedDate(LocalDateTime.now());
@@ -156,7 +156,7 @@ class ServiceOrderRepositoryTest {
   void whenServiceOrderSaved_thenAuditingFieldsAreSet() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setServiceOrderNumber("ORD-AUDIT");
+    order.setOrderNumber("ORD-AUDIT");
     order.setUnitNumber("UNIT-AUDIT");
     order.setCreatedDate(LocalDateTime.now());
     order.setModifiedDate(LocalDateTime.now());
@@ -193,7 +193,7 @@ class ServiceOrderRepositoryTest {
     entityManager.persist(auditInfo);
 
     ServiceOrder order = new ServiceOrder();
-    order.setServiceOrderNumber("ORD-WITH-AUDIT");
+    order.setOrderNumber("ORD-WITH-AUDIT");
     order.setUnitNumber("UNIT-WITH-AUDIT");
     order.setCreatedDate(LocalDateTime.now());
     order.setModifiedDate(LocalDateTime.now());
@@ -226,7 +226,7 @@ class ServiceOrderRepositoryTest {
   void whenServiceOrderSavedWithServiceAttempts_thenCascadingWorks() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setServiceOrderNumber("ORD-WITH-ATTEMPTS");
+    order.setOrderNumber("ORD-WITH-ATTEMPTS");
     order.setUnitNumber("UNIT-WITH-ATTEMPTS");
     order.setCreatedDate(LocalDateTime.now());
     order.setModifiedDate(LocalDateTime.now());

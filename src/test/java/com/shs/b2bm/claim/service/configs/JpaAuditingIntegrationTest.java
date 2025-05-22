@@ -24,7 +24,7 @@ class JpaAuditingIntegrationTest {
   void auditing_ShouldSetAuditFieldsCorrectly() {
     // Arrange
     ServiceOrder serviceOrder =
-        ServiceOrder.builder().unitNumber("UNIT-INT-001").serviceOrderNumber("SO-INT-001").build();
+        ServiceOrder.builder().unitNumber("UNIT-INT-001").orderNumber("SO-INT-001").build();
 
     // Act
     entityManager.persist(serviceOrder);
@@ -48,7 +48,7 @@ class JpaAuditingIntegrationTest {
   void auditing_ShouldUpdateLastModifiedFields() {
     // Arrange
     ServiceOrder serviceOrder =
-        ServiceOrder.builder().unitNumber("UNIT-INT-002").serviceOrderNumber("SO-INT-002").build();
+        ServiceOrder.builder().unitNumber("UNIT-INT-002").orderNumber("SO-INT-002").build();
 
     // Act - First save
     entityManager.persist(serviceOrder);
