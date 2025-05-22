@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package protobuf;
+
+option java_multiple_files = true;
+option java_package = "com.shs.b2bm.claim.service.kafka.proto";
+option java_outer_classname = "ServiceAttemptProtoOuter";
+
+// Represents a service attempt for a service order
+message ServiceAttemptProto {
+  // Date of the service call (ISO-8601 format)
+  string call_date = 1;
+  // Employee number of the technician
+  string technician_employee_number = 2;
+  // Code for the service call
+  string call_code = 3;
+  // Start time of the service attempt
+  string start_time = 4;
+  // End time of the service attempt
+  string end_time = 5;
+  // Transit time in minutes
+  string transit_time_in_minutes = 6;
+  // First technician comment
+  string technician_comment_1 = 7;
+  // Second technician comment
+  string technician_comment_2 = 8;
+}

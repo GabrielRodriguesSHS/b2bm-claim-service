@@ -10,7 +10,7 @@ import org.springframework.lang.NonNull;
  */
 public class AuditorAwareImpl implements AuditorAware<String> {
 
-  private static final String SYSTEM_AUDITOR = "b2bm-service-order";
+  private static final String SYSTEM_AUDITOR = "b2bm-claim-service";
 
   /**
    * Returns a hardcoded auditor value for the application.

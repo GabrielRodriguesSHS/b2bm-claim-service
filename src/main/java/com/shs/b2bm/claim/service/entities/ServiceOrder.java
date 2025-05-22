@@ -15,7 +15,6 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -50,10 +49,10 @@ public class ServiceOrder extends BaseEntity {
 
   @NotBlank(message = "Service order number cannot be blank")
   @Column(nullable = false)
-  private String serviceOrderNumber;
+  private String orderNumber;
 
   @Temporal(TemporalType.DATE)
-  private Date closedDate;
+  private String closedDate;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "service_order_data_import_audit_information_id")
@@ -62,5 +61,5 @@ public class ServiceOrder extends BaseEntity {
 
   @OneToMany(mappedBy = "serviceOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @ToString.Exclude
-  private List<ServiceAttempt> serviceAttempts = new ArrayList<>();
+  private List<ServiceAttempt> serviceAttemptsList = new ArrayList<>();
 }

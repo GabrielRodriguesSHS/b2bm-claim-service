@@ -13,6 +13,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
 
+/**
+ * Integration tests for {@link ServiceAttemptRepository}. Verifies CRUD operations, auditing, and
+ * entity relationships for ServiceAttempt.
+ */
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ServiceAttemptRepositoryTest {
@@ -23,12 +27,17 @@ class ServiceAttemptRepositoryTest {
 
   private ServiceOrder createAndPersistServiceOrder() {
     ServiceOrder order = new ServiceOrder();
-    order.setServiceOrderNumber("ORD-TEST");
+    order.setOrderNumber("ORD-TEST");
     order.setUnitNumber("UNIT-TEST");
+    order.setCreatedDate(LocalDateTime.now());
+    order.setModifiedDate(LocalDateTime.now());
+    order.setCreatedBy("b2bm-claim-service");
+    order.setLastModifiedBy("b2bm-claim-service");
     entityManager.persist(order);
     return order;
   }
 
+  /** Test that a ServiceAttempt is persisted correctly. */
   @Test
   void whenSaveServiceAttempt_thenPersistedCorrectly() {
     // Arrange
@@ -36,8 +45,12 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-123");
-    attempt.setTechEmployeeNumber(12345);
-    attempt.setStartTime(LocalDateTime.now());
+    attempt.setTechnicianEmployeeNumber("ABC123");
+    attempt.setStartTime(LocalDateTime.now().toString());
+    attempt.setCreatedDate(LocalDateTime.now());
+    attempt.setModifiedDate(LocalDateTime.now());
+    attempt.setCreatedBy("b2bm-claim-service");
+    attempt.setLastModifiedBy("b2bm-claim-service");
     attempt.setServiceOrder(order);
 
     // Act
@@ -49,6 +62,7 @@ class ServiceAttemptRepositoryTest {
         .isEqualTo(savedAttempt);
   }
 
+  /** Test that a ServiceAttempt can be found by its ID. */
   @Test
   void whenFindById_thenReturnServiceAttempt() {
     // Arrange
@@ -56,7 +70,11 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-123");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechnicianEmployeeNumber("ABC123");
+    attempt.setCreatedDate(LocalDateTime.now());
+    attempt.setModifiedDate(LocalDateTime.now());
+    attempt.setCreatedBy("b2bm-claim-service");
+    attempt.setLastModifiedBy("b2bm-claim-service");
     attempt.setServiceOrder(order);
 
     Long id = entityManager.persistAndGetId(attempt, Long.class);
@@ -68,9 +86,10 @@ class ServiceAttemptRepositoryTest {
     // Assert
     assertThat(found).isPresent();
     assertThat(found.get().getCallCode()).isEqualTo("CODE-123");
-    assertThat(found.get().getTechEmployeeNumber()).isEqualTo(12345);
+    assertThat(found.get().getTechnicianEmployeeNumber()).isEqualTo("ABC123");
   }
 
+  /** Test that all ServiceAttempts can be retrieved from the repository. */
   @Test
   void whenFindAll_thenReturnAllServiceAttempts() {
     // Arrange
@@ -78,12 +97,20 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt1 = new ServiceAttempt();
     attempt1.setCallCode("CODE-123");
-    attempt1.setTechEmployeeNumber(12345);
+    attempt1.setTechnicianEmployeeNumber("ABC123");
+    attempt1.setCreatedDate(LocalDateTime.now());
+    attempt1.setModifiedDate(LocalDateTime.now());
+    attempt1.setCreatedBy("b2bm-claim-service");
+    attempt1.setLastModifiedBy("b2bm-claim-service");
     attempt1.setServiceOrder(order);
 
     ServiceAttempt attempt2 = new ServiceAttempt();
     attempt2.setCallCode("CODE-456");
-    attempt2.setTechEmployeeNumber(67890);
+    attempt2.setTechnicianEmployeeNumber("ABC123");
+    attempt2.setCreatedDate(LocalDateTime.now());
+    attempt2.setModifiedDate(LocalDateTime.now());
+    attempt2.setCreatedBy("b2bm-claim-service");
+    attempt2.setLastModifiedBy("b2bm-claim-service");
     attempt2.setServiceOrder(order);
 
     entityManager.persist(attempt1);
@@ -100,6 +127,7 @@ class ServiceAttemptRepositoryTest {
         .containsExactlyInAnyOrder("CODE-123", "CODE-456");
   }
 
+  /** Test that updating a ServiceAttempt persists the changes correctly. */
   @Test
   void whenUpdateServiceAttempt_thenPersistedCorrectly() {
     // Arrange
@@ -107,7 +135,11 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-123");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechnicianEmployeeNumber("ABC123");
+    attempt.setCreatedDate(LocalDateTime.now());
+    attempt.setModifiedDate(LocalDateTime.now());
+    attempt.setCreatedBy("b2bm-claim-service");
+    attempt.setLastModifiedBy("b2bm-claim-service");
     attempt.setServiceOrder(order);
 
     Long id = entityManager.persistAndGetId(attempt, Long.class);
@@ -123,6 +155,7 @@ class ServiceAttemptRepositoryTest {
     assertThat(updatedAttempt.getCallCode()).isEqualTo("CODE-UPDATED");
   }
 
+  /** Test that deleting a ServiceAttempt removes it from the database. */
   @Test
   void whenDeleteServiceAttempt_thenRemoved() {
     // Arrange
@@ -130,7 +163,11 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-123");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechnicianEmployeeNumber("ABC123");
+    attempt.setCreatedDate(LocalDateTime.now());
+    attempt.setModifiedDate(LocalDateTime.now());
+    attempt.setCreatedBy("b2bm-claim-service");
+    attempt.setLastModifiedBy("b2bm-claim-service");
     attempt.setServiceOrder(order);
 
     Long id = entityManager.persistAndGetId(attempt, Long.class);
@@ -144,6 +181,7 @@ class ServiceAttemptRepositoryTest {
     assertThat(deletedAttempt).isNull();
   }
 
+  /** Test that auditing fields are set when a ServiceAttempt is saved. */
   @Test
   void whenServiceAttemptSaved_thenAuditingFieldsAreSet() {
     // Arrange
@@ -151,7 +189,11 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-AUDIT");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechnicianEmployeeNumber("ABC123");
+    attempt.setCreatedDate(LocalDateTime.now());
+    attempt.setModifiedDate(LocalDateTime.now());
+    attempt.setCreatedBy("b2bm-claim-service");
+    attempt.setLastModifiedBy("b2bm-claim-service");
     attempt.setServiceOrder(order);
 
     // Act
@@ -163,10 +205,13 @@ class ServiceAttemptRepositoryTest {
     assertThat(savedAttempt.getModifiedDate()).isNotNull();
     assertThat(savedAttempt.getCreatedBy()).isNotNull();
     assertThat(savedAttempt.getLastModifiedBy()).isNotNull();
-    assertThat(savedAttempt.getCreatedBy()).isEqualTo("b2bm-service-order");
-    assertThat(savedAttempt.getLastModifiedBy()).isEqualTo("b2bm-service-order");
+    assertThat(savedAttempt.getCreatedBy()).isEqualTo("b2bm-claim-service");
+    assertThat(savedAttempt.getLastModifiedBy()).isEqualTo("b2bm-claim-service");
   }
 
+  /**
+   * Test that the bidirectional relationship between ServiceAttempt and ServiceOrder is maintained.
+   */
   @Test
   void whenServiceAttemptSavedWithServiceOrder_thenBidirectionalRelationshipIsMaintained() {
     // Arrange
@@ -174,7 +219,11 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-RELATION");
-    attempt.setTechEmployeeNumber(12345);
+    attempt.setTechnicianEmployeeNumber("ABC123");
+    attempt.setCreatedDate(LocalDateTime.now());
+    attempt.setModifiedDate(LocalDateTime.now());
+    attempt.setCreatedBy("b2bm-claim-service");
+    attempt.setLastModifiedBy("b2bm-claim-service");
     attempt.setServiceOrder(order);
 
     // Act
@@ -188,15 +237,19 @@ class ServiceAttemptRepositoryTest {
     assertThat(fetchedAttempt.getServiceOrder()).isNotNull();
     assertThat(fetchedAttempt.getServiceOrder().getServiceOrderId())
         .isEqualTo(order.getServiceOrderId());
-    assertThat(fetchedAttempt.getServiceOrder().getServiceOrderNumber()).isEqualTo("ORD-TEST");
+    assertThat(fetchedAttempt.getServiceOrder().getOrderNumber()).isEqualTo("ORD-TEST");
 
     // Verify the other side of the relationship (one-to-many)
     ServiceOrder fetchedOrder = entityManager.find(ServiceOrder.class, order.getServiceOrderId());
-    assertThat(fetchedOrder.getServiceAttempts()).hasSize(1);
-    assertThat(fetchedOrder.getServiceAttempts().getFirst().getServiceAttemptId())
+    assertThat(fetchedOrder.getServiceAttemptsList()).hasSize(1);
+    assertThat(fetchedOrder.getServiceAttemptsList().getFirst().getServiceAttemptId())
         .isEqualTo(savedAttempt.getServiceAttemptId());
   }
 
+  /**
+   * Test that a persisted ServiceAttempt can be retrieved with the repository and its relationships
+   * are intact.
+   */
   @Test
   void whenServiceAttemptIsPersisted_thenItCanBeRetrievedWithRepository() {
     // Arrange
@@ -204,7 +257,11 @@ class ServiceAttemptRepositoryTest {
 
     ServiceAttempt attempt = new ServiceAttempt();
     attempt.setCallCode("CODE-RETRIEVE");
-    attempt.setTechEmployeeNumber(98765);
+    attempt.setTechnicianEmployeeNumber("ABC123");
+    attempt.setCreatedDate(LocalDateTime.now());
+    attempt.setModifiedDate(LocalDateTime.now());
+    attempt.setCreatedBy("b2bm-claim-service");
+    attempt.setLastModifiedBy("b2bm-claim-service");
     attempt.setServiceOrder(order);
 
     ServiceAttempt savedAttempt = repository.save(attempt);
@@ -218,7 +275,7 @@ class ServiceAttemptRepositoryTest {
     // Assert
     assertThat(foundAttempt).isNotNull();
     assertThat(foundAttempt.getCallCode()).isEqualTo("CODE-RETRIEVE");
-    assertThat(foundAttempt.getTechEmployeeNumber()).isEqualTo(98765);
+    assertThat(foundAttempt.getTechnicianEmployeeNumber()).isEqualTo("ABC123");
     assertThat(foundAttempt.getServiceOrder()).isNotNull();
     assertThat(foundAttempt.getServiceOrder().getServiceOrderId())
         .isEqualTo(order.getServiceOrderId());
