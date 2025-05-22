@@ -5,7 +5,7 @@ import com.shs.b2bm.claim.service.kafka.proto.ServiceAttemptProto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper()
+@Mapper
 public interface ServiceAttemptProtoMapper {
   ServiceAttemptProtoMapper INSTANCE = Mappers.getMapper(ServiceAttemptProtoMapper.class);
 
