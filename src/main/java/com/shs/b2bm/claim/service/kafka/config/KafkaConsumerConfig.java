@@ -56,6 +56,12 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.consumer.heartbeat-interval-ms}")
     private int heartbeatIntervalMs;
 
+    @Value("${spring.kafka.consumer.max-attempts}")
+    private int maxAttempts;
+
+    @Value("${spring.kafka.consumer.concurrency}")
+    private int concurrency;
+
     @Value("${spring.kafka.topics.service-order-dead-letter}")
     private String deadLetterTopic;
 
@@ -99,13 +105,13 @@ public class KafkaConsumerConfig {
             new ConcurrentKafkaListenerContainerFactory<>();
 
         factory.setConsumerFactory(serviceOrderConsumerFactory());
-        factory.setConcurrency(3); // Number of concurrent consumers
+        factory.setConcurrency(concurrency); // Number of concurrent consumers
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.RECORD);
 
         // Configure error handling with retry and dead letter topic
         DefaultErrorHandler errorHandler = new DefaultErrorHandler(
             deadLetterPublishingRecoverer(),
-            new FixedBackOff(1000L, 3L) // Retry 3 times with 1 second interval
+            new FixedBackOff(heartbeatIntervalMs, maxAttempts)
         );
         factory.setCommonErrorHandler(errorHandler);
 
@@ -133,8 +139,15 @@ public class KafkaConsumerConfig {
         return () -> {
             try {
                 ConsumerFactory<String, ServiceOrderProto> cf = serviceOrderConsumerFactory();
-                cf.createConsumer().listTopics();
-                return Health.up().build();
+
+                var consumer = cf.createConsumer();
+
+                try {
+                    consumer.listTopics();
+                    return Health.up().build();
+                } finally {
+                    consumer.close();
+                }
             } catch (Exception e) {
                 return Health.down()
                     .withException(e)
