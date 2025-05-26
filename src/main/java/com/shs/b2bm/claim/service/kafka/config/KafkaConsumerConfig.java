@@ -46,6 +46,9 @@ public class KafkaConsumerConfig {
   @Value("${spring.kafka.topics.service-order-dead-letter}")
   private String deadLetterTopic;
 
+  @Value("${spring.kafka.consumer.auto-offset-reset}")
+  private String autoOffsetReset;
+
   private final KafkaTemplate<String, ServiceOrderProto> kafkaTemplate;
 
   /**
@@ -58,6 +61,8 @@ public class KafkaConsumerConfig {
     Map<String, Object> props = new HashMap<>();
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
+    props.put(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG, heartbeatIntervalMs);
 
     ErrorHandlingDeserializer<ServiceOrderProto> valueDeserializer =
         new ErrorHandlingDeserializer<>(new ProtobufDeserialize<>(ServiceOrderProto.class));
