@@ -1,19 +1,14 @@
 package com.shs.b2bm.claim.service.kafka.consumer;
 
-import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.exceptions.ServiceOrderProcessingException;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
-import com.shs.b2bm.claim.service.mappers.ServiceOrderProtoMapper;
-import com.shs.b2bm.claim.service.repositories.ServiceOrderRepository;
-import io.micrometer.core.instrument.MeterRegistry;
-import lombok.RequiredArgsConstructor;
+import com.shs.b2bm.claim.service.services.ServiceOrderValidatorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Kafka consumer service for processing ServiceOrder messages. Handles the consumption and
@@ -22,11 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class ServiceOrderKafkaConsumer {
 
-  private final ServiceOrderRepository serviceOrderRepository;
-  private final MeterRegistry meterRegistry;
+  private final ServiceOrderValidatorService serviceOrderValidatorService;
+
+  public ServiceOrderKafkaConsumer(ServiceOrderValidatorService serviceOrderValidatorService) {
+    this.serviceOrderValidatorService = serviceOrderValidatorService;
+  }
 
   /**
    * Consumes ServiceOrder messages from the specified Kafka topic. Converts the proto message to an
@@ -37,62 +34,20 @@ public class ServiceOrderKafkaConsumer {
    * @param partition The partition from which the message was received
    * @param offset The offset of the message
    */
-  @Transactional
-  @KafkaListener(
-      topics = "${spring.kafka.topics.service-order-created}",
-      groupId = "${spring.kafka.consumer.group-id:b2bm-claim-service}",
-      containerFactory = "serviceOrderKafkaListenerContainerFactory")
-  public void consume(
+  @KafkaListener(topics = "${spring.kafka.topics.service-order-created}",
+          groupId = "${spring.kafka.consumer.group-id:b2bm-claim-service}",
+          containerFactory = "serviceOrderKafkaListenerContainerFactory")
+  public void listenWithHeaders(
       @Payload ServiceOrderProto serviceOrder,
       @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
       @Header(KafkaHeaders.RECEIVED_PARTITION) Integer partition,
       @Header(KafkaHeaders.OFFSET) Long offset) {
     try {
-      validateMessage(serviceOrder);
-      processServiceOrder(serviceOrder);
-
-      meterRegistry
-          .counter("kafka.serviceorder.processed", "topic", topic, "result", "success")
-          .increment();
+      this.serviceOrderValidatorService.validateMessage(serviceOrder);
 
       log.info("Successfully processed and saved ServiceOrder: {}", serviceOrder.getOrderNumber());
     } catch (Exception e) {
-      meterRegistry
-          .counter("kafka.serviceorder.processed", "topic", topic, "result", "error")
-          .increment();
-
       handleProcessingError(e, serviceOrder.getOrderNumber(), topic, partition, offset);
-    }
-  }
-
-  /**
-   * Validates the incoming service order message.
-   *
-   * @param serviceOrder The service order to validate
-   * @throws ServiceOrderProcessingException if validation fails
-   */
-  private void validateMessage(ServiceOrderProto serviceOrder) {
-    if (serviceOrder.getOrderNumber() == null || serviceOrder.getOrderNumber().isEmpty()) {
-      throw new ServiceOrderProcessingException("Service order number is required");
-    }
-    // Add additional validation as needed
-  }
-
-  /**
-   * Processes the service order message and persists it to the database.
-   *
-   * @param serviceOrder The service order to process
-   * @param correlationId The correlation ID for tracking
-   * @throws ServiceOrderProcessingException if processing fails
-   */
-  @Transactional
-  private void processServiceOrder(ServiceOrderProto serviceOrder) {
-    try {
-      ServiceOrder entity = ServiceOrderProtoMapper.INSTANCE.toEntity(serviceOrder);
-      serviceOrderRepository.save(entity);
-    } catch (Exception e) {
-      throw new ServiceOrderProcessingException(
-          "Failed to process service order: " + serviceOrder.getOrderNumber(), e);
     }
   }
 

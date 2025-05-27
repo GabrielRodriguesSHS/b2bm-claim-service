@@ -11,7 +11,7 @@ import org.apache.kafka.common.serialization.Deserializer;
  * handling.
  */
 @Slf4j
-public class ProtobufDeserialize<T extends Message> implements Deserializer<T> {
+public class ProtobufDeserializer<T extends Message> implements Deserializer<T> {
 
   private final Class<T> type;
 
@@ -20,7 +20,7 @@ public class ProtobufDeserialize<T extends Message> implements Deserializer<T> {
    *
    * @param type The class type of the Protobuf message
    */
-  public ProtobufDeserialize(Class<T> type) {
+  public ProtobufDeserializer(Class<T> type) {
     this.type = type;
   }
 
