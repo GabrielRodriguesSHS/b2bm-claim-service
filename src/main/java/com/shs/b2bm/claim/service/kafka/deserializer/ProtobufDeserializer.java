@@ -1,7 +1,6 @@
 package com.shs.b2bm.claim.service.kafka.deserializer;
 
 import com.google.protobuf.Message;
-
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.errors.SerializationException;
