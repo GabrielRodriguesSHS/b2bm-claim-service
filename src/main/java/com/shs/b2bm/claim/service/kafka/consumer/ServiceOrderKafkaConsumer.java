@@ -1,9 +1,9 @@
 package com.shs.b2bm.claim.service.kafka.consumer;
 
-import com.shs.b2bm.claim.service.exceptions.ServiceOrderProcessingException;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
 import com.shs.b2bm.claim.service.services.ServiceOrderValidatorService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.KafkaException;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
@@ -48,30 +48,7 @@ public class ServiceOrderKafkaConsumer {
 
       log.info("Successfully processed and saved ServiceOrder: {}", serviceOrder.getOrderNumber());
     } catch (Exception e) {
-      handleProcessingError(e, serviceOrder.getOrderNumber(), topic, partition, offset);
+      throw new KafkaException("Failed to process Service Order message", e);
     }
-  }
-
-  /**
-   * Handles processing errors by logging and throwing appropriate exceptions.
-   *
-   * @param e The exception that occurred
-   * @param orderNumber The service order number
-   * @param topic The Kafka topic
-   * @param partition The partition
-   * @param offset The offset
-   * @throws ServiceOrderProcessingException wrapped exception
-   */
-  private void handleProcessingError(
-      Exception e, String orderNumber, String topic, Integer partition, Long offset) {
-    log.error(
-        "Error processing ServiceOrder message - Topic: {}, Partition: {}, Offset: {}, Order Number: {}, Error: {}",
-        topic,
-        partition,
-        offset,
-        orderNumber,
-        e.getMessage(),
-        e);
-    throw new ServiceOrderProcessingException("Failed to process service order: " + orderNumber, e);
   }
 }

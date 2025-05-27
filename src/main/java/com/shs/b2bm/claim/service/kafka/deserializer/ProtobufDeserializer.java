@@ -1,9 +1,10 @@
 package com.shs.b2bm.claim.service.kafka.deserializer;
 
 import com.google.protobuf.Message;
-import com.shs.b2bm.claim.service.exceptions.ProtobufDeserializationException;
+
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 
 /**
@@ -43,7 +44,7 @@ public class ProtobufDeserializer<T extends Message> implements Deserializer<T> 
       String errorMessage =
           String.format("Failed to deserialize Protobuf message from topic: %s", topic);
       log.error(errorMessage, e);
-      throw new ProtobufDeserializationException(errorMessage, e);
+      throw new SerializationException("Error deserializing Protobuf message", e);
     }
   }
 
