@@ -34,9 +34,10 @@ public class ServiceOrderKafkaConsumer {
    * @param partition The partition from which the message was received
    * @param offset The offset of the message
    */
-  @KafkaListener(topics = "${spring.kafka.topics.service-order-created}",
-          groupId = "${spring.kafka.consumer.group-id:b2bm-claim-service}",
-          containerFactory = "serviceOrderKafkaListenerContainerFactory")
+  @KafkaListener(
+      topics = "${spring.kafka.topics.service-order-created}",
+      groupId = "${spring.kafka.consumer.group-id:b2bm-claim-service}",
+      containerFactory = "serviceOrderKafkaListenerContainerFactory")
   public void listenWithHeaders(
       @Payload ServiceOrderProto serviceOrder,
       @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,

@@ -3,7 +3,7 @@ package com.shs.b2bm.claim.service.services;
 import com.shs.b2bm.claim.service.exceptions.ServiceOrderProcessingException;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
 
-/** Service interface for handling file storage operations. */
+/** Service interface for validating ServiceOrderProto messages. */
 public interface ServiceOrderValidatorService {
 
   /**
