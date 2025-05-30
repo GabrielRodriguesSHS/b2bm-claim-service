@@ -14,6 +14,10 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Entity representing the configuration for rule validation.
+ * Stores configuration details for validation rules, including associated partner, rule, parameters, and error messages.
+ */
 @Entity
 @Table(name = "rule_validation_config")
 @Getter
