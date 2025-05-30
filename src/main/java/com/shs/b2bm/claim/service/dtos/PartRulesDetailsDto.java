@@ -8,4 +8,4 @@ import java.math.BigDecimal;
  * @param required indicates if the part is required
  * @param minPriceValue minimum allowed price value for the part
  */
-public record PartRulesDetailsDto (boolean required, BigDecimal minPriceValue) {}
+public record PartRulesDetailsDto(boolean required, BigDecimal minPriceValue) {}

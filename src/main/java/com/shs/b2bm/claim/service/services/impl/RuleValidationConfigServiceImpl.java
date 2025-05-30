@@ -6,18 +6,21 @@ import com.shs.b2bm.claim.service.repositories.RuleValidationConfigRepository;
 import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
 import org.springframework.stereotype.Service;
 
-/** Implementation of RuleValidationConfigService for accessing rule validation configuration data. */
+/**
+ * Implementation of RuleValidationConfigService for accessing rule validation configuration data.
+ */
 @Service
 public class RuleValidationConfigServiceImpl implements RuleValidationConfigService {
 
-    RuleValidationConfigRepository ruleValidationConfigRepository;
+  RuleValidationConfigRepository ruleValidationConfigRepository;
 
-    public RuleValidationConfigServiceImpl(RuleValidationConfigRepository ruleValidationConfigRepository, ObjectMapper objectMapper) {
-        this.ruleValidationConfigRepository = ruleValidationConfigRepository;
-    }
+  public RuleValidationConfigServiceImpl(
+      RuleValidationConfigRepository ruleValidationConfigRepository, ObjectMapper objectMapper) {
+    this.ruleValidationConfigRepository = ruleValidationConfigRepository;
+  }
 
-    @Override
-    public RuleValidationConfig findByRuleIdAndPartnerId(Integer ruleId, Integer partnerId) {
-        return this.ruleValidationConfigRepository.findByRuleIdAndPartnerId(ruleId, partnerId);
-    }
+  @Override
+  public RuleValidationConfig findByRuleIdAndPartnerId(Integer ruleId, Integer partnerId) {
+    return this.ruleValidationConfigRepository.findByRuleIdAndPartnerId(ruleId, partnerId);
+  }
 }

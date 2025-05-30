@@ -15,8 +15,8 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Entity representing the configuration for rule validation.
- * Stores configuration details for validation rules, including associated partner, rule, parameters, and error messages.
+ * Entity representing the configuration for rule validation. Stores configuration details for
+ * validation rules, including associated partner, rule, parameters, and error messages.
  */
 @Entity
 @Table(name = "rule_validation_config")
@@ -29,15 +29,16 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class RuleValidationConfig extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ruleValidationConfigId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long ruleValidationConfigId;
 
-    @Column private Integer ruleId;
+  @Column private Integer ruleId;
 
-    @Column private Integer partnerId;
+  @Column private Integer partnerId;
 
-    @Column(columnDefinition = "JSON") private String parametersDetails;
+  @Column(columnDefinition = "JSON")
+  private String parametersDetails;
 
-    @Column private String 	errorMessage;
+  @Column private String errorMessage;
 }
