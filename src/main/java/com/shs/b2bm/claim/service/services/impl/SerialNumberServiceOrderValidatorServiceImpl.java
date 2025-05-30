@@ -1,7 +1,7 @@
 package com.shs.b2bm.claim.service.services.impl;
 
 import com.shs.b2bm.claim.service.dtos.SerialNumberRulesDetailsDto;
-import com.shs.b2bm.claim.service.dtos.ServiceOrderValidationResult;
+import com.shs.b2bm.claim.service.dtos.ServiceOrderValidationResultDto;
 import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.enums.Rule;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
@@ -26,7 +26,7 @@ public class SerialNumberServiceOrderValidatorServiceImpl
   }
 
   @Override
-  public ServiceOrderValidationResult validate(ServiceOrderProto serviceOrder) {
+  public ServiceOrderValidationResultDto validate(ServiceOrderProto serviceOrder) {
     List<String> errorsList = new ArrayList<String>();
 
     RuleValidationConfig ruleValidationConfig = this.ruleValidationConfigService.findByRuleIdAndPartnerId(Rule.PartsValidation.ordinal() + 1, 1);
@@ -35,9 +35,9 @@ public class SerialNumberServiceOrderValidatorServiceImpl
     if (serviceOrder.getOrderNumber().length() >= serialNumberRulesDetailsDto.minLenght() && serviceOrder.getOrderNumber().length() <= serialNumberRulesDetailsDto.maxLenght()) {
       errorsList.add(ruleValidationConfig.getErrorMessage());
 
-      return new ServiceOrderValidationResult(false, errorsList);
+      return new ServiceOrderValidationResultDto(false, errorsList);
     }
 
-    return new ServiceOrderValidationResult(true, errorsList);
+    return new ServiceOrderValidationResultDto(true, errorsList);
   }
 }

@@ -1,6 +1,6 @@
 package com.shs.b2bm.claim.service.services.impl;
 
-import com.shs.b2bm.claim.service.dtos.ServiceOrderValidationResult;
+import com.shs.b2bm.claim.service.dtos.ServiceOrderValidationResultDto;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
 import com.shs.b2bm.claim.service.services.ServiceOrderRuleValidatorService;
 import com.shs.b2bm.claim.service.services.ServiceOrderValidationService;
@@ -37,7 +37,7 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
       throw new ValidationException("Service order number is required");
     }
 
-    ServiceOrderValidationResult rulesResult = this.rulesValidator(serviceOrder);
+    ServiceOrderValidationResultDto rulesResult = this.rulesValidator(serviceOrder);
 
     System.out.println(rulesResult.toString());
 
@@ -52,18 +52,18 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
    * @param serviceOrder The service order to validate
    * @throws ValidationException if any rule fails
    */
-  private ServiceOrderValidationResult rulesValidator(ServiceOrderProto serviceOrder) {
+  private ServiceOrderValidationResultDto rulesValidator(ServiceOrderProto serviceOrder) {
     boolean valid = true;
     List<String> errorsList = new ArrayList<>(Collections.emptyList());
 
     for (ServiceOrderRuleValidatorService rule : listRules) {
-      ServiceOrderValidationResult ruleResult = rule.validate(serviceOrder);
+      ServiceOrderValidationResultDto ruleResult = rule.validate(serviceOrder);
       if (!ruleResult.isValid()) {
         errorsList.addAll(ruleResult.errorsList());
         valid = false;
       }
     }
 
-    return new ServiceOrderValidationResult(valid, errorsList);
+    return new ServiceOrderValidationResultDto(valid, errorsList);
   }
 }
