@@ -9,7 +9,7 @@ public interface ServiceOrderValidationService {
   /**
    * Validates the incoming service order message.
    *
-   * @param serviceOrder The service order to validate
+   * @param serviceOrder the service order to validate
    * @throws ValidationException if validation fails
    */
   void validateMessage(ServiceOrderProto serviceOrder);

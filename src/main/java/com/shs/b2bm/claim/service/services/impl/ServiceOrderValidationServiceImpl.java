@@ -16,21 +16,10 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
 
   private final List<ServiceOrderRuleValidatorService> listRules;
 
-  /**
-   * Constructor for dependency injection of all validation rules.
-   *
-   * @param listRules List of all ServiceOrderValidationRule beans
-   */
   public ServiceOrderValidationServiceImpl(List<ServiceOrderRuleValidatorService> listRules) {
     this.listRules = listRules;
   }
 
-  /**
-   * Validates the incoming service order message.
-   *
-   * @param serviceOrder The service order to validate
-   * @throws ValidationException if validation fails
-   */
   @Override
   public void validateMessage(ServiceOrderProto serviceOrder) {
     if (serviceOrder.getOrderNumber() == null || serviceOrder.getOrderNumber().isEmpty()) {

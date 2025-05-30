@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Implementation of ServiceOrderRuleValidatorService to validate Parts. */
 @Service
 public class PartsServiceOrderValidatorServiceImpl implements ServiceOrderRuleValidatorService {
 

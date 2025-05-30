@@ -6,6 +6,7 @@ import com.shs.b2bm.claim.service.repositories.RuleValidationConfigRepository;
 import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
 import org.springframework.stereotype.Service;
 
+/** Implementation of RuleValidationConfigService for accessing rule validation configuration data. */
 @Service
 public class RuleValidationConfigServiceImpl implements RuleValidationConfigService {
 
