@@ -1,7 +1,7 @@
 package com.shs.b2bm.claim.service.kafka.consumer;
 
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
-import com.shs.b2bm.claim.service.services.ServiceOrderValidatorService;
+import com.shs.b2bm.claim.service.services.ServiceOrderValidationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.KafkaException;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -19,10 +19,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceOrderKafkaConsumer {
 
-  private final ServiceOrderValidatorService serviceOrderValidatorService;
+  private final ServiceOrderValidationService serviceOrderValidationService;
 
-  public ServiceOrderKafkaConsumer(ServiceOrderValidatorService serviceOrderValidatorService) {
-    this.serviceOrderValidatorService = serviceOrderValidatorService;
+  public ServiceOrderKafkaConsumer(ServiceOrderValidationService serviceOrderValidationService) {
+    this.serviceOrderValidationService = serviceOrderValidationService;
   }
 
   /**
@@ -44,7 +44,7 @@ public class ServiceOrderKafkaConsumer {
       @Header(KafkaHeaders.RECEIVED_PARTITION) Integer partition,
       @Header(KafkaHeaders.OFFSET) Long offset) {
     try {
-      this.serviceOrderValidatorService.validateMessage(serviceOrder);
+      this.serviceOrderValidationService.validateMessage(serviceOrder);
 
       log.info("Successfully processed and saved ServiceOrder: {}", serviceOrder.getOrderNumber());
     } catch (Exception e) {

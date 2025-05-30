@@ -4,7 +4,7 @@ import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
 import jakarta.validation.ValidationException;
 
 /** Service interface for validating ServiceOrderProto messages. */
-public interface ServiceOrderValidatorService {
+public interface ServiceOrderValidationService {
 
   /**
    * Validates the incoming service order message.
