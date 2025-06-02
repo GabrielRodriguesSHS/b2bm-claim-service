@@ -36,7 +36,7 @@ public class PartsServiceOrderValidatorServiceImpl implements ServiceOrderRuleVa
         this.serviceAttemptProtoMapper.jsonToPartRulesDetailsDto(ruleValidationConfig);
 
     if ((serviceOrder.getServiceAttemptsList().size()
-        > Integer.parseInt(partRulesDetailsDto.minPriceValue().toString()))) {
+        < Integer.parseInt(partRulesDetailsDto.minPriceValue().toString()))) {
       errorsList.add(ruleValidationConfig.getErrorMessage());
 
       return new ServiceOrderValidationResultDto(false, errorsList);

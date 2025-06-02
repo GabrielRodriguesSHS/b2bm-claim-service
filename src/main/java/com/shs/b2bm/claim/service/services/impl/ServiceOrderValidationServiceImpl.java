@@ -8,10 +8,13 @@ import jakarta.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /** Implementation of ServiceOrderValidatorService for validating ServiceOrderProto messages. */
 @Service
+@Slf4j
 public class ServiceOrderValidationServiceImpl implements ServiceOrderValidationService {
 
   private final List<ServiceOrderRuleValidatorService> listRules;
@@ -28,10 +31,9 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
 
     ServiceOrderValidationResultDto rulesResult = this.rulesValidator(serviceOrder);
 
-    System.out.println(rulesResult.toString());
-
     if (!rulesResult.isValid()) {
-      System.out.println(rulesResult.errorsList().toString());
+      log.debug("Some rule failed.");
+      log.debug(rulesResult.errorsList().toString());
     }
   }
 

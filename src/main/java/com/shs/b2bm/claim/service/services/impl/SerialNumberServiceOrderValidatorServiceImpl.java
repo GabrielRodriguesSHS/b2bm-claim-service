@@ -32,12 +32,12 @@ public class SerialNumberServiceOrderValidatorServiceImpl
 
     RuleValidationConfig ruleValidationConfig =
         this.ruleValidationConfigService.findByRuleIdAndPartnerId(
-            Rule.PartsValidation.ordinal() + 1, 1);
+            Rule.SerialNumberValidation.ordinal() + 1, 1);
     SerialNumberRulesDetailsDto serialNumberRulesDetailsDto =
         this.serviceAttemptProtoMapper.jsonToSerialNumberRulesDetailsDto(ruleValidationConfig);
 
-    if (serviceOrder.getOrderNumber().length() >= serialNumberRulesDetailsDto.minLenght()
-        && serviceOrder.getOrderNumber().length() <= serialNumberRulesDetailsDto.maxLenght()) {
+    if (serviceOrder.getOrderNumber().length() < serialNumberRulesDetailsDto.minLength()
+        || serviceOrder.getOrderNumber().length() > serialNumberRulesDetailsDto.maxLength()) {
       errorsList.add(ruleValidationConfig.getErrorMessage());
 
       return new ServiceOrderValidationResultDto(false, errorsList);

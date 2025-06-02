@@ -15,7 +15,7 @@ public class RuleValidationConfigServiceImpl implements RuleValidationConfigServ
   RuleValidationConfigRepository ruleValidationConfigRepository;
 
   public RuleValidationConfigServiceImpl(
-      RuleValidationConfigRepository ruleValidationConfigRepository, ObjectMapper objectMapper) {
+      RuleValidationConfigRepository ruleValidationConfigRepository) {
     this.ruleValidationConfigRepository = ruleValidationConfigRepository;
   }
 
