@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
  * Implementation of RuleValidationConfigService for accessing rule validation configuration data.
  */
 @Service
+@Slf4j
 public class RuleValidationConfigServiceImpl implements RuleValidationConfigService {
 
   private final RuleValidationConfigRepository ruleValidationConfigRepository;
@@ -41,7 +43,8 @@ public class RuleValidationConfigServiceImpl implements RuleValidationConfigServ
   public ExtractValueFromJson getExtractRules(RuleValidationConfig ruleValidationConfig) {
     Map<String, Object> rules = new HashMap<>();
 
-    if (ruleValidationConfig.getParametersDetails() != null
+    if (ruleValidationConfig != null
+        && ruleValidationConfig.getParametersDetails() != null
         && !ruleValidationConfig.getParametersDetails().trim().isEmpty()) {
       try {
         TypeReference<Map<String, Object>> typeRef = new TypeReference<Map<String, Object>>() {};
@@ -49,7 +52,7 @@ public class RuleValidationConfigServiceImpl implements RuleValidationConfigServ
             objectMapper.readValue(ruleValidationConfig.getParametersDetails(), String.class);
         rules = objectMapper.readValue(json, typeRef);
       } catch (Exception e) {
-        System.err.println("Failed to parse validation rules: " + e.getMessage());
+        log.error("Failed to parse validation rules: {}", e.getMessage());
       }
     }
 

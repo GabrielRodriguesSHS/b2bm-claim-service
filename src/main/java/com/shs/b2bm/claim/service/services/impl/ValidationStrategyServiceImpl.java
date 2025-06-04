@@ -8,7 +8,9 @@ import com.shs.b2bm.claim.service.services.ValidationStrategyService;
 import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
 import java.util.List;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class ValidationStrategyServiceImpl implements ValidationStrategyService {
 
   private final RuleValidationConfigService ruleValidationConfigService;

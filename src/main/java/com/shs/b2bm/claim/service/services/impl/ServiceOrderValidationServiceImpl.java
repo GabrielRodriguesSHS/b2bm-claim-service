@@ -53,7 +53,6 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
    */
   private List<ErrorValidation> rulesValidator(
       ServiceOrder serviceOrder, List<RuleValidationConfig> listRulesConfig) {
-    boolean valid = true;
     List<ErrorValidation> listErrorValidation = new ArrayList<>(Collections.emptyList());
 
     for (ValidationStrategyService rule : listRulesImplementation) {
