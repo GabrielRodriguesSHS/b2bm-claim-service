@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
  * MapStruct mapper for converting between ServiceOrder proto and entity objects. Uses various
  * component mappers for handling nested objects and custom type conversions.
  */
-@Mapper(uses = {ServiceAttemptProtoMapper.class})
+@Mapper
 public interface ServiceOrderProtoMapper {
   ServiceOrderProtoMapper INSTANCE = Mappers.getMapper(ServiceOrderProtoMapper.class);
 

@@ -3,9 +3,7 @@ package com.shs.b2bm.claim.service.mappers;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
-import com.shs.b2bm.claim.service.kafka.proto.ServiceAttemptProto;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -25,16 +23,8 @@ class ServiceOrderProtoMapperTest {
     // Arrange
     var protoBuilder =
         ServiceOrderProto.newBuilder()
-            .setUnitNumber("UNIT001")
-            .setOrderNumber("SO001")
-            .setClosedDate("2024-03-15")
-            .addAllServiceAttempts(
-                List.of(
-                    ServiceAttemptProto.newBuilder()
-                        .setCallDate("2024-03-15")
-                        .setTechnicianEmployeeNumber("ABC123")
-                        .setCallCode("CC001")
-                        .build()));
+            .setServiceUnitNumber("UNIT001")
+            .setServiceOrderNumber("SO001");
     var proto = protoBuilder.build();
 
     // Act
@@ -42,15 +32,8 @@ class ServiceOrderProtoMapperTest {
 
     // Assert
     assertThat(entity).isNotNull();
-    assertThat(entity.getUnitNumber()).isEqualTo("UNIT001");
-    assertThat(entity.getOrderNumber()).isEqualTo("SO001");
-    assertThat(entity.getClosedDate()).isNotNull();
-
-    // Verify Service Attempts
-    assertThat(entity.getServiceAttemptsList()).hasSize(1);
-    assertThat(entity.getServiceAttemptsList().getFirst().getTechnicianEmployeeNumber())
-        .isEqualTo("ABC123");
-    assertThat(entity.getServiceAttemptsList().getFirst().getCallCode()).isEqualTo("CC001");
+    assertThat(entity.getServiceUnitNumber()).isEqualTo("UNIT001");
+    assertThat(entity.getServiceOrderNumber()).isEqualTo("SO001");
   }
 
   /**
@@ -68,20 +51,13 @@ class ServiceOrderProtoMapperTest {
 
     // Assert
     assertThat(entity).isNotNull();
-    assertThat(entity.getUnitNumber()).isEqualTo(""); // Proto defaults to empty string
-    assertThat(entity.getOrderNumber()).isEqualTo(""); // Proto defaults to empty string
-    assertThat(entity.getClosedDate())
-        .isEqualTo(""); // Custom date conversion returns null for empty string
-    assertThat(entity.getServiceAttemptsList()).isEmpty();
+    assertThat(entity.getServiceUnitNumber()).isEqualTo(""); // Proto defaults to empty string
+    assertThat(entity.getServiceOrderNumber()).isEqualTo(""); // Proto defaults to empty string
   }
 
   /** Tests that mapping a null proto returns null. */
   @Test
   void toEntity_WithNullProto_ShouldMapToDefaults() {
-    // Arrange
-    var protoBuilder = ServiceOrderProto.newBuilder();
-    var proto = protoBuilder.build();
-
     // Act
     ServiceOrder entity = mapper.toEntity(null);
 

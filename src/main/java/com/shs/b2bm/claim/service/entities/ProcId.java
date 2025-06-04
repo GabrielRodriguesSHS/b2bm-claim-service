@@ -9,8 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,12 +17,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-/**
- * Represents an attempt made to service a particular order. Contains information about a specific
- * service attempt including call details, technician information, and time tracking.
- */
 @Entity
-@Table(name = "service_attempt")
+@Table
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -32,31 +26,16 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServiceAttempt extends BaseEntity {
+public class ProcId extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long serviceAttemptId;
-
-  @Temporal(TemporalType.DATE)
-  private String callDate;
-
-  @Column private String technicianEmployeeNumber;
-
-  @Column private String callCode;
-
-  @Column private String startTime;
-
-  @Column private String endTime;
-
-  @Column private String transitTimeInMinutes;
-
-  @Column private String technicianComment1;
-
-  @Column private String technicianComment2;
+  private Long procId;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "service_order_id")
+  @JoinColumn(name = "obligor_id")
   @ToString.Exclude
-  private ServiceOrder serviceOrder;
+  private Obligor obligorId;
+
+  @Column private String productName;
 }
