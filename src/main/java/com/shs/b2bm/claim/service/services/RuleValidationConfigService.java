@@ -1,5 +1,6 @@
 package com.shs.b2bm.claim.service.services;
 
+import com.shs.b2bm.claim.service.dtos.RuleValidationConfigDto;
 import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 
 /** Service interface for accessing rule validation configuration data. */
@@ -12,5 +13,5 @@ public interface RuleValidationConfigService {
    * @param partnerId the partner identifier
    * @return the matching RuleValidationConfig, or null if not found
    */
-  RuleValidationConfig findByRuleIdAndPartnerId(Integer ruleId, Integer partnerId);
+  RuleValidationConfigDto findByRuleIdAndPartnerId(Integer ruleId, Integer partnerId);
 }

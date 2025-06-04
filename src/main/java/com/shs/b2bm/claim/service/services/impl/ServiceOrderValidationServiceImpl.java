@@ -1,8 +1,10 @@
 package com.shs.b2bm.claim.service.services.impl;
 
 import com.shs.b2bm.claim.service.dtos.ServiceOrderValidationResultDto;
+import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
-import com.shs.b2bm.claim.service.services.ServiceOrderRuleValidatorService;
+import com.shs.b2bm.claim.service.mappers.ServiceOrderProtoMapper;
+import com.shs.b2bm.claim.service.services.ValidationStrategyService;
 import com.shs.b2bm.claim.service.services.ServiceOrderValidationService;
 import jakarta.validation.ValidationException;
 import java.util.ArrayList;
@@ -17,18 +19,21 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ServiceOrderValidationServiceImpl implements ServiceOrderValidationService {
 
-  private final List<ServiceOrderRuleValidatorService> listRules;
+  private final List<ValidationStrategyService> listRules;
+  private final ServiceOrderProtoMapper serviceOrderProtoMapper;
 
-  public ServiceOrderValidationServiceImpl(List<ServiceOrderRuleValidatorService> listRules) {
+  public ServiceOrderValidationServiceImpl(List<ValidationStrategyService> listRules) {
     this.listRules = listRules;
+    this.serviceOrderProtoMapper = ServiceOrderProtoMapper.INSTANCE;
   }
 
   @Override
-  public void validateMessage(ServiceOrderProto serviceOrder) {
-    if (serviceOrder.getOrderNumber() == null || serviceOrder.getOrderNumber().isEmpty()) {
+  public void validateMessage(ServiceOrderProto serviceOrderProto) {
+    if (serviceOrderProto.getOrderNumber() == null || serviceOrderProto.getOrderNumber().isEmpty()) {
       throw new ValidationException("Service order number is required");
     }
 
+    ServiceOrder serviceOrder = serviceOrderProtoMapper.toEntity(serviceOrderProto);
     ServiceOrderValidationResultDto rulesResult = this.rulesValidator(serviceOrder);
 
     if (!rulesResult.isValid()) {
@@ -43,12 +48,12 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
    * @param serviceOrder The service order to validate
    * @throws ValidationException if any rule fails
    */
-  private ServiceOrderValidationResultDto rulesValidator(ServiceOrderProto serviceOrder) {
+  private ServiceOrderValidationResultDto rulesValidator(ServiceOrder serviceOrder) {
     boolean valid = true;
     List<String> errorsList = new ArrayList<>(Collections.emptyList());
 
-    for (ServiceOrderRuleValidatorService rule : listRules) {
-      ServiceOrderValidationResultDto ruleResult = rule.validate(serviceOrder);
+    for (ValidationStrategyService rule : listRules) {
+      ServiceOrderValidationResultDto ruleResult = rule.validate(serviceOrder, 1);
       if (!ruleResult.isValid()) {
         errorsList.addAll(ruleResult.errorsList());
         valid = false;
