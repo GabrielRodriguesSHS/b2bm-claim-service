@@ -30,7 +30,7 @@ public class ValidationSerialNumberServiceImpl extends ValidationStrategyService
     int minLength = ruleValidationConfigDto.getIntRule("minLength", 0);
     int maxLength = ruleValidationConfigDto.getIntRule("maxLength", Integer.MAX_VALUE);
 
-    if (serviceOrder.getOrderNumber().length() < minLength || serviceOrder.getOrderNumber().length() > maxLength) {
+    if (serviceOrder.getServiceOrderNumber().length() < minLength || serviceOrder.getServiceOrderNumber().length() > maxLength) {
       errorsList.add(ruleValidationConfigDto.errorMessage());
 
       return new ServiceOrderValidationResultDto(false, errorsList);

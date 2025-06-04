@@ -29,11 +29,11 @@ public class ValidationPartsServiceImpl extends ValidationStrategyServiceImpl {
 
     int minPriceValue = ruleValidationConfigDto.getIntRule("minPriceValue", 0);
 
-    if (serviceOrder.getServiceAttemptsList().size() < minPriceValue) {
+    /*if (serviceOrder.getServiceAttemptsList().size() < minPriceValue) {
       errorsList.add(ruleValidationConfigDto.errorMessage());
 
       return new ServiceOrderValidationResultDto(false, errorsList);
-    }
+    }*/
 
     return new ServiceOrderValidationResultDto(true, errorsList);
   }

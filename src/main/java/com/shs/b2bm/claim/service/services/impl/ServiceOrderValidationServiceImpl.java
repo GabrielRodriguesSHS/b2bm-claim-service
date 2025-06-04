@@ -29,7 +29,7 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
 
   @Override
   public void validateMessage(ServiceOrderProto serviceOrderProto) {
-    if (serviceOrderProto.getOrderNumber() == null || serviceOrderProto.getOrderNumber().isEmpty()) {
+    if (serviceOrderProto.getServiceOrderNumber() == null || serviceOrderProto.getServiceOrderNumber().isEmpty()) {
       throw new ValidationException("Service order number is required");
     }
 
