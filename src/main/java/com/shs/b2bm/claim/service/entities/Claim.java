@@ -11,7 +11,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +23,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-/**
- * Represents a service order entity in the system. Contains information about a specific service
- * order including unit number, service order number, and related service attempts.
- */
 @Entity
 @Table
 @Getter
@@ -37,37 +32,25 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServiceOrder extends BaseEntity {
+public class Claim extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long serviceOrderId;
+  private Long claimId;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "job_code_id")
+  @JoinColumn(name = "service_order_id")
   @ToString.Exclude
-  private JobCode jobCode;
+  private ServiceOrder serviceOrder;
 
-  @NotBlank(message = "Service unit number cannot be blank")
-  @Column(nullable = false)
-  private String serviceUnitNumber;
+  @Column private String claimNumber;
 
-  @NotBlank(message = "Service order number cannot be blank")
-  @Column(nullable = false)
-  private String serviceOrderNumber;
+  @Column private LocalDate claimDate;
 
-  @Column private LocalDate serviceOrderCreatedDate;
+  @Column private String claimStatus;
 
-  @Column private LocalDate serviceOrderClosedDate;
-
-  @Column private String statusCode;
-
-  @Column private String merchandiseModelNumber;
-
-  @Column private String merchandiseSerialNumber;
-
-  @OneToMany(mappedBy = "serviceOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @ToString.Exclude
   @Builder.Default
-  private List<Claim> claims = new ArrayList<>();
+  private List<Part> parts = new ArrayList<>();
 }

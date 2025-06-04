@@ -3,7 +3,7 @@ package com.shs.b2bm.claim.service.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,19 +28,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 public abstract class BaseEntity {
 
-  @CreatedDate
   @Column(nullable = false, updatable = false)
-  private LocalDateTime createdDate;
-
-  @LastModifiedDate
-  @Column(nullable = false)
-  private LocalDateTime modifiedDate;
-
   @CreatedBy
-  @Column(nullable = false, updatable = false)
   private String createdBy;
 
-  @LastModifiedBy
+  @Column(nullable = false, updatable = false)
+  @CreatedDate
+  private Instant createdDate;
+
   @Column(nullable = false)
+  @LastModifiedBy
   private String lastModifiedBy;
+
+  @Column(nullable = false)
+  @LastModifiedDate
+  private Instant lastModifiedDate;
 }
