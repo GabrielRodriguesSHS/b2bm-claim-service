@@ -46,7 +46,9 @@ public class ServiceOrderKafkaConsumer {
     try {
       this.serviceOrderValidatorService.validateMessage(serviceOrder);
 
-      log.info("Successfully processed and saved ServiceOrder: {}", serviceOrder.getOrderNumber());
+      log.info(
+          "Successfully processed and saved ServiceOrder: {}",
+          serviceOrder.getServiceOrderNumber());
     } catch (Exception e) {
       throw new KafkaException("Failed to process Service Order message", e);
     }

@@ -2,12 +2,8 @@ package com.shs.b2bm.claim.service.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.shs.b2bm.claim.service.entities.ServiceAttempt;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
-import com.shs.b2bm.claim.service.entities.ServiceOrderDataImportAuditInformation;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -33,12 +29,12 @@ class ServiceOrderRepositoryTest {
   void whenSaveServiceOrder_thenPersistedCorrectly() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setOrderNumber("ORD-12345");
-    order.setCreatedDate(LocalDateTime.now());
-    order.setModifiedDate(LocalDateTime.now());
+    order.setServiceOrderNumber("ORD-12345");
+    order.setCreatedDate(Instant.now());
+    order.setLastModifiedDate(Instant.now());
     order.setCreatedBy("b2bm-claim-service");
     order.setLastModifiedBy("b2bm-claim-service");
-    order.setUnitNumber("UNIT-001");
+    order.setServiceUnitNumber("UNIT-001");
 
     // Act
     ServiceOrder savedOrder = repository.save(order);
@@ -54,12 +50,12 @@ class ServiceOrderRepositoryTest {
   void whenFindById_thenReturnServiceOrder() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setOrderNumber("ORD-12345");
-    order.setCreatedDate(LocalDateTime.now());
-    order.setModifiedDate(LocalDateTime.now());
+    order.setServiceOrderNumber("ORD-12345");
+    order.setCreatedDate(Instant.now());
+    order.setLastModifiedDate(Instant.now());
     order.setCreatedBy("b2bm-claim-service");
     order.setLastModifiedBy("b2bm-claim-service");
-    order.setUnitNumber("UNIT-001");
+    order.setServiceUnitNumber("UNIT-001");
     Long id = entityManager.persistAndGetId(order, Long.class);
     entityManager.flush();
 
@@ -68,7 +64,7 @@ class ServiceOrderRepositoryTest {
 
     // Assert
     assertThat(found).isPresent();
-    assertThat(found.get().getOrderNumber()).isEqualTo("ORD-12345");
+    assertThat(found.get().getServiceOrderNumber()).isEqualTo("ORD-12345");
   }
 
   /** Test that all ServiceOrders can be retrieved from the repository. */
@@ -76,20 +72,20 @@ class ServiceOrderRepositoryTest {
   void whenFindAll_thenReturnAllServiceOrders() {
     // Arrange
     ServiceOrder order1 = new ServiceOrder();
-    order1.setOrderNumber("ORD-12345");
-    order1.setCreatedDate(LocalDateTime.now());
-    order1.setModifiedDate(LocalDateTime.now());
+    order1.setServiceOrderNumber("ORD-12345");
+    order1.setCreatedDate(Instant.now());
+    order1.setLastModifiedDate(Instant.now());
     order1.setCreatedBy("b2bm-claim-service");
     order1.setLastModifiedBy("b2bm-claim-service");
-    order1.setUnitNumber("UNIT-001");
+    order1.setServiceUnitNumber("UNIT-001");
 
     ServiceOrder order2 = new ServiceOrder();
-    order2.setOrderNumber("ORD-67890");
-    order2.setCreatedDate(LocalDateTime.now());
-    order2.setModifiedDate(LocalDateTime.now());
+    order2.setServiceOrderNumber("ORD-67890");
+    order2.setCreatedDate(Instant.now());
+    order2.setLastModifiedDate(Instant.now());
     order2.setCreatedBy("b2bm-claim-service");
     order2.setLastModifiedBy("b2bm-claim-service");
-    order2.setUnitNumber("UNIT-002");
+    order2.setServiceUnitNumber("UNIT-002");
 
     entityManager.persist(order1);
     entityManager.persist(order2);
@@ -101,7 +97,7 @@ class ServiceOrderRepositoryTest {
     // Assert
     assertThat(orders).hasSize(2);
     assertThat(orders)
-        .extracting(ServiceOrder::getOrderNumber)
+        .extracting(ServiceOrder::getServiceOrderNumber)
         .containsExactlyInAnyOrder("ORD-12345", "ORD-67890");
   }
 
@@ -110,10 +106,10 @@ class ServiceOrderRepositoryTest {
   void whenUpdateServiceOrder_thenPersistedCorrectly() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setOrderNumber("ORD-12345");
-    order.setUnitNumber("UNIT-001");
-    order.setCreatedDate(LocalDateTime.now());
-    order.setModifiedDate(LocalDateTime.now());
+    order.setServiceOrderNumber("ORD-12345");
+    order.setServiceUnitNumber("UNIT-001");
+    order.setCreatedDate(Instant.now());
+    order.setLastModifiedDate(Instant.now());
     order.setCreatedBy("b2bm-claim-service");
     order.setLastModifiedBy("b2bm-claim-service");
     Long id = entityManager.persistAndGetId(order, Long.class);
@@ -121,12 +117,12 @@ class ServiceOrderRepositoryTest {
 
     // Act
     ServiceOrder savedOrder = repository.findById(id).get();
-    savedOrder.setOrderNumber("ORD-UPDATED");
+    savedOrder.setServiceOrderNumber("ORD-UPDATED");
     repository.save(savedOrder);
 
     // Assert
     ServiceOrder updatedOrder = entityManager.find(ServiceOrder.class, id);
-    assertThat(updatedOrder.getOrderNumber()).isEqualTo("ORD-UPDATED");
+    assertThat(updatedOrder.getServiceOrderNumber()).isEqualTo("ORD-UPDATED");
   }
 
   /** Test that deleting a ServiceOrder removes it from the database. */
@@ -134,10 +130,10 @@ class ServiceOrderRepositoryTest {
   void whenDeleteServiceOrder_thenRemoved() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setOrderNumber("ORD-12345");
-    order.setUnitNumber("UNIT-001");
-    order.setCreatedDate(LocalDateTime.now());
-    order.setModifiedDate(LocalDateTime.now());
+    order.setServiceOrderNumber("ORD-12345");
+    order.setServiceUnitNumber("UNIT-001");
+    order.setCreatedDate(Instant.now());
+    order.setLastModifiedDate(Instant.now());
     order.setCreatedBy("b2bm-claim-service");
     order.setLastModifiedBy("b2bm-claim-service");
     Long id = entityManager.persistAndGetId(order, Long.class);
@@ -156,10 +152,10 @@ class ServiceOrderRepositoryTest {
   void whenServiceOrderSaved_thenAuditingFieldsAreSet() {
     // Arrange
     ServiceOrder order = new ServiceOrder();
-    order.setOrderNumber("ORD-AUDIT");
-    order.setUnitNumber("UNIT-AUDIT");
-    order.setCreatedDate(LocalDateTime.now());
-    order.setModifiedDate(LocalDateTime.now());
+    order.setServiceOrderNumber("ORD-AUDIT");
+    order.setServiceUnitNumber("UNIT-AUDIT");
+    order.setCreatedDate(Instant.now());
+    order.setLastModifiedDate(Instant.now());
     order.setCreatedBy("b2bm-claim-service");
     order.setLastModifiedBy("b2bm-claim-service");
 
@@ -169,111 +165,10 @@ class ServiceOrderRepositoryTest {
 
     // Assert
     assertThat(savedOrder.getCreatedDate()).isNotNull();
-    assertThat(savedOrder.getModifiedDate()).isNotNull();
+    assertThat(savedOrder.getLastModifiedDate()).isNotNull();
     assertThat(savedOrder.getCreatedBy()).isNotNull();
     assertThat(savedOrder.getLastModifiedBy()).isNotNull();
     assertThat(savedOrder.getCreatedBy()).isEqualTo("b2bm-claim-service");
     assertThat(savedOrder.getLastModifiedBy()).isEqualTo("b2bm-claim-service");
-  }
-
-  /**
-   * Test that the relationship between ServiceOrder and ServiceOrderDataImportAuditInformation is
-   * persisted.
-   */
-  @Test
-  void whenServiceOrderSavedWithAuditInfo_thenRelationshipIsPersisted() {
-    // Arrange
-    ServiceOrderDataImportAuditInformation auditInfo = new ServiceOrderDataImportAuditInformation();
-    auditInfo.setGeneratedBy("Test System");
-    auditInfo.setCreatedDate(LocalDateTime.now());
-    auditInfo.setModifiedDate(LocalDateTime.now());
-    auditInfo.setCreatedBy("b2bm-claim-service");
-    auditInfo.setLastModifiedBy("b2bm-claim-service");
-    auditInfo.setTotalNumberOfRecords(100);
-    entityManager.persist(auditInfo);
-
-    ServiceOrder order = new ServiceOrder();
-    order.setOrderNumber("ORD-WITH-AUDIT");
-    order.setUnitNumber("UNIT-WITH-AUDIT");
-    order.setCreatedDate(LocalDateTime.now());
-    order.setModifiedDate(LocalDateTime.now());
-    order.setCreatedBy("b2bm-claim-service");
-    order.setLastModifiedBy("b2bm-claim-service");
-    order.setServiceOrderDataImportAuditInformation(auditInfo);
-
-    // Act
-    ServiceOrder savedOrder = repository.save(order);
-    entityManager.flush();
-    entityManager.clear(); // Clear persistence context to force reload
-
-    // Assert
-    ServiceOrder fetchedOrder = repository.findById(savedOrder.getServiceOrderId()).orElseThrow();
-    assertThat(fetchedOrder.getServiceOrderDataImportAuditInformation()).isNotNull();
-    assertThat(
-            fetchedOrder
-                .getServiceOrderDataImportAuditInformation()
-                .getServiceOrderDataImportAuditInformationId())
-        .isEqualTo(auditInfo.getServiceOrderDataImportAuditInformationId());
-    assertThat(fetchedOrder.getServiceOrderDataImportAuditInformation().getGeneratedBy())
-        .isEqualTo("Test System");
-  }
-
-  /**
-   * Test that cascading works when saving a ServiceOrder with ServiceAttempts and verifies
-   * bidirectional relationship.
-   */
-  @Test
-  void whenServiceOrderSavedWithServiceAttempts_thenCascadingWorks() {
-    // Arrange
-    ServiceOrder order = new ServiceOrder();
-    order.setOrderNumber("ORD-WITH-ATTEMPTS");
-    order.setUnitNumber("UNIT-WITH-ATTEMPTS");
-    order.setCreatedDate(LocalDateTime.now());
-    order.setModifiedDate(LocalDateTime.now());
-    order.setCreatedBy("b2bm-claim-service");
-    order.setLastModifiedBy("b2bm-claim-service");
-
-    ServiceAttempt attempt1 = new ServiceAttempt();
-    attempt1.setCallCode("CODE-123");
-    attempt1.setTechnicianEmployeeNumber("ABC123");
-    attempt1.setCallDate(LocalDate.now().toString());
-    attempt1.setCreatedDate(LocalDateTime.now());
-    attempt1.setModifiedDate(LocalDateTime.now());
-    attempt1.setCreatedBy("b2bm-claim-service");
-    attempt1.setLastModifiedBy("b2bm-claim-service");
-    attempt1.setServiceOrder(order);
-
-    ServiceAttempt attempt2 = new ServiceAttempt();
-    attempt2.setCallCode("CODE-456");
-    attempt2.setTechnicianEmployeeNumber("ABC123");
-    attempt2.setCallDate(LocalDate.now().toString());
-    attempt2.setCreatedDate(LocalDateTime.now());
-    attempt2.setModifiedDate(LocalDateTime.now());
-    attempt2.setCreatedBy("b2bm-claim-service");
-    attempt2.setLastModifiedBy("b2bm-claim-service");
-    attempt2.setServiceOrder(order);
-
-    List<ServiceAttempt> attempts = new ArrayList<>();
-    attempts.add(attempt1);
-    attempts.add(attempt2);
-    order.setServiceAttemptsList(attempts);
-
-    // Act
-    ServiceOrder savedOrder = repository.save(order);
-    entityManager.flush();
-    entityManager.clear(); // Clear persistence context to force reload
-
-    // Assert
-    ServiceOrder fetchedOrder = repository.findById(savedOrder.getServiceOrderId()).orElseThrow();
-    assertThat(fetchedOrder.getServiceAttemptsList()).hasSize(2);
-    assertThat(fetchedOrder.getServiceAttemptsList().get(0).getServiceAttemptId()).isNotNull();
-    assertThat(fetchedOrder.getServiceAttemptsList().get(1).getServiceAttemptId()).isNotNull();
-
-    // Verify the relationship is bidirectional
-    ServiceAttempt fetchedAttempt =
-        entityManager.find(
-            ServiceAttempt.class,
-            fetchedOrder.getServiceAttemptsList().get(0).getServiceAttemptId());
-    assertThat(fetchedAttempt.getServiceOrder()).isEqualTo(fetchedOrder);
   }
 }

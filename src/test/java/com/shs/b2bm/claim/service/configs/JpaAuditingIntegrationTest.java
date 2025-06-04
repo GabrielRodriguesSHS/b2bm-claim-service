@@ -24,7 +24,10 @@ class JpaAuditingIntegrationTest {
   void auditing_ShouldSetAuditFieldsCorrectly() {
     // Arrange
     ServiceOrder serviceOrder =
-        ServiceOrder.builder().unitNumber("UNIT-INT-001").orderNumber("SO-INT-001").build();
+        ServiceOrder.builder()
+            .serviceUnitNumber("UNIT-INT-001")
+            .serviceOrderNumber("SO-INT-001")
+            .build();
 
     // Act
     entityManager.persist(serviceOrder);
@@ -38,7 +41,7 @@ class JpaAuditingIntegrationTest {
     // Assert
     assertThat(persistedOrder).isNotNull();
     assertThat(persistedOrder.getCreatedDate()).isNotNull();
-    assertThat(persistedOrder.getModifiedDate()).isNotNull();
+    assertThat(persistedOrder.getLastModifiedDate()).isNotNull();
     assertThat(persistedOrder.getCreatedBy()).isEqualTo("b2bm-claim-service");
     assertThat(persistedOrder.getLastModifiedBy()).isEqualTo("b2bm-claim-service");
   }
@@ -48,7 +51,10 @@ class JpaAuditingIntegrationTest {
   void auditing_ShouldUpdateLastModifiedFields() {
     // Arrange
     ServiceOrder serviceOrder =
-        ServiceOrder.builder().unitNumber("UNIT-INT-002").orderNumber("SO-INT-002").build();
+        ServiceOrder.builder()
+            .serviceUnitNumber("UNIT-INT-002")
+            .serviceOrderNumber("SO-INT-002")
+            .build();
 
     // Act - First save
     entityManager.persist(serviceOrder);
@@ -58,7 +64,7 @@ class JpaAuditingIntegrationTest {
     // Retrieve and modify
     ServiceOrder persistedOrder =
         entityManager.find(ServiceOrder.class, serviceOrder.getServiceOrderId());
-    persistedOrder.setUnitNumber("UPDATED-UNIT-002");
+    persistedOrder.setServiceUnitNumber("UPDATED-UNIT-002");
 
     // Save changes
     entityManager.merge(persistedOrder);
@@ -71,13 +77,13 @@ class JpaAuditingIntegrationTest {
 
     // Assert
     assertThat(updatedOrder).isNotNull();
-    assertThat(updatedOrder.getUnitNumber()).isEqualTo("UPDATED-UNIT-002");
+    assertThat(updatedOrder.getServiceUnitNumber()).isEqualTo("UPDATED-UNIT-002");
     assertThat(updatedOrder.getCreatedDate()).isNotNull();
-    assertThat(updatedOrder.getModifiedDate()).isNotNull();
+    assertThat(updatedOrder.getLastModifiedDate()).isNotNull();
     assertThat(updatedOrder.getCreatedBy()).isEqualTo("b2bm-claim-service");
     assertThat(updatedOrder.getLastModifiedBy()).isEqualTo("b2bm-claim-service");
 
     // Modified date should be after created date after an update
-    assertThat(updatedOrder.getModifiedDate()).isAfterOrEqualTo(updatedOrder.getCreatedDate());
+    assertThat(updatedOrder.getLastModifiedDate()).isAfterOrEqualTo(updatedOrder.getCreatedDate());
   }
 }
