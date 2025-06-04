@@ -3,7 +3,6 @@ package com.shs.b2bm.claim.service.services;
 import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
 import jakarta.validation.ValidationException;
-
 import java.util.List;
 
 /** Service interface for validating ServiceOrderProto messages. */

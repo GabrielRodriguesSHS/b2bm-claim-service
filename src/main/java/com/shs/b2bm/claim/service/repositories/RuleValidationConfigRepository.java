@@ -1,11 +1,9 @@
 package com.shs.b2bm.claim.service.repositories;
 
 import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Repository interface for {@link RuleValidationConfig} entity. Provides standard CRUD operations

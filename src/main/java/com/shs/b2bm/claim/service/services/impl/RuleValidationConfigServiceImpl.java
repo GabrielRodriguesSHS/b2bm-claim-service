@@ -6,12 +6,11 @@ import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.repositories.RuleValidationConfigRepository;
 import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
 import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of RuleValidationConfigService for accessing rule validation configuration data.
@@ -22,7 +21,8 @@ public class RuleValidationConfigServiceImpl implements RuleValidationConfigServ
   private final RuleValidationConfigRepository ruleValidationConfigRepository;
   private final ObjectMapper objectMapper;
 
-  public RuleValidationConfigServiceImpl(RuleValidationConfigRepository ruleValidationConfigRepository, ObjectMapper objectMapper) {
+  public RuleValidationConfigServiceImpl(
+      RuleValidationConfigRepository ruleValidationConfigRepository, ObjectMapper objectMapper) {
     this.ruleValidationConfigRepository = ruleValidationConfigRepository;
     this.objectMapper = objectMapper;
   }
@@ -41,10 +41,12 @@ public class RuleValidationConfigServiceImpl implements RuleValidationConfigServ
   public ExtractValueFromJson getExtractRules(RuleValidationConfig ruleValidationConfig) {
     Map<String, Object> rules = new HashMap<>();
 
-    if (ruleValidationConfig.getParametersDetails() != null && !ruleValidationConfig.getParametersDetails().trim().isEmpty()) {
+    if (ruleValidationConfig.getParametersDetails() != null
+        && !ruleValidationConfig.getParametersDetails().trim().isEmpty()) {
       try {
         TypeReference<Map<String, Object>> typeRef = new TypeReference<Map<String, Object>>() {};
-        String json = objectMapper.readValue(ruleValidationConfig.getParametersDetails(), String.class);
+        String json =
+            objectMapper.readValue(ruleValidationConfig.getParametersDetails(), String.class);
         rules = objectMapper.readValue(json, typeRef);
       } catch (Exception e) {
         System.err.println("Failed to parse validation rules: " + e.getMessage());
@@ -53,5 +55,4 @@ public class RuleValidationConfigServiceImpl implements RuleValidationConfigServ
 
     return new ExtractValueFromJson(rules);
   }
-
 }

@@ -4,6 +4,7 @@ import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
 import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
 import com.shs.b2bm.claim.service.services.ServiceOrderValidationService;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.KafkaException;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -11,8 +12,6 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Kafka consumer service for processing ServiceOrder messages. Handles the consumption and
@@ -27,7 +26,9 @@ public class ServiceOrderKafkaConsumer {
 
   private final RuleValidationConfigService ruleValidationConfigService;
 
-  public ServiceOrderKafkaConsumer(ServiceOrderValidationService serviceOrderValidationService, RuleValidationConfigService ruleValidationConfigService) {
+  public ServiceOrderKafkaConsumer(
+      ServiceOrderValidationService serviceOrderValidationService,
+      RuleValidationConfigService ruleValidationConfigService) {
     this.serviceOrderValidationService = serviceOrderValidationService;
     this.ruleValidationConfigService = ruleValidationConfigService;
   }
@@ -52,7 +53,8 @@ public class ServiceOrderKafkaConsumer {
       @Header(KafkaHeaders.OFFSET) Long offset) {
     try {
       Integer partnerId = 1;
-      List<RuleValidationConfig> listRules = ruleValidationConfigService.findByRuleIdAndPartnerId(partnerId);
+      List<RuleValidationConfig> listRules =
+          ruleValidationConfigService.findByRuleIdAndPartnerId(partnerId);
 
       this.serviceOrderValidationService.validateMessage(serviceOrder, listRules);
 

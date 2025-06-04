@@ -5,7 +5,6 @@ import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.enums.Rule;
 import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
-
 import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +22,17 @@ public class ValidationPartsServiceImpl extends ValidationStrategyServiceImpl {
   }
 
   @Override
-  public ErrorValidation executeValidation(ServiceOrder serviceOrder, RuleValidationConfig ruleValidationConfig, ExtractValueFromJson extractValueFromJson) {
+  public ErrorValidation executeValidation(
+      ServiceOrder serviceOrder,
+      RuleValidationConfig ruleValidationConfig,
+      ExtractValueFromJson extractValueFromJson) {
     ErrorValidation errorValidation = new ErrorValidation();
 
-    int minPriceValue = extractValueFromJson.getIntRule("minPriceValue", 0);
+    int maxPartsPerClaim = extractValueFromJson.getIntRule("maxPartsPerClaim", 1);
 
-    /*if (serviceOrder.get < minPriceValue) {
-      errorsList.add(ruleValidationConfigDto.errorMessage());
-
-      return new ServiceOrderValidationResultDto(false, errorsList);
-    }*/
+    if (serviceOrder.getClaims().stream().anyMatch(c -> c.getParts().size() > maxPartsPerClaim)) {
+      errorValidation.setErrorMessage(ruleValidationConfig.getErrorMessage());
+    }
 
     return errorValidation;
   }
