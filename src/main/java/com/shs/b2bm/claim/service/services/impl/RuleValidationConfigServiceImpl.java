@@ -2,15 +2,16 @@ package com.shs.b2bm.claim.service.services.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shs.b2bm.claim.service.dtos.RuleValidationConfigDto;
 import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.repositories.RuleValidationConfigRepository;
 import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
+import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Implementation of RuleValidationConfigService for accessing rule validation configuration data.
@@ -21,30 +22,23 @@ public class RuleValidationConfigServiceImpl implements RuleValidationConfigServ
   private final RuleValidationConfigRepository ruleValidationConfigRepository;
   private final ObjectMapper objectMapper;
 
-  public RuleValidationConfigServiceImpl(
-      RuleValidationConfigRepository ruleValidationConfigRepository, ObjectMapper objectMapper) {
+  public RuleValidationConfigServiceImpl(RuleValidationConfigRepository ruleValidationConfigRepository, ObjectMapper objectMapper) {
     this.ruleValidationConfigRepository = ruleValidationConfigRepository;
     this.objectMapper = objectMapper;
   }
 
   @Override
-  public RuleValidationConfigDto findByRuleIdAndPartnerId(Integer ruleId, Integer partnerId) {
-    Optional<RuleValidationConfig> partnerRuleValidationConfig =  this.ruleValidationConfigRepository.findByRuleIdAndPartnerId(ruleId, partnerId);
+  public List<RuleValidationConfig> findByRuleIdAndPartnerId(Integer partnerId) {
+    List<RuleValidationConfig> listRules = new ArrayList<RuleValidationConfig>();
 
-    if (partnerRuleValidationConfig.isPresent()) {
-      return toRuleValidationConfigDto(partnerRuleValidationConfig.get());
-    }
+    listRules.addAll(this.ruleValidationConfigRepository.findByPartnerId(partnerId));
+    listRules.addAll(this.ruleValidationConfigRepository.findByPartnerId(null));
 
-    Optional<RuleValidationConfig> globalRuleValidationConfig =  this.ruleValidationConfigRepository.findByRuleIdAndPartnerId(ruleId, null);
-
-    if (globalRuleValidationConfig.isPresent()) {
-      return toRuleValidationConfigDto(globalRuleValidationConfig.get());
-    }
-
-    return RuleValidationConfigDto.defaultConfig();
+    return listRules;
   }
 
-  private RuleValidationConfigDto toRuleValidationConfigDto(RuleValidationConfig ruleValidationConfig) {
+  @Override
+  public ExtractValueFromJson getExtractRules(RuleValidationConfig ruleValidationConfig) {
     Map<String, Object> rules = new HashMap<>();
 
     if (ruleValidationConfig.getParametersDetails() != null && !ruleValidationConfig.getParametersDetails().trim().isEmpty()) {
@@ -57,6 +51,7 @@ public class RuleValidationConfigServiceImpl implements RuleValidationConfigServ
       }
     }
 
-    return new RuleValidationConfigDto(rules, ruleValidationConfig.getErrorMessage());
+    return new ExtractValueFromJson(rules);
   }
+
 }

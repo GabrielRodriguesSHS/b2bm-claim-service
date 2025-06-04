@@ -1,17 +1,20 @@
 package com.shs.b2bm.claim.service.services;
 
-import com.shs.b2bm.claim.service.dtos.RuleValidationConfigDto;
 import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
+import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
+
+import java.util.List;
 
 /** Service interface for accessing rule validation configuration data. */
 public interface RuleValidationConfigService {
 
   /**
-   * Finds the rule validation configuration for the given rule and partner IDs.
+   * Finds the rules validation configuration.
    *
-   * @param ruleId the rule identifier
    * @param partnerId the partner identifier
    * @return the matching RuleValidationConfig, or null if not found
    */
-  RuleValidationConfigDto findByRuleIdAndPartnerId(Integer ruleId, Integer partnerId);
+  List<RuleValidationConfig> findByRuleIdAndPartnerId(Integer partnerId);
+
+  ExtractValueFromJson getExtractRules(RuleValidationConfig ruleValidationConfig);
 }

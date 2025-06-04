@@ -1,20 +1,14 @@
-package com.shs.b2bm.claim.service.dtos;
+package com.shs.b2bm.claim.service.utils;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public record RuleValidationConfigDto(Map<String, Object> rules, String errorMessage) {
+public class ExtractValueFromJson {
+    private final Map<String, Object> rules;
 
-    public RuleValidationConfigDto(Map<String, Object> rules, String errorMessage) {
+    public ExtractValueFromJson(Map<String, Object> rules) {
         this.rules = rules != null ? rules : new HashMap<>();
-        this.errorMessage = errorMessage;
-    }
-
-    public static RuleValidationConfigDto defaultConfig() {
-        Map<String, Object> defaultRules = new HashMap<>();
-
-        return new RuleValidationConfigDto(defaultRules, "");
     }
 
     public String getStringRule(String key, String defaultValue) {
@@ -62,5 +56,6 @@ public record RuleValidationConfigDto(Map<String, Object> rules, String errorMes
         }
         return defaultValue;
     }
+
 
 }

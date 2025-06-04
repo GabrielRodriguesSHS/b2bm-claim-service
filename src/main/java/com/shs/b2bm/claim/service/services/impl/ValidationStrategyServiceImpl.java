@@ -1,24 +1,41 @@
 package com.shs.b2bm.claim.service.services.impl;
 
-import com.shs.b2bm.claim.service.dtos.RuleValidationConfigDto;
-import com.shs.b2bm.claim.service.dtos.ServiceOrderValidationResultDto;
+import com.shs.b2bm.claim.service.entities.ErrorValidation;
+import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
 import com.shs.b2bm.claim.service.services.ValidationStrategyService;
+import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
+
+import java.util.List;
+import java.util.Objects;
 
 public abstract class ValidationStrategyServiceImpl implements ValidationStrategyService {
+
     private final RuleValidationConfigService ruleValidationConfigService;
 
-    public ValidationStrategyServiceImpl(RuleValidationConfigService ruleValidationConfigService) {
+    public ValidationStrategyServiceImpl(RuleValidationConfigService ruleValidationConfigService){
         this.ruleValidationConfigService = ruleValidationConfigService;
     }
 
     @Override
-    public final ServiceOrderValidationResultDto validate(ServiceOrder serviceOrder, Integer partnerId) {
-        RuleValidationConfigDto ruleValidationConfigDto = ruleValidationConfigService.findByRuleIdAndPartnerId(getValidationId(), partnerId);
+    public final ErrorValidation validate(ServiceOrder serviceOrder, Integer partnerId, List<RuleValidationConfig> listRulesConfig) {
 
-        return executeValidation(serviceOrder, partnerId, ruleValidationConfigDto);
+        RuleValidationConfig ruleValidationConfig = this.findRuleInList(listRulesConfig, partnerId);
+        ExtractValueFromJson extractValueFromJson = this.ruleValidationConfigService.getExtractRules(ruleValidationConfig);
+
+        return executeValidation(serviceOrder, ruleValidationConfig, extractValueFromJson);
     }
 
-    protected abstract ServiceOrderValidationResultDto executeValidation(ServiceOrder serviceOrder, Integer partnerId, RuleValidationConfigDto ruleValidationConfigDto);
+    protected abstract ErrorValidation executeValidation(ServiceOrder serviceOrder, RuleValidationConfig ruleValidationConfig, ExtractValueFromJson extractValueFromJson);
+
+    private RuleValidationConfig findRuleInList(List<RuleValidationConfig> listRulesConfig, Integer partnerId) {
+        RuleValidationConfig rule = listRulesConfig.stream().filter(r -> r.getRule().equals(getValidationRule()) && Objects.equals(r.getPartnerId(), partnerId)).findFirst().orElse(null);
+
+        if(rule == null) {
+            rule = listRulesConfig.stream().filter(r -> r.getRule().equals(getValidationRule()) && Objects.equals(r.getPartnerId(), null)).findFirst().orElse(null);
+        }
+
+        return rule;
+    }
 }

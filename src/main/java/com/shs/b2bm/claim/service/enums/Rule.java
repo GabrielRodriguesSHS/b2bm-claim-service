@@ -6,9 +6,9 @@ package com.shs.b2bm.claim.service.enums;
  */
 public enum Rule {
   /** Rule for validating serial numbers. */
-  SerialNumberValidation("Serial Number Validation"),
+  SerialNumberValidation("SerialNumber"),
   /** Rule for validating parts. */
-  PartsValidation("Parts Validation");
+  PartsValidation("Parts");
 
   private final String description;
 

@@ -1,6 +1,8 @@
 package com.shs.b2bm.claim.service.kafka.consumer;
 
+import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
+import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
 import com.shs.b2bm.claim.service.services.ServiceOrderValidationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.KafkaException;
@@ -9,6 +11,8 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Kafka consumer service for processing ServiceOrder messages. Handles the consumption and
@@ -21,8 +25,11 @@ public class ServiceOrderKafkaConsumer {
 
   private final ServiceOrderValidationService serviceOrderValidationService;
 
-  public ServiceOrderKafkaConsumer(ServiceOrderValidationService serviceOrderValidationService) {
+  private final RuleValidationConfigService ruleValidationConfigService;
+
+  public ServiceOrderKafkaConsumer(ServiceOrderValidationService serviceOrderValidationService, RuleValidationConfigService ruleValidationConfigService) {
     this.serviceOrderValidationService = serviceOrderValidationService;
+    this.ruleValidationConfigService = ruleValidationConfigService;
   }
 
   /**
@@ -44,7 +51,10 @@ public class ServiceOrderKafkaConsumer {
       @Header(KafkaHeaders.RECEIVED_PARTITION) Integer partition,
       @Header(KafkaHeaders.OFFSET) Long offset) {
     try {
-      this.serviceOrderValidationService.validateMessage(serviceOrder);
+      Integer partnerId = 1;
+      List<RuleValidationConfig> listRules = ruleValidationConfigService.findByRuleIdAndPartnerId(partnerId);
+
+      this.serviceOrderValidationService.validateMessage(serviceOrder, listRules);
 
       log.info(
           "Successfully processed and saved ServiceOrder: {}",

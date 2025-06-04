@@ -4,6 +4,7 @@ import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -12,5 +13,5 @@ import java.util.Optional;
  */
 @Repository
 public interface RuleValidationConfigRepository extends JpaRepository<RuleValidationConfig, Long> {
-  Optional<RuleValidationConfig> findByRuleIdAndPartnerId(Integer ruleId, Integer partnerId);
+  List<RuleValidationConfig> findByPartnerId(Integer partnerId);
 }
