@@ -40,8 +40,7 @@ public class ValidationConfigServiceImpl implements ValidationConfigService {
     if (validationConfig != null && !validationConfig.getRuleDetails().isBlank()) {
       try {
         TypeReference<Map<String, Object>> typeRef = new TypeReference<Map<String, Object>>() {};
-        String json = objectMapper.readValue(validationConfig.getRuleDetails(), String.class);
-        rules = objectMapper.readValue(json, typeRef);
+        rules = objectMapper.readValue(validationConfig.getRuleDetails(), typeRef);
       } catch (Exception e) {
         log.error("Failed to parse validation rules: {}", e.getMessage());
       }

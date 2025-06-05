@@ -46,8 +46,7 @@ public class ValidationConfig extends BaseEntity {
   private Obligor obligor;*/
   @Column private Integer obligorId; // Just for mocking the initial implementations
 
-  @Column(columnDefinition = "JSON")
-  private String ruleDetails;
+  @Column private String ruleDetails;
 
   @Column private String errorMessage;
 }
