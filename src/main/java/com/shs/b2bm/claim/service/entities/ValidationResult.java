@@ -20,6 +20,10 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Entity representing the result for rule validation. Stores results details for
+ * validation rules, including associated serviceOrder, errorMessage, rules, and status.
+ */
 @Entity
 @Table
 @Getter

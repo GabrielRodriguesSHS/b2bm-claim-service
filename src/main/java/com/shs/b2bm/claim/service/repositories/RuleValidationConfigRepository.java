@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RuleValidationConfigRepository extends JpaRepository<RuleValidationConfig, Long> {
   /**
-   * Finds all rule validation configurations where partnerId matches the given value or is null.
+   * Finds all rule validation configurations where obligorId matches the given value or is null.
    * This allows retrieving both partner-specific rules and global rules in a single query.
    *
    * @param obligorId the obligor to search for
