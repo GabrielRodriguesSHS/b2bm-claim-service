@@ -1,7 +1,10 @@
 package com.shs.b2bm.claim.service.entities;
 
+import com.shs.b2bm.claim.service.enums.Rule;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,7 +22,7 @@ import lombok.experimental.SuperBuilder;
  * validation rules, including associated partner, rule, parameters, and error messages.
  */
 @Entity
-@Table(name = "rule_validation_config")
+@Table
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -33,12 +36,18 @@ public class RuleValidationConfig extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long ruleValidationConfigId;
 
-  @Column private String rule;
+  @Column
+  @Enumerated(EnumType.STRING)
+  private Rule ruleName;
 
-  @Column private Integer partnerId;
+  /*@ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "obligor_id")
+  @ToString.Exclude
+  private Obligor obligor;*/
+  @Column private Integer obligorId; // Just for mocking the initial implementations
 
   @Column(columnDefinition = "JSON")
-  private String parametersDetails;
+  private String ruleDetails;
 
   @Column private String errorMessage;
 }

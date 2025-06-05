@@ -60,10 +60,10 @@ CREATE TABLE rule_validation_config  (
 
 INSERT INTO rule_validation_config(rule, partner_id, parameters_details, error_message, created_date, modified_date, created_by, last_modified_by)
 VALUES
-('SerialNumber', 1, '{"required" : "true", "minLength" : "0", "maxLength": "10"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('SerialNumber', 2, '{"required" : "true", "minLength" : "5", "maxLength": "15"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('SerialNumber', 3, '{"required" : "false", "minLength" : "0", "maxLength": "50"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('Parts', null, '{"required" : "true", "maxPartsPerClaim" : 1}', 'Exist part without price', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service');
+('SerialNumberValidation', 1, '{"required" : "true", "minLength" : "0", "maxLength": "10"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('SerialNumberValidation', 2, '{"required" : "true", "minLength" : "5", "maxLength": "15"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('SerialNumberValidation', 3, '{"required" : "false", "minLength" : "0", "maxLength": "50"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('PartsValidation', null, '{"required" : "true", "maxPartsPerClaim" : 1}', 'Exist part without price', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service');
 
 -- Add indexes for foreign keys for query optimization
 CREATE INDEX idx_service_order_service_order_data_import_audit_information_id ON service_order (service_order_data_import_audit_information_id);

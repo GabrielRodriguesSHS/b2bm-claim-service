@@ -1,62 +1,48 @@
 package com.shs.b2bm.claim.service.services.impl;
 
-import com.shs.b2bm.claim.service.entities.ErrorValidation;
 import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
-import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
+import com.shs.b2bm.claim.service.entities.ValidationResult;
+import com.shs.b2bm.claim.service.enums.StatusValidation;
+import com.shs.b2bm.claim.service.services.ValidationConfigService;
 import com.shs.b2bm.claim.service.services.ValidationStrategyService;
 import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
 import java.util.List;
-import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class ValidationStrategyServiceImpl implements ValidationStrategyService {
 
-  private final RuleValidationConfigService ruleValidationConfigService;
+  private final ValidationConfigService validationConfigService;
 
-  public ValidationStrategyServiceImpl(RuleValidationConfigService ruleValidationConfigService) {
-    this.ruleValidationConfigService = ruleValidationConfigService;
+  public ValidationStrategyServiceImpl(ValidationConfigService validationConfigService) {
+    this.validationConfigService = validationConfigService;
   }
 
   @Override
-  public final ErrorValidation validate(
-      ServiceOrder serviceOrder, Integer partnerId, List<RuleValidationConfig> listRulesConfig) {
+  public final ValidationResult validate(ServiceOrder serviceOrder) {
 
-    RuleValidationConfig ruleValidationConfig = this.findRuleInList(listRulesConfig, partnerId);
+    List<RuleValidationConfig> validations =
+        validationConfigService.findByObligorIdOrObligorIdIsNull(serviceOrder.getObligorId());
+
+    RuleValidationConfig ruleValidationConfig =
+        validationConfigService.findRuleInList(
+            validations, getValidationRule(), serviceOrder.getObligorId());
     ExtractValueFromJson extractValueFromJson =
-        this.ruleValidationConfigService.getExtractRules(ruleValidationConfig);
+        validationConfigService.extractRulesFromValidation(ruleValidationConfig);
 
-    return executeValidation(serviceOrder, ruleValidationConfig, extractValueFromJson);
+    ValidationResult validationResult = new ValidationResult();
+
+    validationResult.setErrorMessage(ruleValidationConfig.getErrorMessage());
+    validationResult.setServiceOrder(serviceOrder);
+    validationResult.setRules(ruleValidationConfig.getRuleDetails());
+    validationResult.setStatus(StatusValidation.Success);
+
+    return executeValidation(serviceOrder, validationResult, extractValueFromJson);
   }
 
-  protected abstract ErrorValidation executeValidation(
+  protected abstract ValidationResult executeValidation(
       ServiceOrder serviceOrder,
-      RuleValidationConfig ruleValidationConfig,
+      ValidationResult validationResult,
       ExtractValueFromJson extractValueFromJson);
-
-  private RuleValidationConfig findRuleInList(
-      List<RuleValidationConfig> listRulesConfig, Integer partnerId) {
-    RuleValidationConfig rule =
-        listRulesConfig.stream()
-            .filter(
-                r ->
-                    r.getRule().equals(getValidationRule())
-                        && Objects.equals(r.getPartnerId(), partnerId))
-            .findFirst()
-            .orElse(null);
-
-    if (rule == null) {
-      rule =
-          listRulesConfig.stream()
-              .filter(
-                  r ->
-                      r.getRule().equals(getValidationRule())
-                          && Objects.equals(r.getPartnerId(), null))
-              .findFirst()
-              .orElse(null);
-    }
-
-    return rule;
-  }
 }

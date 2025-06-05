@@ -1,8 +1,7 @@
 package com.shs.b2bm.claim.service.services.impl;
 
-import com.shs.b2bm.claim.service.entities.ErrorValidation;
-import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
+import com.shs.b2bm.claim.service.entities.ValidationResult;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
 import com.shs.b2bm.claim.service.mappers.ServiceOrderProtoMapper;
 import com.shs.b2bm.claim.service.services.ServiceOrderValidationService;
@@ -29,15 +28,16 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
   }
 
   @Override
-  public void validateMessage(
-      ServiceOrderProto serviceOrderProto, List<RuleValidationConfig> listRulesConfig) {
+  public void validateServiceOrder(ServiceOrderProto serviceOrderProto) {
     if (serviceOrderProto.getServiceOrderNumber() == null
         || serviceOrderProto.getServiceOrderNumber().isEmpty()) {
       throw new ValidationException("Service order number is required");
     }
 
     ServiceOrder serviceOrder = serviceOrderProtoMapper.toEntity(serviceOrderProto);
-    List<ErrorValidation> listErrorValidation = this.rulesValidator(serviceOrder, listRulesConfig);
+    serviceOrder.setObligorId(1);
+
+    List<ValidationResult> listErrorValidation = this.rulesValidator(serviceOrder);
 
     if (!listErrorValidation.isEmpty()) {
       log.debug("Some rule failed.");
@@ -51,17 +51,15 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
    * @param serviceOrder The service order to validate
    * @throws ValidationException if any rule fails
    */
-  private List<ErrorValidation> rulesValidator(
-      ServiceOrder serviceOrder, List<RuleValidationConfig> listRulesConfig) {
-    List<ErrorValidation> listErrorValidation = new ArrayList<>(Collections.emptyList());
+  private List<ValidationResult> rulesValidator(ServiceOrder serviceOrder) {
+    List<ValidationResult> listValidationResult = new ArrayList<>(Collections.emptyList());
 
     for (ValidationStrategyService rule : listRulesImplementation) {
-      ErrorValidation ruleResult = rule.validate(serviceOrder, 1, listRulesConfig);
-      if (ruleResult.getErrorId() != null) {
-        listErrorValidation.add(ruleResult);
-      }
+      ValidationResult ruleResult = rule.validate(serviceOrder);
+
+      listValidationResult.add(ruleResult);
     }
 
-    return listErrorValidation;
+    return listValidationResult;
   }
 }

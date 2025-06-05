@@ -1,10 +1,10 @@
 package com.shs.b2bm.claim.service.services.impl;
 
-import com.shs.b2bm.claim.service.entities.ErrorValidation;
-import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
+import com.shs.b2bm.claim.service.entities.ValidationResult;
 import com.shs.b2bm.claim.service.enums.Rule;
-import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
+import com.shs.b2bm.claim.service.enums.StatusValidation;
+import com.shs.b2bm.claim.service.services.ValidationConfigService;
 import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,28 +14,27 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ValidationPartsServiceImpl extends ValidationStrategyServiceImpl {
 
-  public ValidationPartsServiceImpl(RuleValidationConfigService ruleValidationConfigService) {
+  public ValidationPartsServiceImpl(ValidationConfigService ruleValidationConfigService) {
     super(ruleValidationConfigService);
   }
 
   @Override
-  public String getValidationRule() {
-    return Rule.PartsValidation.getDescription();
+  public Rule getValidationRule() {
+    return Rule.PartsValidation;
   }
 
   @Override
-  public ErrorValidation executeValidation(
+  public ValidationResult executeValidation(
       ServiceOrder serviceOrder,
-      RuleValidationConfig ruleValidationConfig,
+      ValidationResult validationResult,
       ExtractValueFromJson extractValueFromJson) {
-    ErrorValidation errorValidation = new ErrorValidation();
 
     int maxPartsPerClaim = extractValueFromJson.getIntRule("maxPartsPerClaim", 1);
 
     if (serviceOrder.getClaims().stream().anyMatch(c -> c.getParts().size() > maxPartsPerClaim)) {
-      errorValidation.setErrorMessage(ruleValidationConfig.getErrorMessage());
+      validationResult.setStatus(StatusValidation.Error);
     }
 
-    return errorValidation;
+    return validationResult;
   }
 }

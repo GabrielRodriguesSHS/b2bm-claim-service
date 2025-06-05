@@ -74,5 +74,7 @@ public class ServiceOrder extends BaseEntity {
   @OneToMany(mappedBy = "serviceOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @ToString.Exclude
   @Builder.Default
-  private List<ErrorValidation> errorsValidation = new ArrayList<>();
+  private List<ValidationResult> validationResult = new ArrayList<>();
+
+  @Column private Integer obligorId; // Just for mocking the initial implementations
 }

@@ -4,9 +4,9 @@ package com.shs.b2bm.claim.service.enums;
  * Enum representing different types of validation rules. Each rule has a description for display or
  * documentation purposes.
  */
-public enum Rule {
-  SerialNumberValidation("SerialNumberValidation"),
-  PartsValidation("PartsValidation");
+public enum StatusValidation {
+  Error("error"),
+  Success("success");
 
   private final String description;
 
@@ -15,7 +15,7 @@ public enum Rule {
    *
    * @param description the description of the rule
    */
-  Rule(String description) {
+  StatusValidation(String description) {
     this.description = description;
   }
 

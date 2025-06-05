@@ -1,7 +1,10 @@
 package com.shs.b2bm.claim.service.entities;
 
+import com.shs.b2bm.claim.service.enums.StatusValidation;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,11 +29,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorValidation extends BaseEntity {
+public class ValidationResult extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long errorId;
+  private Long validationResultId;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "service_order_id")
@@ -38,4 +41,10 @@ public class ErrorValidation extends BaseEntity {
   private ServiceOrder serviceOrder;
 
   @Column private String errorMessage;
+
+  @Column private String rules;
+
+  @Column
+  @Enumerated(EnumType.STRING)
+  private StatusValidation status;
 }

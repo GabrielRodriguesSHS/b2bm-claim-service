@@ -1,10 +1,7 @@
 package com.shs.b2bm.claim.service.kafka.consumer;
 
-import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
-import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
 import com.shs.b2bm.claim.service.services.ServiceOrderValidationService;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.KafkaException;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -24,13 +21,8 @@ public class ServiceOrderKafkaConsumer {
 
   private final ServiceOrderValidationService serviceOrderValidationService;
 
-  private final RuleValidationConfigService ruleValidationConfigService;
-
-  public ServiceOrderKafkaConsumer(
-      ServiceOrderValidationService serviceOrderValidationService,
-      RuleValidationConfigService ruleValidationConfigService) {
+  public ServiceOrderKafkaConsumer(ServiceOrderValidationService serviceOrderValidationService) {
     this.serviceOrderValidationService = serviceOrderValidationService;
-    this.ruleValidationConfigService = ruleValidationConfigService;
   }
 
   /**
@@ -52,11 +44,7 @@ public class ServiceOrderKafkaConsumer {
       @Header(KafkaHeaders.RECEIVED_PARTITION) Integer partition,
       @Header(KafkaHeaders.OFFSET) Long offset) {
     try {
-      Integer partnerId = 1;
-      List<RuleValidationConfig> listRules =
-          ruleValidationConfigService.findByPartnerIdOrPartnerIdIsNull(partnerId);
-
-      this.serviceOrderValidationService.validateMessage(serviceOrder, listRules);
+      serviceOrderValidationService.validateServiceOrder(serviceOrder);
 
       log.info(
           "Successfully processed and saved ServiceOrder: {}",
