@@ -12,4 +12,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RuleValidationConfigRepository extends JpaRepository<RuleValidationConfig, Long> {
   List<RuleValidationConfig> findByPartnerId(Integer partnerId);
+  
+  /**
+   * Finds all rule validation configurations where partnerId matches the given value or is null.
+   * This allows retrieving both partner-specific rules and global rules in a single query.
+   *
+   * @param partnerId the partner ID to search for
+   * @return list of rule validation configurations matching the criteria
+   */
+  List<RuleValidationConfig> findByPartnerIdOrPartnerIdIsNull(Integer partnerId);
 }

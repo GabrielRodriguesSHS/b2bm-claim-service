@@ -31,12 +31,7 @@ public class RuleValidationConfigServiceImpl implements RuleValidationConfigServ
 
   @Override
   public List<RuleValidationConfig> findByRuleIdAndPartnerId(Integer partnerId) {
-    List<RuleValidationConfig> listRules = new ArrayList<RuleValidationConfig>();
-
-    listRules.addAll(this.ruleValidationConfigRepository.findByPartnerId(partnerId));
-    listRules.addAll(this.ruleValidationConfigRepository.findByPartnerId(null));
-
-    return listRules;
+    return this.ruleValidationConfigRepository.findByPartnerIdOrPartnerIdIsNull(partnerId);
   }
 
   @Override
