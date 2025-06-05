@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ValidationPartsServiceImpl extends ValidationStrategyServiceImpl {
 
-  public ValidationPartsServiceImpl(ValidationConfigService ruleValidationConfigService) {
-    super(ruleValidationConfigService);
+  public ValidationPartsServiceImpl(ValidationConfigService validationConfig) {
+    super(validationConfig);
   }
 
   @Override

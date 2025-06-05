@@ -1,6 +1,6 @@
 package com.shs.b2bm.claim.service.services.impl;
 
-import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
+import com.shs.b2bm.claim.service.entities.ValidationConfig;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.entities.ValidationResult;
 import com.shs.b2bm.claim.service.enums.StatusValidation;
@@ -22,16 +22,16 @@ public abstract class ValidationStrategyServiceImpl implements ValidationStrateg
   @Override
   public final ValidationResult validate(ServiceOrder serviceOrder) {
 
-    List<RuleValidationConfig> validations =
+    List<ValidationConfig> validations =
         validationConfigService.findByObligorIdOrObligorIdIsNull(serviceOrder.getObligorId());
 
-    RuleValidationConfig ruleValidationConfig =
+    ValidationConfig validationConfig =
         validationConfigService.findRuleInList(
             validations, getValidationRule(), serviceOrder.getObligorId());
     ExtractValueFromJson extractValueFromJson =
-        validationConfigService.extractRulesFromValidation(ruleValidationConfig);
+        validationConfigService.extractRulesFromValidation(validationConfig);
 
-    ValidationResult validationResult = getValidationResult(serviceOrder, ruleValidationConfig);
+    ValidationResult validationResult = getValidationResult(serviceOrder, validationConfig);
 
     return executeValidation(serviceOrder, validationResult, extractValueFromJson);
   }
@@ -42,17 +42,17 @@ public abstract class ValidationStrategyServiceImpl implements ValidationStrateg
       ExtractValueFromJson extractValueFromJson);
 
   private ValidationResult getValidationResult(
-      ServiceOrder serviceOrder, RuleValidationConfig ruleValidationConfig) {
+      ServiceOrder serviceOrder, ValidationConfig validationConfig) {
     ValidationResult validationResult = new ValidationResult();
 
     validationResult.setErrorMessage(
-        (ruleValidationConfig != null)
-            ? ruleValidationConfig.getErrorMessage()
+        (validationConfig != null)
+            ? validationConfig.getErrorMessage()
             : "Rule configuration " + getValidationRule().getDescription() + " not found");
     validationResult.setServiceOrder(serviceOrder);
     validationResult.setRules(
-        (ruleValidationConfig != null)
-            ? ruleValidationConfig.getRuleDetails()
+        (validationConfig != null)
+            ? validationConfig.getRuleDetails()
             : "Rule configuration " + getValidationRule().getDescription() + " not found");
     validationResult.setStatus(StatusValidation.Success);
 

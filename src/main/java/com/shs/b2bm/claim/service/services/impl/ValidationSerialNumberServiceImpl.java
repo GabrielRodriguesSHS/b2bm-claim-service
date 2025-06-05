@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ValidationSerialNumberServiceImpl extends ValidationStrategyServiceImpl {
 
-  public ValidationSerialNumberServiceImpl(ValidationConfigService ruleValidationConfigService) {
-    super(ruleValidationConfigService);
+  public ValidationSerialNumberServiceImpl(ValidationConfigService validationConfigService) {
+    super(validationConfigService);
   }
 
   @Override

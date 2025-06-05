@@ -30,11 +30,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RuleValidationConfig extends BaseEntity {
+public class ValidationConfig extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long ruleValidationConfigId;
+  private Long validationConfigId;
 
   @Column
   @Enumerated(EnumType.STRING)
