@@ -1,7 +1,7 @@
 package com.shs.b2bm.claim.service.services.impl;
 
-import com.shs.b2bm.claim.service.entities.ValidationConfig;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
+import com.shs.b2bm.claim.service.entities.ValidationConfig;
 import com.shs.b2bm.claim.service.entities.ValidationResult;
 import com.shs.b2bm.claim.service.enums.StatusValidation;
 import com.shs.b2bm.claim.service.services.ValidationConfigService;

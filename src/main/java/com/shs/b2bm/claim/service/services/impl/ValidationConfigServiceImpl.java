@@ -14,9 +14,7 @@ import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-/**
- * Implementation of ValidationConfigService for accessing rule validation configuration data.
- */
+/** Implementation of ValidationConfigService for accessing rule validation configuration data. */
 @Service
 @Slf4j
 public class ValidationConfigServiceImpl implements ValidationConfigService {
@@ -25,7 +23,7 @@ public class ValidationConfigServiceImpl implements ValidationConfigService {
   private final ObjectMapper objectMapper;
 
   public ValidationConfigServiceImpl(
-          ValidationConfigRepository validationConfigRepository, ObjectMapper objectMapper) {
+      ValidationConfigRepository validationConfigRepository, ObjectMapper objectMapper) {
     this.validationConfigRepository = validationConfigRepository;
     this.objectMapper = objectMapper;
   }
@@ -36,8 +34,7 @@ public class ValidationConfigServiceImpl implements ValidationConfigService {
   }
 
   @Override
-  public ExtractValueFromJson extractRulesFromValidation(
-          ValidationConfig validationConfig) {
+  public ExtractValueFromJson extractRulesFromValidation(ValidationConfig validationConfig) {
     Map<String, Object> rules = new HashMap<>();
 
     if (validationConfig != null && !validationConfig.getRuleDetails().isBlank()) {

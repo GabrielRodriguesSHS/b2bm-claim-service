@@ -42,6 +42,5 @@ public interface ValidationConfigService {
    * @return the matching ValidationConfig, or null if not found
    * @throws IllegalArgumentException if validations or rule is null
    */
-  ValidationConfig findRuleInList(
-      List<ValidationConfig> validations, Rule rule, Integer obligorId);
+  ValidationConfig findRuleInList(List<ValidationConfig> validations, Rule rule, Integer obligorId);
 }
