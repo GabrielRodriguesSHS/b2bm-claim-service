@@ -6,7 +6,6 @@ import com.shs.b2bm.claim.service.entities.RuleValidationConfig;
 import com.shs.b2bm.claim.service.repositories.RuleValidationConfigRepository;
 import com.shs.b2bm.claim.service.services.RuleValidationConfigService;
 import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class RuleValidationConfigServiceImpl implements RuleValidationConfigServ
   }
 
   @Override
-  public List<RuleValidationConfig> findByRuleIdAndPartnerId(Integer partnerId) {
+  public List<RuleValidationConfig> findByPartnerIdOrPartnerIdIsNull(Integer partnerId) {
     return this.ruleValidationConfigRepository.findByPartnerIdOrPartnerIdIsNull(partnerId);
   }
 

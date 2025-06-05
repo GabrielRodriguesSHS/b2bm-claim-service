@@ -13,7 +13,7 @@ public interface RuleValidationConfigService {
    * @param partnerId the partner identifier
    * @return the matching RuleValidationConfig, or null if not found
    */
-  List<RuleValidationConfig> findByRuleIdAndPartnerId(Integer partnerId);
+  List<RuleValidationConfig> findByPartnerIdOrPartnerIdIsNull(Integer partnerId);
 
   ExtractValueFromJson getExtractRules(RuleValidationConfig ruleValidationConfig);
 }

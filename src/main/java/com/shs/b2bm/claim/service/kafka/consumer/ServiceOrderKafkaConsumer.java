@@ -54,7 +54,7 @@ public class ServiceOrderKafkaConsumer {
     try {
       Integer partnerId = 1;
       List<RuleValidationConfig> listRules =
-          ruleValidationConfigService.findByRuleIdAndPartnerId(partnerId);
+          ruleValidationConfigService.findByPartnerIdOrPartnerIdIsNull(partnerId);
 
       this.serviceOrderValidationService.validateMessage(serviceOrder, listRules);
 
