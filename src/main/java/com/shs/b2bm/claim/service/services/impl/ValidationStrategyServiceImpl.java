@@ -31,12 +31,7 @@ public abstract class ValidationStrategyServiceImpl implements ValidationStrateg
     ExtractValueFromJson extractValueFromJson =
         validationConfigService.extractRulesFromValidation(ruleValidationConfig);
 
-    ValidationResult validationResult = new ValidationResult();
-
-    validationResult.setErrorMessage(ruleValidationConfig.getErrorMessage());
-    validationResult.setServiceOrder(serviceOrder);
-    validationResult.setRules(ruleValidationConfig.getRuleDetails());
-    validationResult.setStatus(StatusValidation.Success);
+    ValidationResult validationResult = getValidationResult(serviceOrder, ruleValidationConfig);
 
     return executeValidation(serviceOrder, validationResult, extractValueFromJson);
   }
@@ -45,4 +40,22 @@ public abstract class ValidationStrategyServiceImpl implements ValidationStrateg
       ServiceOrder serviceOrder,
       ValidationResult validationResult,
       ExtractValueFromJson extractValueFromJson);
+
+  private ValidationResult getValidationResult(
+      ServiceOrder serviceOrder, RuleValidationConfig ruleValidationConfig) {
+    ValidationResult validationResult = new ValidationResult();
+
+    validationResult.setErrorMessage(
+        (ruleValidationConfig != null)
+            ? ruleValidationConfig.getErrorMessage()
+            : "Rule configuration " + getValidationRule().getDescription() + " not found");
+    validationResult.setServiceOrder(serviceOrder);
+    validationResult.setRules(
+        (ruleValidationConfig != null)
+            ? ruleValidationConfig.getRuleDetails()
+            : "Rule configuration " + getValidationRule().getDescription() + " not found");
+    validationResult.setStatus(StatusValidation.Success);
+
+    return validationResult;
+  }
 }
