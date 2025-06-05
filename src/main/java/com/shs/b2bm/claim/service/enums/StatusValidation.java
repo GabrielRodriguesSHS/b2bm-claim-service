@@ -1,8 +1,8 @@
 package com.shs.b2bm.claim.service.enums;
 
 /**
- * Enum representing different types of validation status. Each rule has a description for display or
- * documentation purposes.
+ * Enum representing different types of validation status. Each rule has a description for display
+ * or documentation purposes.
  */
 public enum StatusValidation {
   Error("error"),
