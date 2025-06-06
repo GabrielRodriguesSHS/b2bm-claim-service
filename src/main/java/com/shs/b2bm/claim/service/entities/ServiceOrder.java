@@ -70,4 +70,11 @@ public class ServiceOrder extends BaseEntity {
   @ToString.Exclude
   @Builder.Default
   private List<Claim> claims = new ArrayList<>();
+
+  @OneToMany(mappedBy = "serviceOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @ToString.Exclude
+  @Builder.Default
+  private List<ValidationResult> validationResult = new ArrayList<>();
+
+  @Column private Integer obligorId; // Just for mocking the initial implementations
 }
