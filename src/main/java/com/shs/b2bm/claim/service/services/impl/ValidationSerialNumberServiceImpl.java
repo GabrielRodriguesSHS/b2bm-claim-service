@@ -29,11 +29,13 @@ public class ValidationSerialNumberServiceImpl extends ValidationStrategyService
   public ValidationResult executeValidation(
       ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
 
-    int minLength = this.extractValueFromJson.getInt(rulesDetails, "minLength", 0);
-    int maxLength = this.extractValueFromJson.getInt(rulesDetails, "maxLength", Integer.MAX_VALUE);
+    boolean isRequired = extractValueFromJson.getBoolean(rulesDetails, "required", true);
+    int minLength = extractValueFromJson.getInt(rulesDetails, "minLength", 0);
+    int maxLength = extractValueFromJson.getInt(rulesDetails, "maxLength", Integer.MAX_VALUE);
 
-    if (serviceOrder.getServiceOrderNumber().length() < minLength
-        || serviceOrder.getServiceOrderNumber().length() > maxLength) {
+    if ((isRequired && serviceOrder.getSerialNumber().isBlank())
+        || serviceOrder.getSerialNumber().length() < minLength
+        || serviceOrder.getSerialNumber().length() > maxLength) {
       validationResult.setStatus(StatusValidation.Error);
     }
 
