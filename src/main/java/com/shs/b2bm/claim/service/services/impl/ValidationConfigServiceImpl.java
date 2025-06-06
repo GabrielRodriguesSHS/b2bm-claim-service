@@ -1,15 +1,12 @@
 package com.shs.b2bm.claim.service.services.impl;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shs.b2bm.claim.service.entities.ValidationConfig;
 import com.shs.b2bm.claim.service.enums.Rule;
 import com.shs.b2bm.claim.service.repositories.ValidationConfigRepository;
 import com.shs.b2bm.claim.service.services.ValidationConfigService;
-import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,22 +31,6 @@ public class ValidationConfigServiceImpl implements ValidationConfigService {
   }
 
   @Override
-  public ExtractValueFromJson extractRulesFromValidation(ValidationConfig validationConfig) {
-    Map<String, Object> rules = new HashMap<>();
-
-    if (validationConfig != null && !validationConfig.getRuleDetails().isBlank()) {
-      try {
-        TypeReference<Map<String, Object>> typeRef = new TypeReference<Map<String, Object>>() {};
-        rules = objectMapper.readValue(validationConfig.getRuleDetails(), typeRef);
-      } catch (Exception e) {
-        log.error("Failed to parse validation rules: {}", e.getMessage());
-      }
-    }
-
-    return new ExtractValueFromJson(rules);
-  }
-
-  @Override
   public ValidationConfig findRuleInList(
       List<ValidationConfig> validations, Rule rule, Integer obligorId) {
     ValidationConfig validationConfig =
@@ -68,5 +49,16 @@ public class ValidationConfigServiceImpl implements ValidationConfigService {
     }
 
     return validationConfig;
+  }
+
+  @Override
+  public JsonNode extractRuleDetails(ValidationConfig validationConfig) {
+    JsonNode ruleDetails = null;
+
+    if (validationConfig != null && !validationConfig.getRuleDetails().toString().isBlank()) {
+      ruleDetails = validationConfig.getRuleDetails();
+    }
+
+    return ruleDetails;
   }
 }

@@ -1,5 +1,6 @@
 package com.shs.b2bm.claim.service.services.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.entities.ValidationConfig;
 import com.shs.b2bm.claim.service.entities.ValidationResult;
@@ -15,8 +16,12 @@ public abstract class ValidationStrategyServiceImpl implements ValidationStrateg
 
   private final ValidationConfigService validationConfigService;
 
-  public ValidationStrategyServiceImpl(ValidationConfigService validationConfigService) {
+  protected final ExtractValueFromJson extractValueFromJson;
+
+  public ValidationStrategyServiceImpl(
+      ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
     this.validationConfigService = validationConfigService;
+    this.extractValueFromJson = extractValueFromJson;
   }
 
   @Override
@@ -28,18 +33,16 @@ public abstract class ValidationStrategyServiceImpl implements ValidationStrateg
     ValidationConfig validationConfig =
         validationConfigService.findRuleInList(
             validations, getValidationRule(), serviceOrder.getObligorId());
-    ExtractValueFromJson extractValueFromJson =
-        validationConfigService.extractRulesFromValidation(validationConfig);
 
     ValidationResult validationResult = getValidationResult(serviceOrder, validationConfig);
 
-    return executeValidation(serviceOrder, validationResult, extractValueFromJson);
+    JsonNode ruleDetails = validationConfigService.extractRuleDetails(validationConfig);
+
+    return executeValidation(serviceOrder, validationResult, ruleDetails);
   }
 
   protected abstract ValidationResult executeValidation(
-      ServiceOrder serviceOrder,
-      ValidationResult validationResult,
-      ExtractValueFromJson extractValueFromJson);
+      ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails);
 
   private ValidationResult getValidationResult(
       ServiceOrder serviceOrder, ValidationConfig validationConfig) {
@@ -52,7 +55,7 @@ public abstract class ValidationStrategyServiceImpl implements ValidationStrateg
     validationResult.setServiceOrder(serviceOrder);
     validationResult.setRules(
         (validationConfig != null)
-            ? validationConfig.getRuleDetails()
+            ? validationConfig.getRuleDetails().toString()
             : "Rule configuration " + getValidationRule().getDescription() + " not found");
     validationResult.setStatus(StatusValidation.Success);
 

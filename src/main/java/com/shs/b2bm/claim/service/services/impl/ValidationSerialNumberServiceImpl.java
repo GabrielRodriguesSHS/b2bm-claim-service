@@ -1,5 +1,6 @@
 package com.shs.b2bm.claim.service.services.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.entities.ValidationResult;
 import com.shs.b2bm.claim.service.enums.Rule;
@@ -14,8 +15,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ValidationSerialNumberServiceImpl extends ValidationStrategyServiceImpl {
 
-  public ValidationSerialNumberServiceImpl(ValidationConfigService validationConfigService) {
-    super(validationConfigService);
+  public ValidationSerialNumberServiceImpl(
+      ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
+    super(validationConfigService, extractValueFromJson);
   }
 
   @Override
@@ -25,12 +27,10 @@ public class ValidationSerialNumberServiceImpl extends ValidationStrategyService
 
   @Override
   public ValidationResult executeValidation(
-      ServiceOrder serviceOrder,
-      ValidationResult validationResult,
-      ExtractValueFromJson extractValueFromJson) {
+      ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
 
-    int minLength = extractValueFromJson.getIntRule("minLength", 0);
-    int maxLength = extractValueFromJson.getIntRule("maxLength", Integer.MAX_VALUE);
+    int minLength = this.extractValueFromJson.getInt(rulesDetails, "minLength", 0);
+    int maxLength = this.extractValueFromJson.getInt(rulesDetails, "maxLength", Integer.MAX_VALUE);
 
     if (serviceOrder.getServiceOrderNumber().length() < minLength
         || serviceOrder.getServiceOrderNumber().length() > maxLength) {

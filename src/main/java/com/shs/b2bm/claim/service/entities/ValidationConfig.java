@@ -1,5 +1,6 @@
 package com.shs.b2bm.claim.service.entities;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.shs.b2bm.claim.service.enums.Rule;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +17,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 /**
  * Entity representing the configuration for rule validation. Stores configuration details for
@@ -46,7 +49,9 @@ public class ValidationConfig extends BaseEntity {
   private Obligor obligor;*/
   @Column private Integer obligorId; // Just for mocking the initial implementations
 
-  @Column private String ruleDetails;
+  @JdbcTypeCode(SqlTypes.JSON)
+  @Column(columnDefinition = "JSON")
+  private JsonNode ruleDetails;
 
   @Column private String errorMessage;
 }

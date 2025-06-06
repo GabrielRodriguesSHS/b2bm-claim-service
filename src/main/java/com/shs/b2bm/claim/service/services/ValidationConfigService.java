@@ -1,8 +1,8 @@
 package com.shs.b2bm.claim.service.services;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.shs.b2bm.claim.service.entities.ValidationConfig;
 import com.shs.b2bm.claim.service.enums.Rule;
-import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
 import java.util.List;
 
 /**
@@ -22,16 +22,6 @@ public interface ValidationConfigService {
   List<ValidationConfig> findByObligorIdOrObligorIdIsNull(Integer obligorId);
 
   /**
-   * Extracts and processes validation rules from the provided rule validation configuration. Parses
-   * the configuration data and returns a utility object for extracting values from JSON.
-   *
-   * @param validationConfig the rule validation configuration to process, must not be null
-   * @return ExtractValueFromJson utility object for processing the configuration data
-   * @throws IllegalArgumentException if validationConfig is null
-   */
-  ExtractValueFromJson extractRulesFromValidation(ValidationConfig validationConfig);
-
-  /**
    * Finds a specific rule configuration within a list of validation configurations. Searches for a
    * configuration that matches the given rule type and obligor ID, with priority given to
    * obligor-specific configurations over global ones.
@@ -43,4 +33,13 @@ public interface ValidationConfigService {
    * @throws IllegalArgumentException if validations or rule is null
    */
   ValidationConfig findRuleInList(List<ValidationConfig> validations, Rule rule, Integer obligorId);
+
+  /**
+   * Extracts rule details from the provided validation configuration. Validates the JsonNode and
+   * returns null if it does not exist.
+   *
+   * @param validationConfig the rule validation configuration to process, must not be null
+   * @return ExtractValueFromJson utility object for processing the configuration data
+   */
+  JsonNode extractRuleDetails(ValidationConfig validationConfig);
 }

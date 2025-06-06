@@ -1,5 +1,6 @@
 package com.shs.b2bm.claim.service.services.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.entities.ValidationResult;
 import com.shs.b2bm.claim.service.enums.Rule;
@@ -14,8 +15,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ValidationPartsServiceImpl extends ValidationStrategyServiceImpl {
 
-  public ValidationPartsServiceImpl(ValidationConfigService validationConfig) {
-    super(validationConfig);
+  public ValidationPartsServiceImpl(
+      ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
+    super(validationConfigService, extractValueFromJson);
   }
 
   @Override
@@ -25,11 +27,9 @@ public class ValidationPartsServiceImpl extends ValidationStrategyServiceImpl {
 
   @Override
   public ValidationResult executeValidation(
-      ServiceOrder serviceOrder,
-      ValidationResult validationResult,
-      ExtractValueFromJson extractValueFromJson) {
+      ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
 
-    int maxPartsPerClaim = extractValueFromJson.getIntRule("maxPartsPerClaim", 1);
+    int maxPartsPerClaim = this.extractValueFromJson.getInt(rulesDetails, "maxPartsPerClaim", 1);
 
     if (serviceOrder.getClaims().stream().anyMatch(c -> c.getParts().size() > maxPartsPerClaim)) {
       validationResult.setStatus(StatusValidation.Error);
