@@ -1,9 +1,11 @@
 package com.shs.b2bm.claim.service.services.impl;
 
+import com.shs.b2bm.claim.service.entities.Merchandise;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.entities.ValidationResult;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
 import com.shs.b2bm.claim.service.mappers.ServiceOrderProtoMapper;
+import com.shs.b2bm.claim.service.repositories.MerchandiseRepository;
 import com.shs.b2bm.claim.service.repositories.ServiceOrderRepository;
 import com.shs.b2bm.claim.service.services.ServiceOrderValidationService;
 import com.shs.b2bm.claim.service.services.ValidationStrategyService;
@@ -23,14 +25,17 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
   private final List<ValidationStrategyService> listRulesImplementation;
   private final ServiceOrderProtoMapper serviceOrderProtoMapper;
   private final ServiceOrderRepository serviceOrderRepository;
+  private final MerchandiseRepository merchandiseRepository;
 
   private final Random RANDOM; // Just for mocking the initial implementations
 
   public ServiceOrderValidationServiceImpl(
       List<ValidationStrategyService> listRulesImplementation,
-      ServiceOrderRepository serviceOrderRepository) {
+      ServiceOrderRepository serviceOrderRepository,
+      MerchandiseRepository merchandiseRepository) {
     this.listRulesImplementation = listRulesImplementation;
     this.serviceOrderProtoMapper = ServiceOrderProtoMapper.INSTANCE;
+    this.merchandiseRepository = merchandiseRepository;
     this.RANDOM = new Random(); // Just for mocking the initial implementations
     this.serviceOrderRepository = serviceOrderRepository;
   }
@@ -42,9 +47,14 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
       throw new ValidationException("Service order number is required");
     }
 
+    // Merchandise flow just for mocking the initial implementations
+    Merchandise merchandise = new Merchandise();
+    merchandise.setSerialNumber(this.getRandomSerialNumber());
+    merchandiseRepository.save(merchandise);
+
     ServiceOrder serviceOrder = serviceOrderProtoMapper.toEntity(serviceOrderProto);
     serviceOrder.setObligorId(this.getRandomObligorId());
-    serviceOrder.setSerialNumber(this.getRandomSerialNumber());
+    serviceOrder.setMerchandise(merchandise);
 
     List<ValidationResult> listValidationResult = this.rulesValidator(serviceOrder);
 

@@ -33,9 +33,9 @@ public class ValidationSerialNumberServiceImpl extends ValidationStrategyService
     int minLength = extractValueFromJson.getInt(rulesDetails, "minLength", 0);
     int maxLength = extractValueFromJson.getInt(rulesDetails, "maxLength", Integer.MAX_VALUE);
 
-    if ((isRequired && serviceOrder.getSerialNumber().isBlank())
-        || serviceOrder.getSerialNumber().length() < minLength
-        || serviceOrder.getSerialNumber().length() > maxLength) {
+    if ((isRequired && serviceOrder.getMerchandise().getSerialNumber().isBlank())
+        || serviceOrder.getMerchandise().getSerialNumber().length() < minLength
+        || serviceOrder.getMerchandise().getSerialNumber().length() > maxLength) {
       validationResult.setStatus(StatusValidation.Error);
     }
 

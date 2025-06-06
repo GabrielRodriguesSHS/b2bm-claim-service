@@ -48,6 +48,11 @@ public class ServiceOrder extends BaseEntity {
   @ToString.Exclude
   private JobCode jobCode;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "merchandise_id")
+  @ToString.Exclude
+  private Merchandise merchandise;
+
   @NotBlank(message = "Service unit number cannot be blank")
   @Column(nullable = false)
   private String serviceUnitNumber;
@@ -65,8 +70,6 @@ public class ServiceOrder extends BaseEntity {
   @Column private String merchandiseModelNumber;
 
   @Column private String merchandiseSerialNumber;
-
-  @Column private String serialNumber;
 
   @OneToMany(mappedBy = "serviceOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @ToString.Exclude
