@@ -48,6 +48,11 @@ public class ServiceOrder extends BaseEntity {
   @ToString.Exclude
   private JobCode jobCode;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "merchandise_id")
+  @ToString.Exclude
+  private Merchandise merchandise;
+
   @NotBlank(message = "Service unit number cannot be blank")
   @Column(nullable = false)
   private String serviceUnitNumber;
@@ -74,7 +79,7 @@ public class ServiceOrder extends BaseEntity {
   @OneToMany(mappedBy = "serviceOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @ToString.Exclude
   @Builder.Default
-  private List<ValidationResult> validationResult = new ArrayList<>();
+  private List<ValidationResult> validationsResult = new ArrayList<>();
 
   @Column private Integer obligorId; // Just for mocking the initial implementations
 }
