@@ -31,7 +31,7 @@ public class ValidationPartsServiceImpl extends ValidationStrategyServiceImpl {
 
     int maxPartsPerClaim = this.extractValueFromJson.getInt(rulesDetails, "maxPartsPerClaim", 1);
 
-    if (serviceOrder.getClaims().stream().anyMatch(c -> c.getParts().size() > maxPartsPerClaim)) {
+    if (serviceOrder.getParts().size() > maxPartsPerClaim) {
       validationResult.setStatus(StatusValidation.Error);
     }
 

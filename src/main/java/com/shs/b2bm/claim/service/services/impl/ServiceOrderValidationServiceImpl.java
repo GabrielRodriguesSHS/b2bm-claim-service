@@ -2,6 +2,7 @@ package com.shs.b2bm.claim.service.services.impl;
 
 import com.shs.b2bm.claim.service.entities.Merchandise;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
+import com.shs.b2bm.claim.service.entities.ServiceOrderPart;
 import com.shs.b2bm.claim.service.entities.ValidationResult;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
 import com.shs.b2bm.claim.service.mappers.ServiceOrderProtoMapper;
@@ -9,6 +10,7 @@ import com.shs.b2bm.claim.service.repositories.MerchandiseRepository;
 import com.shs.b2bm.claim.service.repositories.ServiceOrderRepository;
 import com.shs.b2bm.claim.service.services.ServiceOrderValidationService;
 import com.shs.b2bm.claim.service.services.ValidationStrategyService;
+import com.shs.b2bm.claim.service.utils.ServiceOrderMock;
 import jakarta.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,16 +29,17 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
   private final ServiceOrderRepository serviceOrderRepository;
   private final MerchandiseRepository merchandiseRepository;
 
-  private final Random RANDOM; // Just for mocking the initial implementations
+  private final ServiceOrderMock serviceOrderMock; // Just for mocking the initial implementations
 
   public ServiceOrderValidationServiceImpl(
       List<ValidationStrategyService> listRulesImplementation,
       ServiceOrderRepository serviceOrderRepository,
-      MerchandiseRepository merchandiseRepository) {
+      MerchandiseRepository merchandiseRepository,
+      ServiceOrderMock serviceOrderMock) {
     this.listRulesImplementation = listRulesImplementation;
     this.serviceOrderProtoMapper = ServiceOrderProtoMapper.INSTANCE;
     this.merchandiseRepository = merchandiseRepository;
-    this.RANDOM = new Random(); // Just for mocking the initial implementations
+    this.serviceOrderMock = serviceOrderMock;  // Just for mocking the initial implementations
     this.serviceOrderRepository = serviceOrderRepository;
   }
 
@@ -49,12 +52,13 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
 
     // Merchandise flow just for mocking the initial implementations
     Merchandise merchandise = new Merchandise();
-    merchandise.setSerialNumber(this.getRandomSerialNumber());
+    merchandise.setSerialNumber(serviceOrderMock.getRandomSerialNumber());
     merchandiseRepository.save(merchandise);
 
     ServiceOrder serviceOrder = serviceOrderProtoMapper.toEntity(serviceOrderProto);
-    serviceOrder.setObligorId(this.getRandomObligorId());
+    serviceOrder.setObligorId(serviceOrderMock.getRandomObligorId());
     serviceOrder.setMerchandise(merchandise);
+    serviceOrder.setParts(serviceOrderMock.getRandomServiceOrderPart(serviceOrder));
 
     List<ValidationResult> listValidationResult = this.rulesValidator(serviceOrder);
 
@@ -86,19 +90,4 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
     return listValidationResult;
   }
 
-  // Just for mocking the initial implementations
-  private int getRandomObligorId() {
-    return 1 + RANDOM.nextInt(3);
-  }
-
-  // Just for mocking the initial implementations
-  private String getRandomSerialNumber() {
-    int length = RANDOM.nextInt(21);
-    String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    StringBuilder sb = new StringBuilder(length);
-    for (int i = 0; i < length; i++) {
-      sb.append(chars.charAt(RANDOM.nextInt(chars.length())));
-    }
-    return sb.toString();
-  }
 }

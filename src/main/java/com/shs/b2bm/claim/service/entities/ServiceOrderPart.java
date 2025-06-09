@@ -26,16 +26,16 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Part extends BaseEntity {
+public class ServiceOrderPart extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long partId;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "claim_id")
+  @JoinColumn(name = "service_order_id")
   @ToString.Exclude
-  private Claim claim;
+  private ServiceOrder serviceOrder;
 
   @Column private String sequenceNumber;
 
