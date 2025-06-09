@@ -2,7 +2,6 @@ package com.shs.b2bm.claim.service.services.impl;
 
 import com.shs.b2bm.claim.service.entities.Merchandise;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
-import com.shs.b2bm.claim.service.entities.ServiceOrderPart;
 import com.shs.b2bm.claim.service.entities.ValidationResult;
 import com.shs.b2bm.claim.service.kafka.proto.ServiceOrderProto;
 import com.shs.b2bm.claim.service.mappers.ServiceOrderProtoMapper;
@@ -15,7 +14,6 @@ import jakarta.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +37,7 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
     this.listRulesImplementation = listRulesImplementation;
     this.serviceOrderProtoMapper = ServiceOrderProtoMapper.INSTANCE;
     this.merchandiseRepository = merchandiseRepository;
-    this.serviceOrderMock = serviceOrderMock;  // Just for mocking the initial implementations
+    this.serviceOrderMock = serviceOrderMock; // Just for mocking the initial implementations
     this.serviceOrderRepository = serviceOrderRepository;
   }
 
@@ -89,5 +87,4 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
 
     return listValidationResult;
   }
-
 }
