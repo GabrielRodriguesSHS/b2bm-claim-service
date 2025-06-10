@@ -51,7 +51,7 @@ public class ValidationSerialNumberServiceImpl extends ValidationStrategyService
     if (serialNumber.length() < minLength || serialNumber.length() > maxLength) {
       String errorMessageLength =
           extractValueFromJson.getString(
-              rulesDetails, "errorMessageLength", "Serial too short");
+              rulesDetails, "errorMessageLength", "Serial does not meet length requirements");
       validationResult.setErrorMessage(
           validationResult.getErrorMessage().concat(" ").concat(errorMessageLength));
       validationResult.setStatus(StatusValidation.Error);
