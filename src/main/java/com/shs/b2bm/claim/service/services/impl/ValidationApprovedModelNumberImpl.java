@@ -7,7 +7,7 @@ import com.shs.b2bm.claim.service.enums.Rule;
 import com.shs.b2bm.claim.service.enums.StatusValidation;
 import com.shs.b2bm.claim.service.services.ValidationConfigService;
 import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,10 +37,9 @@ public class ValidationApprovedModelNumberImpl extends ValidationStrategyService
             ? serviceOrder.getMerchandise().getModelNumber()
             : "";
 
-    List<String> listApprovedModelNumber = new ArrayList<String>();
-    listApprovedModelNumber =
+    List<String> listApprovedModelNumber =
         this.extractValueFromJson.getListOfString(
-            rulesDetails, "listApprovedModelNumber", listApprovedModelNumber);
+            rulesDetails, "listApprovedModelNumber", Collections.emptyList());
 
     if (listApprovedModelNumber.stream().noneMatch(b -> b.equalsIgnoreCase(modelNumber))) {
       validationResult.setStatus(StatusValidation.Error);

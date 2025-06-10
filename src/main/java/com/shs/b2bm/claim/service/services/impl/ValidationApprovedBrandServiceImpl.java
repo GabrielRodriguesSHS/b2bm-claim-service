@@ -7,7 +7,7 @@ import com.shs.b2bm.claim.service.enums.Rule;
 import com.shs.b2bm.claim.service.enums.StatusValidation;
 import com.shs.b2bm.claim.service.services.ValidationConfigService;
 import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,10 +37,9 @@ public class ValidationApprovedBrandServiceImpl extends ValidationStrategyServic
             ? serviceOrder.getMerchandise().getBrandName()
             : "";
 
-    List<String> listApprovedBrand = new ArrayList<String>();
-    listApprovedBrand =
+    List<String> listApprovedBrand =
         this.extractValueFromJson.getListOfString(
-            rulesDetails, "listApprovedBrand", listApprovedBrand);
+            rulesDetails, "listApprovedBrand", Collections.emptyList());
 
     if (listApprovedBrand.stream().noneMatch(b -> b.equalsIgnoreCase(brandName))) {
       validationResult.setStatus(StatusValidation.Error);
