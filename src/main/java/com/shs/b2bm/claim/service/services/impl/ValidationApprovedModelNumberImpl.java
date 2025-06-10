@@ -15,34 +15,34 @@ import org.springframework.stereotype.Service;
 /** Implementation of ServiceOrderRuleValidatorService to validate Parts. */
 @Service
 @Slf4j
-public class ValidationApprovedBrandServiceImpl extends ValidationStrategyServiceImpl {
+public class ValidationApprovedModelNumberImpl extends ValidationStrategyServiceImpl {
 
-  public ValidationApprovedBrandServiceImpl(
+  public ValidationApprovedModelNumberImpl(
       ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
     super(validationConfigService, extractValueFromJson);
   }
 
   @Override
   public Rule getValidationRule() {
-    return Rule.ApprovedBrand;
+    return Rule.ApprovedModelNumber;
   }
 
   @Override
   public ValidationResult executeValidation(
       ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
 
-    String brandName =
+    String modelNumber =
         (serviceOrder.getMerchandise() != null
-                && serviceOrder.getMerchandise().getBrandName() != null)
-            ? serviceOrder.getMerchandise().getBrandName()
+                && serviceOrder.getMerchandise().getModelNumber() != null)
+            ? serviceOrder.getMerchandise().getModelNumber()
             : "";
 
-    List<String> listApprovedBrand = new ArrayList<String>();
-    listApprovedBrand =
+    List<String> listApprovedModelNumber = new ArrayList<String>();
+    listApprovedModelNumber =
         this.extractValueFromJson.getListOfString(
-            rulesDetails, "listApprovedBrand", listApprovedBrand);
+            rulesDetails, "listApprovedModelNumber", listApprovedModelNumber);
 
-    if (listApprovedBrand.stream().noneMatch(b -> b.equalsIgnoreCase(brandName))) {
+    if (listApprovedModelNumber.stream().noneMatch(b -> b.equalsIgnoreCase(modelNumber))) {
       validationResult.setStatus(StatusValidation.Error);
     }
 

@@ -31,5 +31,7 @@ public class Merchandise extends BaseEntity {
 
   @Column private String brandName;
 
+  @Column private String modelNumber;
+
   @Column private String serialNumber;
 }
