@@ -60,9 +60,9 @@ CREATE TABLE validation_config  (
 
 INSERT INTO validation_config(rule_name, obligor_id, rule_details, error_message, created_date, last_modified_date, created_by, last_modified_by)
 VALUES
-('SerialNumberValidation', 1, '{"required" : "true", "minLength" : "0", "maxLength": "10"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('SerialNumberValidation', 2, '{"required" : "true", "minLength" : "5", "maxLength": "15"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('SerialNumberValidation', 3, '{"required" : "false", "minLength" : "0", "maxLength": "50"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('SerialNumberValidation', 1, '{"required" : "true", "errorMessageRequired": "Serial missing", "minLength" : 0, "maxLength": 10, "errorMessageLength": "Serial does not meet length requirements"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('SerialNumberValidation', 2, '{"required" : "true", "errorMessageRequired": "Serial missing", "minLength" : 5, "maxLength": 15, "errorMessageLength": "Serial does not meet length requirements"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('SerialNumberValidation', 3, '{"required" : "false", "errorMessageRequired": "Serial missing", "minLength" : 0, "maxLength": 50, "errorMessageLength": "Serial does not meet length requirements"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
 ('ApprovedBrand', 1, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
 ('ApprovedBrand', 2, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
 ('ApprovedBrand', 3, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),

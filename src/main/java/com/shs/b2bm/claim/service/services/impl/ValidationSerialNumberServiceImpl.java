@@ -29,19 +29,31 @@ public class ValidationSerialNumberServiceImpl extends ValidationStrategyService
   public ValidationResult executeValidation(
       ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
 
-    int serialNumberLength =
+    String serialNumber =
         (serviceOrder.getMerchandise() != null
                 && serviceOrder.getMerchandise().getSerialNumber() != null)
-            ? serviceOrder.getMerchandise().getSerialNumber().length()
-            : 0;
+            ? serviceOrder.getMerchandise().getSerialNumber()
+            : "";
 
     boolean isRequired = extractValueFromJson.getBoolean(rulesDetails, "required", true);
     int minLength = extractValueFromJson.getInt(rulesDetails, "minLength", 0);
     int maxLength = extractValueFromJson.getInt(rulesDetails, "maxLength", Integer.MAX_VALUE);
 
-    if ((isRequired && serviceOrder.getMerchandise().getSerialNumber().isBlank())
-        || serialNumberLength < minLength
-        || serialNumberLength > maxLength) {
+    if (isRequired && serialNumber.isBlank()) {
+      String errorMessageRequired =
+          extractValueFromJson.getString(
+              rulesDetails, "errorMessageRequired", "Serial missing");
+      validationResult.setErrorMessage(
+          validationResult.getErrorMessage().concat(" ").concat(errorMessageRequired));
+      validationResult.setStatus(StatusValidation.Error);
+    }
+
+    if (serialNumber.length() < minLength || serialNumber.length() > maxLength) {
+      String errorMessageLength =
+          extractValueFromJson.getString(
+              rulesDetails, "errorMessageLength", "Serial does not meet length requirements");
+      validationResult.setErrorMessage(
+          validationResult.getErrorMessage().concat(" ").concat(errorMessageLength));
       validationResult.setStatus(StatusValidation.Error);
     }
 
