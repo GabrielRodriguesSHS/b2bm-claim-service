@@ -66,6 +66,9 @@ VALUES
 ('ApprovedBrand', 1, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
 ('ApprovedBrand', 2, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
 ('ApprovedBrand', 3, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('ApprovedModelNumber', 1, '{"listApprovedModelNumber" : ["MODEL123", "ModelTest"]}', 'Invalid model number for selected obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('ApprovedModelNumber', 2, '{"listApprovedModelNumber" : ["MODEL123", "ModelTest"]}', 'Invalid model number for selected obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('ApprovedModelNumber', 3, '{"listApprovedModelNumber" : ["MODEL123", "ModelTest"]}', 'Invalid model number for selected obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
 ('PartsValidation', null, '{"required" : "true", "maxPartsPerClaim" : 1}', 'Multiple parts detected', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service');
 
 -- Add indexes for foreign keys for query optimization

@@ -52,6 +52,7 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
     Merchandise merchandise = new Merchandise();
     merchandise.setSerialNumber(serviceOrderMock.getRandomSerialNumber());
     merchandise.setBrandName(serviceOrderMock.getRandomBrand());
+    merchandise.setModelNumber(serviceOrderMock.getRandomModelNumber());
     merchandiseRepository.save(merchandise);
 
     ServiceOrder serviceOrder = serviceOrderProtoMapper.toEntity(serviceOrderProto);
