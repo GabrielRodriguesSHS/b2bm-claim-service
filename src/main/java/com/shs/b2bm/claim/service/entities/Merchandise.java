@@ -29,5 +29,7 @@ public class Merchandise extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long merchandiseId;
 
+  @Column private String brandName;
+
   @Column private String serialNumber;
 }
