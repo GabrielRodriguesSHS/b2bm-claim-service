@@ -53,8 +53,8 @@ public class ServiceOrderMock {
   }
 
   public String getRandomModelNumber() {
-    List<String> brands = Arrays.asList("MODEL123", "ModelTest", "NewModel");
+    List<String> modelNumbers = Arrays.asList("MODEL123", "ModelTest", "NewModel");
 
-    return brands.get(RANDOM.nextInt(brands.size()));
+    return modelNumbers.get(RANDOM.nextInt(modelNumbers.size()));
   }
 }
