@@ -47,7 +47,7 @@ public class ServiceOrderMock {
   }
 
   public String getRandomBrand() {
-    List<String> brands = Arrays.asList("LG", "Samsung", "Brastemp");
+    List<String> brands = Arrays.asList("LG", "Samsung", "Whirlpool");
 
     return brands.get(RANDOM.nextInt(brands.size()));
   }
