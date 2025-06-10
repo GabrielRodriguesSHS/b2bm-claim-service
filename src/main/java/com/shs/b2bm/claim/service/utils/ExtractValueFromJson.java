@@ -2,6 +2,9 @@ package com.shs.b2bm.claim.service.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -91,6 +94,19 @@ public class ExtractValueFromJson {
     return (jsonNode != null && jsonNode.get(key) != null)
         ? jsonNode.get(key).asDouble()
         : defaultValue;
+  }
+
+  public List<String> getListOfString(JsonNode jsonNode, String key, List<String> defaultValue) {
+    jsonNode = this.validateJsonNode(jsonNode);
+
+    if (jsonNode != null && jsonNode.has(key) && jsonNode.get(key).isArray()) {
+      return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
+          .filter(JsonNode::isTextual)
+          .map(JsonNode::asText)
+          .collect(Collectors.toList());
+    }
+
+    return defaultValue;
   }
 
   private JsonNode validateJsonNode(JsonNode jsonNode) {

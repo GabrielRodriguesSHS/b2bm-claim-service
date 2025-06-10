@@ -3,6 +3,7 @@ package com.shs.b2bm.claim.service.utils;
 import com.shs.b2bm.claim.service.entities.ServiceOrder;
 import com.shs.b2bm.claim.service.entities.ServiceOrderPart;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import lombok.NoArgsConstructor;
@@ -43,5 +44,11 @@ public class ServiceOrderMock {
     }
 
     return listParts;
+  }
+
+  public String getRandomBrand() {
+    List<String> brands = Arrays.asList("LG", "Samsung", "Whirlpool");
+
+    return brands.get(RANDOM.nextInt(brands.size()));
   }
 }

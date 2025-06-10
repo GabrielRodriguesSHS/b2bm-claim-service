@@ -51,6 +51,7 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
     // Merchandise flow just for mocking the initial implementations
     Merchandise merchandise = new Merchandise();
     merchandise.setSerialNumber(serviceOrderMock.getRandomSerialNumber());
+    merchandise.setBrandName(serviceOrderMock.getRandomBrand());
     merchandiseRepository.save(merchandise);
 
     ServiceOrder serviceOrder = serviceOrderProtoMapper.toEntity(serviceOrderProto);
