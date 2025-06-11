@@ -3,7 +3,6 @@ package com.shs.b2bm.claim.service.utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -99,14 +98,27 @@ public class ExtractValueFromJson {
   public List<String> getListOfString(JsonNode jsonNode, String key, List<String> defaultValue) {
     jsonNode = this.validateJsonNode(jsonNode);
 
-    if (jsonNode != null && jsonNode.has(key) && jsonNode.get(key).isArray()) {
-      return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
-          .filter(JsonNode::isTextual)
-          .map(JsonNode::asText)
-          .collect(Collectors.toList());
+    if (jsonNode == null || !jsonNode.has(key) || !jsonNode.get(key).isArray()) {
+      return defaultValue;
     }
 
-    return defaultValue;
+    return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
+        .filter(JsonNode::isTextual)
+        .map(JsonNode::asText)
+        .toList();
+  }
+
+  public List<Integer> getListOfInteger(JsonNode jsonNode, String key, List<Integer> defaultValue) {
+    jsonNode = this.validateJsonNode(jsonNode);
+
+    if (jsonNode == null || !jsonNode.has(key) || !jsonNode.get(key).isArray()) {
+      return defaultValue;
+    }
+
+    return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
+        .filter(JsonNode::isInt)
+        .map(JsonNode::asInt)
+        .toList();
   }
 
   private JsonNode validateJsonNode(JsonNode jsonNode) {

@@ -15,33 +15,29 @@ import org.springframework.stereotype.Service;
 /** Implementation of ServiceOrderRuleValidatorService to validate Parts. */
 @Service
 @Slf4j
-public class ValidationApprovedModelNumberImpl extends ValidationStrategyServiceImpl {
+public class ValidationManualReviewProcIdImpl extends ValidationStrategyServiceImpl {
 
-  public ValidationApprovedModelNumberImpl(
+  public ValidationManualReviewProcIdImpl(
       ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
     super(validationConfigService, extractValueFromJson);
   }
 
   @Override
   public Rule getValidationRule() {
-    return Rule.APPROVED_MODEL_NUMBER;
+    return Rule.MANUAL_REVIEW_PROC_ID;
   }
 
   @Override
   public ValidationResult executeValidation(
       ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
 
-    String modelNumber =
-        (serviceOrder.getMerchandise() != null
-                && serviceOrder.getMerchandise().getModelNumber() != null)
-            ? serviceOrder.getMerchandise().getModelNumber()
-            : "";
+    Integer procId = (serviceOrder.getProcId() != null) ? serviceOrder.getProcId() : 0;
 
-    List<String> listApprovedModelNumber =
-        this.extractValueFromJson.getListOfString(
-            rulesDetails, "listApprovedModelNumber", Collections.emptyList());
+    List<Integer> listManualReviewProcId =
+        this.extractValueFromJson.getListOfInteger(
+            rulesDetails, "listManualReviewProcId", Collections.emptyList());
 
-    if (listApprovedModelNumber.stream().noneMatch(b -> b.equalsIgnoreCase(modelNumber))) {
+    if (listManualReviewProcId.stream().anyMatch(b -> b.equals(procId))) {
       validationResult.setStatus(StatusValidation.Error);
     }
 

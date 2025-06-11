@@ -60,16 +60,19 @@ CREATE TABLE validation_config  (
 
 INSERT INTO validation_config(rule_name, obligor_id, rule_details, error_message, created_date, last_modified_date, created_by, last_modified_by)
 VALUES
-('SerialNumberValidation', 1, '{"required" : "true", "errorMessageRequired": "Serial missing", "minLength" : 0, "maxLength": 10, "errorMessageLength": "Serial does not meet length requirements"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('SerialNumberValidation', 2, '{"required" : "true", "errorMessageRequired": "Serial missing", "minLength" : 5, "maxLength": 15, "errorMessageLength": "Serial does not meet length requirements"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('SerialNumberValidation', 3, '{"required" : "false", "errorMessageRequired": "Serial missing", "minLength" : 0, "maxLength": 50, "errorMessageLength": "Serial does not meet length requirements"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('ApprovedBrand', 1, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('ApprovedBrand', 2, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('ApprovedBrand', 3, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('ApprovedModelNumber', 1, '{"listApprovedModelNumber" : ["MODEL123", "ModelTest"]}', 'Invalid model number for selected obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('ApprovedModelNumber', 2, '{"listApprovedModelNumber" : ["MODEL123", "ModelTest"]}', 'Invalid model number for selected obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('ApprovedModelNumber', 3, '{"listApprovedModelNumber" : ["MODEL123", "ModelTest"]}', 'Invalid model number for selected obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('PartsValidation', null, '{"required" : "true", "maxPartsPerClaim" : 1}', 'Multiple parts detected', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service');
+('SERIAL_NUMBER_VALIDATION', 1, '{"required" : "true", "errorMessageRequired": "Serial missing", "minLength" : 0, "maxLength": 10, "errorMessageLength": "Serial does not meet length requirements"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('SERIAL_NUMBER_VALIDATION', 2, '{"required" : "true", "errorMessageRequired": "Serial missing", "minLength" : 5, "maxLength": 15, "errorMessageLength": "Serial does not meet length requirements"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('SERIAL_NUMBER_VALIDATION', 3, '{"required" : "false", "errorMessageRequired": "Serial missing", "minLength" : 0, "maxLength": 50, "errorMessageLength": "Serial does not meet length requirements"}', 'Serial Number does not meet the required parameters', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('APPROVED_BRAND', 1, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('APPROVED_BRAND', 2, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('APPROVED_BRAND', 3, '{"listApprovedBrand" : ["LG", "Samsung"]}', 'Unrecognized brand for obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('APPROVED_MODEL_NUMBER', 1, '{"listApprovedModelNumber" : ["MODEL123", "ModelTest"]}', 'Invalid model number for selected obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('APPROVED_MODEL_NUMBER', 2, '{"listApprovedModelNumber" : ["MODEL123", "ModelTest"]}', 'Invalid model number for selected obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('APPROVED_MODEL_NUMBER', 3, '{"listApprovedModelNumber" : ["MODEL123", "ModelTest"]}', 'Invalid model number for selected obligor', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('PARTS_VALIDATION', null, '{"required" : "true", "maxPartsPerClaim" : 1}', 'Multiple parts detected', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('MANUAL_REVIEW_PROC_ID', 1, '{"listManualReviewProcId" : [1, 2]}', 'PROC ID is under review protocol', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('MANUAL_REVIEW_PROC_ID', 2, '{"listManualReviewProcId" : [1, 2]}', 'PROC ID is under review protocol', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('MANUAL_REVIEW_PROC_ID', 3, '{"listManualReviewProcId" : [1, 2]}', 'PROC ID is under review protocol', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service');
 
 -- Add indexes for foreign keys for query optimization
 CREATE INDEX idx_service_order_service_order_data_import_audit_information_id ON service_order (service_order_data_import_audit_information_id);

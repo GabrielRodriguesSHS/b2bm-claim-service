@@ -15,24 +15,24 @@ import org.springframework.stereotype.Component;
 @Component
 // Just for mocking the initial implementations
 public class ServiceOrderMock {
-  private final Random RANDOM = new Random();
+  private final Random random = new Random();
 
   public int getRandomObligorId() {
-    return 1 + RANDOM.nextInt(3);
+    return 1 + random.nextInt(3);
   }
 
   public String getRandomSerialNumber() {
-    int length = RANDOM.nextInt(21);
+    int length = random.nextInt(21);
     String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     StringBuilder sb = new StringBuilder(length);
     for (int i = 0; i < length; i++) {
-      sb.append(chars.charAt(RANDOM.nextInt(chars.length())));
+      sb.append(chars.charAt(random.nextInt(chars.length())));
     }
     return sb.toString();
   }
 
   public List<ServiceOrderPart> getRandomServiceOrderPart(ServiceOrder serviceOrder) {
-    int randomNumberParts = RANDOM.nextInt(3);
+    int randomNumberParts = random.nextInt(3);
     List<ServiceOrderPart> listParts = new ArrayList<ServiceOrderPart>();
 
     for (int i = 0; i < randomNumberParts; i++) {
@@ -49,12 +49,16 @@ public class ServiceOrderMock {
   public String getRandomBrand() {
     List<String> brands = Arrays.asList("LG", "Samsung", "Whirlpool");
 
-    return brands.get(RANDOM.nextInt(brands.size()));
+    return brands.get(random.nextInt(brands.size()));
   }
 
   public String getRandomModelNumber() {
     List<String> modelNumbers = Arrays.asList("MODEL123", "ModelTest", "NewModel");
 
-    return modelNumbers.get(RANDOM.nextInt(modelNumbers.size()));
+    return modelNumbers.get(random.nextInt(modelNumbers.size()));
+  }
+
+  public int getRandomProcId() {
+    return 1 + random.nextInt(3);
   }
 }

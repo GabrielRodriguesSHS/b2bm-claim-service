@@ -22,7 +22,7 @@ public class ValidationPartsServiceImpl extends ValidationStrategyServiceImpl {
 
   @Override
   public Rule getValidationRule() {
-    return Rule.PartsValidation;
+    return Rule.PARTS_VALIDATION;
   }
 
   @Override

@@ -22,7 +22,7 @@ public class ValidationSerialNumberServiceImpl extends ValidationStrategyService
 
   @Override
   public Rule getValidationRule() {
-    return Rule.SerialNumberValidation;
+    return Rule.SERIAL_NUMBER_VALIDATION;
   }
 
   @Override
@@ -41,8 +41,7 @@ public class ValidationSerialNumberServiceImpl extends ValidationStrategyService
 
     if (isRequired && serialNumber.isBlank()) {
       String errorMessageRequired =
-          extractValueFromJson.getString(
-              rulesDetails, "errorMessageRequired", "Serial missing");
+          extractValueFromJson.getString(rulesDetails, "errorMessageRequired", "Serial missing");
       validationResult.setErrorMessage(
           validationResult.getErrorMessage().concat(" ").concat(errorMessageRequired));
       validationResult.setStatus(StatusValidation.Error);
