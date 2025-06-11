@@ -87,4 +87,6 @@ public class ServiceOrder extends BaseEntity {
   private List<ServiceOrderPart> parts = new ArrayList<>();
 
   @Column private Integer obligorId; // Just for mocking the initial implementations
+
+  @Column private Integer procId; // Just for mocking the initial implementations
 }

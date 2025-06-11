@@ -57,4 +57,8 @@ public class ServiceOrderMock {
 
     return modelNumbers.get(RANDOM.nextInt(modelNumbers.size()));
   }
+
+  public int getRandomProcId() {
+    return 1 + RANDOM.nextInt(3);
+  }
 }

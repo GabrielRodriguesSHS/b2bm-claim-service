@@ -8,7 +8,8 @@ public enum Rule {
   SerialNumberValidation("SerialNumberValidation"),
   PartsValidation("PartsValidation"),
   ApprovedBrand("ApprovedBrand"),
-  ApprovedModelNumber("ApprovedModelNumber");
+  ApprovedModelNumber("ApprovedModelNumber"),
+  ManualReviewProcId("ManualReviewProcId");
 
   private final String description;
 

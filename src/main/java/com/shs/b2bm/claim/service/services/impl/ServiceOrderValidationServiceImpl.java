@@ -59,6 +59,7 @@ public class ServiceOrderValidationServiceImpl implements ServiceOrderValidation
     serviceOrder.setObligorId(serviceOrderMock.getRandomObligorId());
     serviceOrder.setMerchandise(merchandise);
     serviceOrder.setParts(serviceOrderMock.getRandomServiceOrderPart(serviceOrder));
+    serviceOrder.setProcId(serviceOrderMock.getRandomProcId());
 
     List<ValidationResult> listValidationResult = this.rulesValidator(serviceOrder);
 

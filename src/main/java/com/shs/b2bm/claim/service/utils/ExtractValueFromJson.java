@@ -109,6 +109,19 @@ public class ExtractValueFromJson {
     return defaultValue;
   }
 
+  public List<Integer> getListOfInteger(JsonNode jsonNode, String key, List<Integer> defaultValue) {
+    jsonNode = this.validateJsonNode(jsonNode);
+
+    if (jsonNode != null && jsonNode.has(key) && jsonNode.get(key).isArray()) {
+      return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
+          .filter(JsonNode::isInt)
+          .map(JsonNode::asInt)
+          .collect(Collectors.toList());
+    }
+
+    return defaultValue;
+  }
+
   private JsonNode validateJsonNode(JsonNode jsonNode) {
     if (jsonNode != null && jsonNode.isTextual()) {
       ObjectMapper mapper = new ObjectMapper();
