@@ -61,4 +61,36 @@ public class ServiceOrderMock {
   public int getRandomProcId() {
     return 1 + random.nextInt(3);
   }
+
+  public String getRandomManualEntrie() {
+    List<String> words = Arrays.asList(
+            "test",
+            "****",
+            "xxxxxx",
+            "technician",
+            "washing machine",
+            "error",
+            "repair",
+            "appointment",
+            "schedule",
+            "visit",
+            "home",
+            "service",
+            "diagnostic",
+            "issue",
+            "support",
+            "maintenance",
+            "client",
+            "request",
+            "fix",
+            "unit",
+            "install",
+            "confirm"
+    );
+
+      return words.get(random.nextInt(words.size())) +
+              words.get(random.nextInt(words.size())) +
+              words.get(random.nextInt(words.size())) +
+              words.get(random.nextInt(words.size()));
+  }
 }

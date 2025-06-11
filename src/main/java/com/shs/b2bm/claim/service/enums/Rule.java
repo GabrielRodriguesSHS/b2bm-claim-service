@@ -9,7 +9,8 @@ public enum Rule {
   PARTS_VALIDATION("PartsValidation"),
   APPROVED_BRAND("ApprovedBrand"),
   APPROVED_MODEL_NUMBER("ApprovedModelNumber"),
-  MANUAL_REVIEW_PROC_ID("ManualReviewProcId");
+  MANUAL_REVIEW_PROC_ID("ManualReviewProcId"),
+  KEYWORDS_MANUAL_ENTRIES("KeywordsManualEntries");
 
   private final String description;
 

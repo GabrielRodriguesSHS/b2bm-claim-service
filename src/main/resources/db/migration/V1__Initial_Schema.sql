@@ -72,7 +72,10 @@ VALUES
 ('PARTS_VALIDATION', null, '{"required" : "true", "maxPartsPerClaim" : 1}', 'Multiple parts detected', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
 ('MANUAL_REVIEW_PROC_ID', 1, '{"listManualReviewProcId" : [1, 2]}', 'PROC ID is under review protocol', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
 ('MANUAL_REVIEW_PROC_ID', 2, '{"listManualReviewProcId" : [1, 2]}', 'PROC ID is under review protocol', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
-('MANUAL_REVIEW_PROC_ID', 3, '{"listManualReviewProcId" : [1, 2]}', 'PROC ID is under review protocol', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service');
+('MANUAL_REVIEW_PROC_ID', 3, '{"listManualReviewProcId" : [1, 2]}', 'PROC ID is under review protocol', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('KEYWORDS_MANUAL_ENTRIES', 1, '{"listKeywordsManualEntries" : ["TEST", "****", "xxxxxx"]}', 'OEM keyword detected: ', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('KEYWORDS_MANUAL_ENTRIES', 2, '{"listKeywordsManualEntries" : ["TEST", "****", "xxxxxx"]}', 'OEM keyword detected: ', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service'),
+('KEYWORDS_MANUAL_ENTRIES', 3, '{"listKeywordsManualEntries" : ["TEST", "****", "xxxxxx"]}', 'OEM keyword detected: ', '2025-05-29', '2025-05-29', 'b2bm-claim-service', 'b2bm-claim-service');
 
 -- Add indexes for foreign keys for query optimization
 CREATE INDEX idx_service_order_service_order_data_import_audit_information_id ON service_order (service_order_data_import_audit_information_id);
