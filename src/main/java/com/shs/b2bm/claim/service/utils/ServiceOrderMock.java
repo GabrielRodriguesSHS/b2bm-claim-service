@@ -17,6 +17,31 @@ import org.springframework.stereotype.Component;
 public class ServiceOrderMock {
   private final Random random = new Random();
 
+  private static final List<String> words = Arrays.asList(
+          "test",
+          "****",
+          "xxxxxx",
+          "technician",
+          "washing machine",
+          "error",
+          "repair",
+          "appointment",
+          "schedule",
+          "visit",
+          "home",
+          "service",
+          "diagnostic",
+          "issue",
+          "support",
+          "maintenance",
+          "client",
+          "request",
+          "fix",
+          "unit",
+          "install",
+          "confirm"
+  );
+
   public int getRandomObligorId() {
     return 1 + random.nextInt(3);
   }
@@ -62,32 +87,7 @@ public class ServiceOrderMock {
     return 1 + random.nextInt(3);
   }
 
-  public String getRandomManualEntrie() {
-    List<String> words = Arrays.asList(
-            "test",
-            "****",
-            "xxxxxx",
-            "technician",
-            "washing machine",
-            "error",
-            "repair",
-            "appointment",
-            "schedule",
-            "visit",
-            "home",
-            "service",
-            "diagnostic",
-            "issue",
-            "support",
-            "maintenance",
-            "client",
-            "request",
-            "fix",
-            "unit",
-            "install",
-            "confirm"
-    );
-
+  public String getRandomManualEntry() {
       return words.get(random.nextInt(words.size())) +
               words.get(random.nextInt(words.size())) +
               words.get(random.nextInt(words.size())) +
