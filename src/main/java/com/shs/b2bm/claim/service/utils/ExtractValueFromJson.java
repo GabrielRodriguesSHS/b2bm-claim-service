@@ -98,27 +98,27 @@ public class ExtractValueFromJson {
   public List<String> getListOfString(JsonNode jsonNode, String key, List<String> defaultValue) {
     jsonNode = this.validateJsonNode(jsonNode);
 
-    if (jsonNode != null && jsonNode.has(key) && jsonNode.get(key).isArray()) {
-      return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
-          .filter(JsonNode::isTextual)
-          .map(JsonNode::asText)
-          .toList();
+    if (jsonNode == null || !jsonNode.has(key) || !jsonNode.get(key).isArray()) {
+      return defaultValue;
     }
 
-    return defaultValue;
+    return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
+        .filter(JsonNode::isTextual)
+        .map(JsonNode::asText)
+        .toList();
   }
 
   public List<Integer> getListOfInteger(JsonNode jsonNode, String key, List<Integer> defaultValue) {
     jsonNode = this.validateJsonNode(jsonNode);
 
-    if (jsonNode != null && jsonNode.has(key) && jsonNode.get(key).isArray()) {
-      return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
-          .filter(JsonNode::isInt)
-          .map(JsonNode::asInt)
-          .toList();
+    if (jsonNode == null || !jsonNode.has(key) || !jsonNode.get(key).isArray()) {
+      return defaultValue;
     }
 
-    return defaultValue;
+    return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
+        .filter(JsonNode::isInt)
+        .map(JsonNode::asInt)
+        .toList();
   }
 
   private JsonNode validateJsonNode(JsonNode jsonNode) {
