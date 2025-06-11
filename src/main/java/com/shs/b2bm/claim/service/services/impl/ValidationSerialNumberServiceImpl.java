@@ -22,7 +22,7 @@ public class ValidationSerialNumberServiceImpl extends ValidationStrategyService
 
   @Override
   public Rule getValidationRule() {
-    return Rule.SerialNumberValidation;
+    return Rule.SERIAL_NUMBER_VALIDATION;
   }
 
   @Override

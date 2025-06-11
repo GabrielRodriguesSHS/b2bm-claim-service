@@ -24,7 +24,7 @@ public class ValidationApprovedBrandServiceImpl extends ValidationStrategyServic
 
   @Override
   public Rule getValidationRule() {
-    return Rule.ApprovedBrand;
+    return Rule.APPROVED_BRAND;
   }
 
   @Override

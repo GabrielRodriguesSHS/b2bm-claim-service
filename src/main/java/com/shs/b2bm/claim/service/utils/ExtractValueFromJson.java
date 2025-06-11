@@ -103,7 +103,7 @@ public class ExtractValueFromJson {
       return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
           .filter(JsonNode::isTextual)
           .map(JsonNode::asText)
-          .collect(Collectors.toList());
+          .toList();
     }
 
     return defaultValue;
@@ -116,7 +116,7 @@ public class ExtractValueFromJson {
       return StreamSupport.stream(jsonNode.get(key).spliterator(), false)
           .filter(JsonNode::isInt)
           .map(JsonNode::asInt)
-          .collect(Collectors.toList());
+          .toList();
     }
 
     return defaultValue;

@@ -24,7 +24,7 @@ public class ValidationApprovedModelNumberImpl extends ValidationStrategyService
 
   @Override
   public Rule getValidationRule() {
-    return Rule.ApprovedModelNumber;
+    return Rule.APPROVED_MODEL_NUMBER;
   }
 
   @Override

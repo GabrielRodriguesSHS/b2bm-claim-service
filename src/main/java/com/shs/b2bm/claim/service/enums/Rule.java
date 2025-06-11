@@ -5,11 +5,11 @@ package com.shs.b2bm.claim.service.enums;
  * documentation purposes.
  */
 public enum Rule {
-  SerialNumberValidation("SerialNumberValidation"),
-  PartsValidation("PartsValidation"),
-  ApprovedBrand("ApprovedBrand"),
-  ApprovedModelNumber("ApprovedModelNumber"),
-  ManualReviewProcId("ManualReviewProcId");
+  SERIAL_NUMBER_VALIDATION("SerialNumberValidation"),
+  PARTS_VALIDATION("PartsValidation"),
+  APPROVED_BRAND("ApprovedBrand"),
+  APPROVED_MODEL_NUMBER("ApprovedModelNumber"),
+  MANUAL_REVIEW_PROC_ID("ManualReviewProcId");
 
   private final String description;
 

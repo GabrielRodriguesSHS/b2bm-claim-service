@@ -24,7 +24,7 @@ public class ValidationManualReviewProcIdImpl extends ValidationStrategyServiceI
 
   @Override
   public Rule getValidationRule() {
-    return Rule.ManualReviewProcId;
+    return Rule.MANUAL_REVIEW_PROC_ID;
   }
 
   @Override
