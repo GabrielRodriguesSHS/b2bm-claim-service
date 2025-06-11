@@ -89,4 +89,8 @@ public class ServiceOrder extends BaseEntity {
   @Column private Integer obligorId; // Just for mocking the initial implementations
 
   @Column private Integer procId; // Just for mocking the initial implementations
+
+  @Column private String technicianNotes; // Just for mocking the initial implementations
+
+  @Column private String serviceDescriptions; // Just for mocking the initial implementations
 }
