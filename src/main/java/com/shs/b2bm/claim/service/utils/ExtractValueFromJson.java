@@ -22,6 +22,7 @@ public class ExtractValueFromJson {
    * Extracts a string value from the rules map for the specified key. Converts the value to string
    * using toString() if present, otherwise returns the default value.
    *
+   * @param jsonNode the JSON node that contains the data to be read, must not be null
    * @param key the key to look up in the rules map, must not be null
    * @param defaultValue the default value to return if key is not found or value is null
    * @return the string value associated with the key, or defaultValue if not found or null
@@ -40,6 +41,7 @@ public class ExtractValueFromJson {
    * objects directly or parse String values as integers. Returns the default value if conversion
    * fails or key is not found.
    *
+   * @param jsonNode the JSON node that contains the data to be read, must not be null
    * @param key the key to look up in the rules map, must not be null
    * @param defaultValue the default value to return if key is not found, value is null, or
    *     conversion fails
@@ -60,6 +62,7 @@ public class ExtractValueFromJson {
    * directly or parses String values using Boolean.parseBoolean(). Returns the default value if key
    * is not found or value cannot be converted.
    *
+   * @param jsonNode the JSON node that contains the data to be read, must not be null
    * @param key the key to look up in the rules map, must not be null
    * @param defaultValue the default value to return if key is not found, value is null, or
    *     conversion fails
@@ -80,6 +83,7 @@ public class ExtractValueFromJson {
    * Double or parses String values as Double. Returns the default value if conversion fails or key
    * is not found.
    *
+   * @param jsonNode the JSON node that contains the data to be read, must not be null
    * @param key the key to look up in the rules map, must not be null
    * @param defaultValue the default value to return if key is not found, value is null, or
    *     conversion fails
@@ -95,6 +99,19 @@ public class ExtractValueFromJson {
         : defaultValue;
   }
 
+  /**
+   * Extracts a list of String values from the rules map for the specified key.
+   * Ensures that the associated value is a list or can be converted into a list of strings.
+   * Returns the default value if the key is not found, the value is null, the list is empty,
+   * or the conversion fails.
+   *
+   * @param jsonNode the JSON node that contains the data to be read, must not be null
+   * @param key the key to look up in the rules map, must not be null
+   * @param defaultValue the default list to return if the key is not found, the value is null,
+   *                     the list is empty, or conversion to a list of strings fails
+   * @return the List of String values associated with the key, or defaultValue if not found, empty, or conversion fails
+   * @throws NullPointerException if key is null
+   */
   public List<String> getListOfString(JsonNode jsonNode, String key, List<String> defaultValue) {
     jsonNode = this.validateJsonNode(jsonNode);
 
@@ -108,6 +125,19 @@ public class ExtractValueFromJson {
         .toList();
   }
 
+  /**
+   * Extracts a list of Integer values from the rules map for the specified key.
+   * Ensures that the associated value is a list or can be converted into a list of strings.
+   * Returns the default value if the key is not found, the value is null, the list is empty,
+   * or the conversion fails.
+   *
+   * @param jsonNode the JSON node that contains the data to be read, must not be null
+   * @param key the key to look up in the rules map, must not be null
+   * @param defaultValue the default list to return if the key is not found, the value is null,
+   *                     the list is empty, or conversion to a list of strings fails
+   * @return the List of Integer values associated with the key, or defaultValue if not found, empty, or conversion fails
+   * @throws NullPointerException if key is null
+   */
   public List<Integer> getListOfInteger(JsonNode jsonNode, String key, List<Integer> defaultValue) {
     jsonNode = this.validateJsonNode(jsonNode);
 
