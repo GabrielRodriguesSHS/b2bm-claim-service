@@ -19,38 +19,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceOrderKafkaConsumer {
 
-  private final ServiceOrderValidationService serviceOrderValidationService;
+    private final ServiceOrderValidationService serviceOrderValidationService;
 
-  public ServiceOrderKafkaConsumer(ServiceOrderValidationService serviceOrderValidationService) {
-    this.serviceOrderValidationService = serviceOrderValidationService;
-  }
-
-  /**
-   * Consumes ServiceOrder messages from the specified Kafka topic. Converts the proto message to an
-   * entity and persists it to the database. Implements correlation tracking and metrics collection.
-   *
-   * @param serviceOrder The ServiceOrder proto message
-   * @param topic The Kafka topic from which the message was received
-   * @param partition The partition from which the message was received
-   * @param offset The offset of the message
-   */
-  @KafkaListener(
-      topics = "${spring.kafka.topics.service-order-created}",
-      groupId = "${spring.kafka.consumer.group-id:b2bm-claim-service}",
-      containerFactory = "serviceOrderKafkaListenerContainerFactory")
-  public void listenWithHeaders(
-      @Payload ServiceOrderProto serviceOrder,
-      @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
-      @Header(KafkaHeaders.RECEIVED_PARTITION) Integer partition,
-      @Header(KafkaHeaders.OFFSET) Long offset) {
-    try {
-      serviceOrderValidationService.validateServiceOrder(serviceOrder);
-
-      log.info(
-          "Successfully processed and saved ServiceOrder: {}",
-          serviceOrder.getServiceOrderNumber());
-    } catch (Exception e) {
-      throw new KafkaException("Failed to process Service Order message", e);
+    public ServiceOrderKafkaConsumer(ServiceOrderValidationService serviceOrderValidationService) {
+        this.serviceOrderValidationService = serviceOrderValidationService;
     }
-  }
+
+    /**
+     * Consumes ServiceOrder messages from the specified Kafka topic. Converts the proto message to an
+     * entity and persists it to the database. Implements correlation tracking and metrics collection.
+     *
+     * @param serviceOrder The ServiceOrder proto message
+     * @param topic        The Kafka topic from which the message was received
+     * @param partition    The partition from which the message was received
+     * @param offset       The offset of the message
+     */
+    @KafkaListener(
+            topics = "${spring.kafka.topics.service-order-created}",
+            groupId = "${spring.kafka.consumer.group-id:b2bm-claim-service}",
+            containerFactory = "serviceOrderKafkaListenerContainerFactory")
+    public void listenWithHeaders(
+            @Payload ServiceOrderProto serviceOrder,
+            @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+            @Header(KafkaHeaders.RECEIVED_PARTITION) Integer partition,
+            @Header(KafkaHeaders.OFFSET) Long offset) {
+        try {
+            serviceOrderValidationService.validateServiceOrder(serviceOrder);
+
+            log.info(
+                    "Successfully processed and saved ServiceOrder: {}",
+                    serviceOrder.getServiceOrderNumber());
+        } catch (Exception e) {
+            throw new KafkaException("Failed to process Service Order message", e);
+        }
+    }
 }

@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface ServiceOrderProtoMapper {
-  ServiceOrderProtoMapper INSTANCE = Mappers.getMapper(ServiceOrderProtoMapper.class);
+    ServiceOrderProtoMapper INSTANCE = Mappers.getMapper(ServiceOrderProtoMapper.class);
 
-  ServiceOrder toEntity(ServiceOrderProto serviceOrder);
+    ServiceOrder toEntity(ServiceOrderProto serviceOrder);
 }

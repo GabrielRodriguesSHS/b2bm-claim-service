@@ -12,45 +12,46 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-/** Implementation of ServiceOrderRuleValidatorService to validate Parts. */
+/**
+ * Implementation of ServiceOrderRuleValidatorService to validate Parts.
+ */
 @Service
 @Slf4j
 public class ValidationKeywordsManualEntriesImpl extends ValidationStrategyServiceImpl {
 
-  public ValidationKeywordsManualEntriesImpl(
-      ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
-    super(validationConfigService, extractValueFromJson);
-  }
-
-  @Override
-  public Rule getValidationRule() {
-    return Rule.KEYWORDS_MANUAL_ENTRIES;
-  }
-
-  @Override
-  public ValidationResult executeValidation(
-      ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
-
-    String technicianNotes = (serviceOrder.getTechnicianNotes() != null) ? serviceOrder.getTechnicianNotes() : "";
-    String serviceDescriptions = (serviceOrder.getServiceDescriptions() != null) ? serviceOrder.getServiceDescriptions() : "";
-
-    List<String> listKeywordsManualEntries =
-        this.extractValueFromJson.getListOfString(
-            rulesDetails, "listKeywordsManualEntries", Collections.emptyList());
-
-    List<String> foundWords = listKeywordsManualEntries.stream()
-            .filter(w -> (technicianNotes.toLowerCase().contains(w.toLowerCase())
-                              || serviceDescriptions.toLowerCase().contains(w.toLowerCase())))
-            .toList();
-
-    if (!foundWords.isEmpty()) {
-      validationResult.setErrorMessage(validationResult.getErrorMessage().concat(foundWords.toString()));
-
-      validationResult.setStatus(StatusValidation.Error);
+    public ValidationKeywordsManualEntriesImpl(
+            ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
+        super(validationConfigService, extractValueFromJson);
     }
 
-    return validationResult;
-  }
+    @Override
+    public Rule getValidationRule() {
+        return Rule.KEYWORDS_MANUAL_ENTRIES;
+    }
+
+    @Override
+    public ValidationResult executeValidation(
+            ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
+
+        String technicianNotes = (serviceOrder.getTechnicianNotes() != null) ? serviceOrder.getTechnicianNotes() : "";
+        String serviceDescriptions = (serviceOrder.getServiceDescriptions() != null) ? serviceOrder.getServiceDescriptions() : "";
+
+        List<String> listKeywordsManualEntries =
+                this.extractValueFromJson.getListOfString(
+                        rulesDetails, "listKeywordsManualEntries", Collections.emptyList());
+
+        List<String> foundWords = listKeywordsManualEntries.stream()
+                .filter(w -> (technicianNotes.toLowerCase().contains(w.toLowerCase())
+                        || serviceDescriptions.toLowerCase().contains(w.toLowerCase())))
+                .toList();
+
+        if (!foundWords.isEmpty()) {
+            validationResult.setErrorMessage(validationResult.getErrorMessage().concat(foundWords.toString()));
+
+            validationResult.setStatus(StatusValidation.Error);
+        }
+
+        return validationResult;
+    }
 }

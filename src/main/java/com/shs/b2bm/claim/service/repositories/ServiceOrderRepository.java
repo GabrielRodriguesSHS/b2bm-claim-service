@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ServiceOrderRepository extends JpaRepository<ServiceOrder, Long> {
-  // Basic CRUD operations are provided by JpaRepository
-  // Additional custom query methods can be added here as needed
+    // Basic CRUD operations are provided by JpaRepository
+    // Additional custom query methods can be added here as needed
 }

@@ -10,31 +10,33 @@ import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-/** Implementation of ServiceOrderRuleValidatorService to validate Parts. */
+/**
+ * Implementation of ServiceOrderRuleValidatorService to validate Parts.
+ */
 @Service
 @Slf4j
 public class ValidationPartsServiceImpl extends ValidationStrategyServiceImpl {
 
-  public ValidationPartsServiceImpl(
-      ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
-    super(validationConfigService, extractValueFromJson);
-  }
-
-  @Override
-  public Rule getValidationRule() {
-    return Rule.PARTS_VALIDATION;
-  }
-
-  @Override
-  public ValidationResult executeValidation(
-      ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
-
-    int maxPartsPerClaim = this.extractValueFromJson.getInt(rulesDetails, "maxPartsPerClaim", 1);
-
-    if (serviceOrder.getParts().size() > maxPartsPerClaim) {
-      validationResult.setStatus(StatusValidation.Error);
+    public ValidationPartsServiceImpl(
+            ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
+        super(validationConfigService, extractValueFromJson);
     }
 
-    return validationResult;
-  }
+    @Override
+    public Rule getValidationRule() {
+        return Rule.PARTS_VALIDATION;
+    }
+
+    @Override
+    public ValidationResult executeValidation(
+            ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
+
+        int maxPartsPerClaim = this.extractValueFromJson.getInt(rulesDetails, "maxPartsPerClaim", 1);
+
+        if (serviceOrder.getParts().size() > maxPartsPerClaim) {
+            validationResult.setStatus(StatusValidation.Error);
+        }
+
+        return validationResult;
+    }
 }

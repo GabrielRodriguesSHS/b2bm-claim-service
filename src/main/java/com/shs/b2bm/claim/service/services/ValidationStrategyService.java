@@ -10,21 +10,21 @@ import com.shs.b2bm.claim.service.enums.Rule;
  */
 public interface ValidationStrategyService {
 
-  /**
-   * Retrieves the validation rule type handled by this strategy.
-   *
-   * @return the Rule enum value representing the validation rule type
-   */
-  Rule getValidationRule();
+    /**
+     * Retrieves the validation rule type handled by this strategy.
+     *
+     * @return the Rule enum value representing the validation rule type
+     */
+    Rule getValidationRule();
 
-  /**
-   * Validates the given service order against defined business rules. Performs comprehensive
-   * validation checks based on the specific rule type and returns detailed validation results
-   * including any errors found.
-   *
-   * @param serviceOrder the service order to validate, must not be null
-   * @return the ValidationResult containing validation status and any error messages
-   * @throws IllegalArgumentException if serviceOrder is null
-   */
-  ValidationResult validate(ServiceOrder serviceOrder);
+    /**
+     * Validates the given service order against defined business rules. Performs comprehensive
+     * validation checks based on the specific rule type and returns detailed validation results
+     * including any errors found.
+     *
+     * @param serviceOrder the service order to validate, must not be null
+     * @return the ValidationResult containing validation status and any error messages
+     * @throws IllegalArgumentException if serviceOrder is null
+     */
+    ValidationResult validate(ServiceOrder serviceOrder);
 }

@@ -11,9 +11,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -22,6 +19,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -34,23 +35,26 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class Claim extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long claimId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long claimId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "service_order_id")
-  @ToString.Exclude
-  private ServiceOrder serviceOrder;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_order_id")
+    @ToString.Exclude
+    private ServiceOrder serviceOrder;
 
-  @Column private String claimNumber;
+    @Column
+    private String claimNumber;
 
-  @Column private LocalDate claimDate;
+    @Column
+    private LocalDate claimDate;
 
-  @Column private String claimStatus;
+    @Column
+    private String claimStatus;
 
-  @OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @ToString.Exclude
-  @Builder.Default
-  private List<ClaimPart> parts = new ArrayList<>();
+    @OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @Builder.Default
+    private List<ClaimPart> parts = new ArrayList<>();
 }

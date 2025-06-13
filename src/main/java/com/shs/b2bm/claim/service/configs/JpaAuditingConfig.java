@@ -13,13 +13,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
 public class JpaAuditingConfig {
 
-  /**
-   * Provides an instance of AuditorAware to be used by JPA auditing.
-   *
-   * @return An AuditorAware implementation.
-   */
-  @Bean
-  public AuditorAware<String> auditorProvider() {
-    return new AuditorAwareImpl();
-  }
+    /**
+     * Provides an instance of AuditorAware to be used by JPA auditing.
+     *
+     * @return An AuditorAware implementation.
+     */
+    @Bean
+    public AuditorAware<String> auditorProvider() {
+        return new AuditorAwareImpl();
+    }
 }

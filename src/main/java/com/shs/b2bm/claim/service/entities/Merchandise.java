@@ -25,13 +25,16 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class Merchandise extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long merchandiseId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long merchandiseId;
 
-  @Column private String brandName;
+    @Column
+    private String brandName;
 
-  @Column private String modelNumber;
+    @Column
+    private String modelNumber;
 
-  @Column private String serialNumber;
+    @Column
+    private String serialNumber;
 }

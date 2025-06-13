@@ -10,52 +10,54 @@ import com.shs.b2bm.claim.service.utils.ExtractValueFromJson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-/** Implementation of ServiceOrderRuleValidatorService to validate Serial Number. */
+/**
+ * Implementation of ServiceOrderRuleValidatorService to validate Serial Number.
+ */
 @Service
 @Slf4j
 public class ValidationSerialNumberServiceImpl extends ValidationStrategyServiceImpl {
 
-  public ValidationSerialNumberServiceImpl(
-      ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
-    super(validationConfigService, extractValueFromJson);
-  }
-
-  @Override
-  public Rule getValidationRule() {
-    return Rule.SERIAL_NUMBER_VALIDATION;
-  }
-
-  @Override
-  public ValidationResult executeValidation(
-      ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
-
-    String serialNumber =
-        (serviceOrder.getMerchandise() != null
-                && serviceOrder.getMerchandise().getSerialNumber() != null)
-            ? serviceOrder.getMerchandise().getSerialNumber()
-            : "";
-
-    boolean isRequired = extractValueFromJson.getBoolean(rulesDetails, "required", true);
-    int minLength = extractValueFromJson.getInt(rulesDetails, "minLength", 0);
-    int maxLength = extractValueFromJson.getInt(rulesDetails, "maxLength", Integer.MAX_VALUE);
-
-    if (isRequired && serialNumber.isBlank()) {
-      String errorMessageRequired =
-          extractValueFromJson.getString(rulesDetails, "errorMessageRequired", "Serial missing");
-      validationResult.setErrorMessage(
-          validationResult.getErrorMessage().concat(" ").concat(errorMessageRequired));
-      validationResult.setStatus(StatusValidation.Error);
+    public ValidationSerialNumberServiceImpl(
+            ValidationConfigService validationConfigService, ExtractValueFromJson extractValueFromJson) {
+        super(validationConfigService, extractValueFromJson);
     }
 
-    if (serialNumber.length() < minLength || serialNumber.length() > maxLength) {
-      String errorMessageLength =
-          extractValueFromJson.getString(
-              rulesDetails, "errorMessageLength", "Serial does not meet length requirements");
-      validationResult.setErrorMessage(
-          validationResult.getErrorMessage().concat(" ").concat(errorMessageLength));
-      validationResult.setStatus(StatusValidation.Error);
+    @Override
+    public Rule getValidationRule() {
+        return Rule.SERIAL_NUMBER_VALIDATION;
     }
 
-    return validationResult;
-  }
+    @Override
+    public ValidationResult executeValidation(
+            ServiceOrder serviceOrder, ValidationResult validationResult, JsonNode rulesDetails) {
+
+        String serialNumber =
+                (serviceOrder.getMerchandise() != null
+                        && serviceOrder.getMerchandise().getSerialNumber() != null)
+                        ? serviceOrder.getMerchandise().getSerialNumber()
+                        : "";
+
+        boolean isRequired = extractValueFromJson.getBoolean(rulesDetails, "required", true);
+        int minLength = extractValueFromJson.getInt(rulesDetails, "minLength", 0);
+        int maxLength = extractValueFromJson.getInt(rulesDetails, "maxLength", Integer.MAX_VALUE);
+
+        if (isRequired && serialNumber.isBlank()) {
+            String errorMessageRequired =
+                    extractValueFromJson.getString(rulesDetails, "errorMessageRequired", "Serial missing");
+            validationResult.setErrorMessage(
+                    validationResult.getErrorMessage().concat(" ").concat(errorMessageRequired));
+            validationResult.setStatus(StatusValidation.Error);
+        }
+
+        if (serialNumber.length() < minLength || serialNumber.length() > maxLength) {
+            String errorMessageLength =
+                    extractValueFromJson.getString(
+                            rulesDetails, "errorMessageLength", "Serial does not meet length requirements");
+            validationResult.setErrorMessage(
+                    validationResult.getErrorMessage().concat(" ").concat(errorMessageLength));
+            validationResult.setStatus(StatusValidation.Error);
+        }
+
+        return validationResult;
+    }
 }

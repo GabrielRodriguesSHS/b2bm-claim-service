@@ -35,20 +35,22 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class ValidationResult extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long validationResultId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long validationResultId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "service_order_id")
-  @ToString.Exclude
-  private ServiceOrder serviceOrder;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_order_id")
+    @ToString.Exclude
+    private ServiceOrder serviceOrder;
 
-  @Column private String errorMessage;
+    @Column
+    private String errorMessage;
 
-  @Column private String rules;
+    @Column
+    private String rules;
 
-  @Column
-  @Enumerated(EnumType.STRING)
-  private StatusValidation status;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private StatusValidation status;
 }

@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class B2bmClaimServiceApplicationTests {
 
-  @Test
-  void contextLoads() {}
+    @Test
+    void contextLoads() {
+    }
 }

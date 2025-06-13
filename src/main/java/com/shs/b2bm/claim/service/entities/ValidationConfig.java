@@ -35,23 +35,25 @@ import org.hibernate.type.SqlTypes;
 @AllArgsConstructor
 public class ValidationConfig extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long validationConfigId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long validationConfigId;
 
-  @Column
-  @Enumerated(EnumType.STRING)
-  private Rule ruleName;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Rule ruleName;
 
-  /*@ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "obligor_id")
-  @ToString.Exclude
-  private Obligor obligor;*/
-  @Column private Integer obligorId; // Just for mocking the initial implementations
+    /*@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "obligor_id")
+    @ToString.Exclude
+    private Obligor obligor;*/
+    @Column
+    private Integer obligorId; // Just for mocking the initial implementations
 
-  @JdbcTypeCode(SqlTypes.JSON)
-  @Column(columnDefinition = "JSON")
-  private JsonNode ruleDetails;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "JSON")
+    private JsonNode ruleDetails;
 
-  @Column private String errorMessage;
+    @Column
+    private String errorMessage;
 }

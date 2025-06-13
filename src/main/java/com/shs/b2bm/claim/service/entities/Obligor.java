@@ -25,9 +25,10 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class Obligor extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long obligorId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long obligorId;
 
-  @Column private String obligorName;
+    @Column
+    private String obligorName;
 }

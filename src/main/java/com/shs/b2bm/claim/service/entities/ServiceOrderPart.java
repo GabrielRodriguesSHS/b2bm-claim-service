@@ -28,20 +28,24 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class ServiceOrderPart extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long partId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long partId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "service_order_id")
-  @ToString.Exclude
-  private ServiceOrder serviceOrder;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_order_id")
+    @ToString.Exclude
+    private ServiceOrder serviceOrder;
 
-  @Column private String sequenceNumber;
+    @Column
+    private String sequenceNumber;
 
-  @Column private String divisionNumber;
+    @Column
+    private String divisionNumber;
 
-  @Column private String partDescription;
+    @Column
+    private String partDescription;
 
-  @Column private Integer quantity;
+    @Column
+    private Integer quantity;
 }

@@ -28,14 +28,15 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class ProcId extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long procId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long procId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "obligor_id")
-  @ToString.Exclude
-  private Obligor obligorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "obligor_id")
+    @ToString.Exclude
+    private Obligor obligorId;
 
-  @Column private String productName;
+    @Column
+    private String productName;
 }

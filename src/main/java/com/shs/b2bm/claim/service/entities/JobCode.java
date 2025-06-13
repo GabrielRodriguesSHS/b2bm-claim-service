@@ -28,18 +28,21 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class JobCode extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long jobCodeId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long jobCodeId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "proc_id")
-  @ToString.Exclude
-  private ProcId procId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "proc_id")
+    @ToString.Exclude
+    private ProcId procId;
 
-  @Column private Integer sequenceNumber;
+    @Column
+    private Integer sequenceNumber;
 
-  @Column private String description;
+    @Column
+    private String description;
 
-  @Column private String coverageCode;
+    @Column
+    private String coverageCode;
 }

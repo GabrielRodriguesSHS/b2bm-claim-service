@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  * query methods.
  */
 @Repository
-public interface MerchandiseRepository extends JpaRepository<Merchandise, Long> {}
+public interface MerchandiseRepository extends JpaRepository<Merchandise, Long> {
+}
