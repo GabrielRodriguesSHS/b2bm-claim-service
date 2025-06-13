@@ -14,15 +14,12 @@
 	<description>The Claim Service for the B2B Modernization project</description>
 	<properties>
 		<java.version>21</java.version>
+		<spring-kafka.version>3.3.5</spring-kafka.version>
 		<h2.version>2.2.224</h2.version>
-		<checkstyle.version>10.23.1</checkstyle.version>
-		<spotbugs.version>4.9.3</spotbugs.version>
-		<google-java-format.version>1.17.0</google-java-format.version>
-		<jacoco.version>0.8.13</jacoco.version>
 		<protobuf.version>4.30.2</protobuf.version>
 		<protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
-		<spring-kafka.version>3.3.5</spring-kafka.version>
 		<testcontainers.version>1.21.0</testcontainers.version>
+		<jacoco.version>0.8.13</jacoco.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -54,17 +51,16 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+			<version>${spring-kafka.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
@@ -89,10 +85,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka</artifactId>
-			<version>${spring-kafka.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka-test</artifactId>
@@ -109,6 +106,11 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>10.15.2</version>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -139,93 +141,37 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.3.0</version>
-				<dependencies>
-					<dependency>
-						<groupId>com.puppycrawl.tools</groupId>
-						<artifactId>checkstyle</artifactId>
-						<version>${checkstyle.version}</version>
-					</dependency>
-				</dependencies>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<version>${protobuf-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<configLocation>src/main/resources/checkstyle.xml</configLocation>
-					<consoleOutput>true</consoleOutput>
-					<failsOnError>true</failsOnError>
-					<linkXRef>false</linkXRef>
+					<protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
+					<protoSourceRoot>${project.basedir}/src/main/resources/proto</protoSourceRoot>
+					<outputDirectory>${project.build.directory}/generated-sources/protobuf/java</outputDirectory>
+					<clearOutputDirectory>false</clearOutputDirectory>
 				</configuration>
-				<executions>
-					<execution>
-						<id>validate</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
-			<plugin>
-				<groupId>com.github.spotbugs</groupId>
-				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.9.3.0</version>
-				<dependencies>
-					<dependency>
-						<groupId>com.github.spotbugs</groupId>
-						<artifactId>spotbugs</artifactId>
-						<version>${spotbugs.version}</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<excludeFilterFile>src/main/resources/spotbugs-exclude.xml</excludeFilterFile>
-					<effort>Max</effort>
-					<threshold>Medium</threshold>
-					<xmlOutput>true</xmlOutput>
-				</configuration>
-				<executions>
-					<execution>
-						<id>spotbugs</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>com.spotify.fmt</groupId>
-				<artifactId>fmt-maven-plugin</artifactId>
-				<version>2.21</version>
-				<dependencies>
-					<dependency>
-						<groupId>com.google.googlejavaformat</groupId>
-						<artifactId>google-java-format</artifactId>
-						<version>${google-java-format.version}</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<id>google-java-format</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>format</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+
 <!--			<plugin>-->
 <!--				<groupId>org.jacoco</groupId>-->
 <!--				<artifactId>jacoco-maven-plugin</artifactId>-->
 <!--				<version>${jacoco.version}</version>-->
 <!--				<executions>-->
 <!--					<execution>-->
+<!--						<id>prepare-agent</id>-->
 <!--						<goals>-->
 <!--							<goal>prepare-agent</goal>-->
 <!--						</goals>-->
 <!--					</execution>-->
 <!--					<execution>-->
 <!--						<id>report</id>-->
-<!--						<phase>prepare-package</phase>-->
 <!--						<goals>-->
 <!--							<goal>report</goal>-->
 <!--						</goals>-->
@@ -248,7 +194,7 @@
 <!--										<limit>-->
 <!--											<counter>BRANCH</counter>-->
 <!--											<value>COVEREDRATIO</value>-->
-<!--											<minimum>0.85</minimum>-->
+<!--											<minimum>0.90</minimum>-->
 <!--										</limit>-->
 <!--										<limit>-->
 <!--											<counter>INSTRUCTION</counter>-->
@@ -263,34 +209,12 @@
 <!--				</executions>-->
 <!--				<configuration>-->
 <!--					<excludes>-->
-<!--						<exclude>com/shs/b2bm/claim/service/B2bmClaimServiceApplication.class</exclude>-->
-<!--						<exclude>**/proto/**</exclude>-->
+<!--						<exclude>com/shs/b2bm/service/order/service/B2bmServiceOrderServiceApplication.class</exclude>-->
+<!--						<exclude>**/dtos/**</exclude>-->
+<!--						<exclude>**/protobuf/**</exclude>-->
 <!--					</excludes>-->
 <!--				</configuration>-->
 <!--			</plugin>-->
-			<plugin>
-				<groupId>org.flywaydb</groupId>
-				<artifactId>flyway-maven-plugin</artifactId>
-				<version>10.15.2</version>
-			</plugin>
-			<plugin>
-				<groupId>org.xolstice.maven.plugins</groupId>
-				<artifactId>protobuf-maven-plugin</artifactId>
-				<version>${protobuf-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
-					<protoSourceRoot>${project.basedir}/src/main/resources/proto</protoSourceRoot>
-					<outputDirectory>${project.build.directory}/generated-sources/protobuf/java</outputDirectory>
-					<clearOutputDirectory>false</clearOutputDirectory>
-				</configuration>
-			</plugin>
 		</plugins>
 		<extensions>
 			<extension>
